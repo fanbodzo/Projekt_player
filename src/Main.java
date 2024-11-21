@@ -1,10 +1,12 @@
+import resources.User;
+
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("Hello and welcome!");
+        UserLoader loader = new UserLoader();
+        List<User> users = loader.loadUsersFromFile("data/users.txt");
 
-        for (int i = 1; i <= 15; i++) {
-            System.out.println("i = " + i);
-        }
     }
 }
 
