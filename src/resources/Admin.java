@@ -1,6 +1,5 @@
 package resources;
 
-
 public class Admin extends Accounts {
     private int adminId;
 
