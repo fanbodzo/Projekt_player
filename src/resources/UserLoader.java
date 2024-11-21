@@ -1,3 +1,5 @@
+package resources;
+
 import resources.User;
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-import resources.User;
+import resources.*;
 
 import java.util.List;
 
