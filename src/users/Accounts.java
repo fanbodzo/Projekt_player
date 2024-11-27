@@ -1,4 +1,4 @@
-package resources;
+package users;
 
 public class Accounts {
     protected String login;

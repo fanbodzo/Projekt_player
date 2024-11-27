@@ -1,4 +1,4 @@
-package resources;
+package users;
 
 public class User extends Accounts {
     private String email;

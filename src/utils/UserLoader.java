@@ -1,6 +1,6 @@
-package resources;
+package utils;
 
-import resources.User;
+import users.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
