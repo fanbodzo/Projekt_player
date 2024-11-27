@@ -5,11 +5,20 @@ public class User extends Accounts {
     private String name;
     private Integer userId;
 
-    public User(String login, String password, String email, String name) {
+    public User(String login, String password, String email, String fullName) {
         super(login, password);
         this.email = email;
-        this.name = name;
+        this.name = fullName;
     }
 
-    // musimy dodac tutaj metody dla zwyklego uzytwkownika
+    @Override
+    public String getLogin(){
+        //w ten sposob zwracamy login dziedziczony z accounts
+        return super.getLogin();
+    }
+    @Override
+    public String getPassword(){
+        return super.getPassword();
+    }
+
 }
