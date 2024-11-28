@@ -10,6 +10,11 @@ public class Main {
         UserLoader loader = new UserLoader();
         List<User> users = loader.loadUsersFromFile("data/users.txt");
 
+        //Pomocznicze wyswietlanie listy uzytkownikow
+        /*for (User user : users) {
+            System.out.println("Login: " + user.getLogin() + " " + "Haslo: " + user.getPassword());
+        }*/
+
         // uruchamianie login forma czyli tego gui co zrobilem
         JFrame frame = new JFrame("Login Form");
         LoginForm loginForm = new LoginForm();

@@ -35,24 +35,26 @@ public class LoginForm {
         contentPane.add(passwordField);
         contentPane.add(new JLabel()); // Pusty label dla wyrównania
         contentPane.add(loginButton);
-        
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UserLoader userLoader = new UserLoader();
                 List<User> users = userLoader.loadUsersFromFile("data/users.txt");
 
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
+                String username = usernameField.getText().trim();
+                String password = new String(passwordField.getPassword()).trim();
 
+                boolean loginSuccessful = false;
                 for (User user : users) {
-                    if (user.getLogin().equals(username) && user.getPassword().equals(String.valueOf(password))) {
-                        JOptionPane.showMessageDialog(contentPane, "Login successful!");
-                        return;
+                    if (user.getLogin().equals(username) && user.getPassword().equals(password)) {
+                        JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
+                        loginSuccessful = true;
+                        break;
                     }
-                }
 
-                JOptionPane.showMessageDialog(contentPane, "Invalid username or password.");
+                }
+                if(!loginSuccessful){ JOptionPane.showMessageDialog(contentPane, "Invalid username or password.");}
             }
         });
     }

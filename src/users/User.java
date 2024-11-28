@@ -3,12 +3,13 @@ package users;
 public class User extends Accounts {
     private String email;
     private String name;
-    private Integer userId;
+    private String userId;
 
-    public User(String login, String password, String email, String fullName) {
+    public User(String userId, String login, String password, String email, String fullName) {
         super(login, password);
         this.email = email;
         this.name = fullName;
+        this.userId = userId;
     }
 
     @Override

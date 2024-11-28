@@ -14,10 +14,15 @@ public class UserLoader {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true; // Flaga do pomijania pierwszej linii
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false; // Pomijamy pierwszą linię
+                    continue;
+                }
                 String[] userData = line.split(",");
                 if (userData.length >= 4) {
-                    User newUser = new User(userData[0].trim(), userData[1].trim(), userData[2].trim(), userData[3].trim());
+                    User newUser = new User(userData[0].trim(), userData[1].trim(), userData[2].trim(), userData[3].trim(), userData[4].trim());
                     users.add(newUser);
                 }
             }
