@@ -19,14 +19,7 @@ public class LoginForm {
 
     public LoginForm() {
 
-        contentPane = new JPanel();
         contentPane.setLayout(new GridLayout(3, 2, 10, 10)); // Ustawienie układu
-
-        usernameLabel = new JLabel("Username:");
-        passwordLabel = new JLabel("Password:");
-        usernameField = new JTextField();
-        passwordField = new JPasswordField();
-        loginButton = new JButton("Login");
 
         // Dodanie komponentów do panelu
         contentPane.add(usernameLabel);
