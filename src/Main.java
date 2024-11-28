@@ -1,7 +1,8 @@
 import users.User;
-import utils.UserLoader;
+import utils.*;
 import gui.*;
 
+import javax.swing.*;
 import java.util.List;
 
 public class Main {
@@ -10,7 +11,14 @@ public class Main {
         List<User> users = loader.loadUsersFromFile("data/users.txt");
 
         // uruchamianie login forma czyli tego gui co zrobilem
-        new LoginForm();
+        JFrame frame = new JFrame("Login Form");
+        LoginForm loginForm = new LoginForm();
+
+        frame.setContentPane(loginForm.getContentPane());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 200);
+        frame.setLocationRelativeTo(null); // Wyśrodkowanie okna
+        frame.setVisible(true);
     }
 }
 

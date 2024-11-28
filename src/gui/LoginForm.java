@@ -1,9 +1,10 @@
 package gui;
 
-import utils.UserLoader;
 import users.User;
+import utils.UserLoader;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -16,31 +17,46 @@ public class LoginForm {
     private JLabel passwordLabel;
     private JLabel usernameLabel;
 
-
-
     public LoginForm() {
-        //nie wiem nie wyswietla sie nic nie wiem o co chodzi a sie juz tak nameczylem z tym wsyzskim i naszukalem
-        // na niecie ze mam dosc poprstu na dzis
 
-        UserLoader userLoader = new UserLoader();
-        List<User> dane = userLoader.loadUsersFromFile("data/users.txt");
+        contentPane = new JPanel();
+        contentPane.setLayout(new GridLayout(3, 2, 10, 10)); // Ustawienie układu
 
+        usernameLabel = new JLabel("Username:");
+        passwordLabel = new JLabel("Password:");
+        usernameField = new JTextField();
+        passwordField = new JPasswordField();
+        loginButton = new JButton("Login");
+
+        // Dodanie komponentów do panelu
+        contentPane.add(usernameLabel);
+        contentPane.add(usernameField);
+        contentPane.add(passwordLabel);
+        contentPane.add(passwordField);
+        contentPane.add(new JLabel()); // Pusty label dla wyrównania
+        contentPane.add(loginButton);
+        
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                UserLoader userLoader = new UserLoader();
+                List<User> users = userLoader.loadUsersFromFile("data/users.txt");
 
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
 
-                for(User user : dane){
-                    if(user.getLogin().equals(username) && user.getPassword().equals(String.valueOf(password))){
-                        JOptionPane.showMessageDialog(contentPane, "udalo sie zalogowac");
-                    }else{
-                        JOptionPane.showMessageDialog(contentPane, "niepoprawne dane nie udalo sie zalogowac");
+                for (User user : users) {
+                    if (user.getLogin().equals(username) && user.getPassword().equals(String.valueOf(password))) {
+                        JOptionPane.showMessageDialog(contentPane, "Login successful!");
+                        return;
                     }
-
                 }
+
+                JOptionPane.showMessageDialog(contentPane, "Invalid username or password.");
             }
         });
+    }
+    public JPanel getContentPane() {
+        return contentPane;
     }
 }
