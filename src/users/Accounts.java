@@ -1,4 +1,4 @@
-package resources;
+package users;
 
 public class Accounts {
     protected String login;
@@ -12,5 +12,13 @@ public class Accounts {
     // Metody wspólne dla wszystkich kont
     public boolean authenticate(String inputLogin, String inputPassword) {
         return login.equals(inputLogin) && password.equals(inputPassword);
+    }
+
+    //zwarcanie loginu
+    public String getLogin() {
+        return login;
+    }
+    public String getPassword() {
+        return password;
     }
 }

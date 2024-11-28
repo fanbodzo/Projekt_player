@@ -1,4 +1,4 @@
-package resources;
+package users;
 
 public class UserPremium extends User {
     private boolean premiumStatus;
