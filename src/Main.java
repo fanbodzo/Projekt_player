@@ -21,7 +21,7 @@ public class Main {
 
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
+        frame.setSize(600, 200);
         frame.setLocationRelativeTo(null); // Wyśrodkowanie okna
         frame.setVisible(true);
     }

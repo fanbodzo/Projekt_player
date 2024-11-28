@@ -19,15 +19,7 @@ public class LoginForm {
 
     public LoginForm() {
 
-        contentPane.setLayout(new GridLayout(3, 2, 10, 10)); // Ustawienie układu
 
-        // Dodanie komponentów do panelu
-        contentPane.add(usernameLabel);
-        contentPane.add(usernameField);
-        contentPane.add(passwordLabel);
-        contentPane.add(passwordField);
-        contentPane.add(new JLabel()); // Pusty label dla wyrównania
-        contentPane.add(loginButton);
 
         loginButton.addActionListener(new ActionListener() {
             @Override
