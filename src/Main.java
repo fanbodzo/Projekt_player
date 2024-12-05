@@ -16,14 +16,8 @@ public class Main {
         }*/
 
         // uruchamianie login forma czyli tego gui co zrobilem
-        JFrame frame = new JFrame("Login Form");
-        LoginForm loginForm = new LoginForm();
+       FrameLoader frameLoader = new FrameLoader();
 
-        frame.setContentPane(loginForm.getContentPane());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 200);
-        frame.setLocationRelativeTo(null); // Wyśrodkowanie okna
-        frame.setVisible(true);
     }
 }
 

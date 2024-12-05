@@ -4,7 +4,6 @@ import users.User;
 import utils.UserLoader;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -16,10 +15,9 @@ public class LoginForm {
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JLabel usernameLabel;
+    private boolean loginSuccessful = false;
 
     public LoginForm() {
-
-
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -30,7 +28,7 @@ public class LoginForm {
                 String username = usernameField.getText().trim();
                 String password = new String(passwordField.getPassword()).trim();
 
-                boolean loginSuccessful = false;
+
                 for (User user : users) {
                     if (user.getLogin().equals(username) && user.getPassword().equals(password)) {
                         JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
@@ -42,6 +40,9 @@ public class LoginForm {
                 if(!loginSuccessful){ JOptionPane.showMessageDialog(contentPane, "Invalid username or password.");}
             }
         });
+    }
+    public boolean getLoginConfirmation(){
+        return loginSuccessful;
     }
     public JPanel getContentPane() {
         return contentPane;

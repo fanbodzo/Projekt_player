@@ -3,7 +3,15 @@ package gui;
 import javax.swing.*;
 
 public class MainPageUser {
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JPanel contentPane;
+    private JButton filmyButton;
+    private JButton koszykButton;
+    private JButton mojeKontoButton;
+
+    public MainPageUser() {
+
+    }
+    public JPanel getContentPane() {
+        return contentPane;
+    }
 }
