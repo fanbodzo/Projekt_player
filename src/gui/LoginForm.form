@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.LoginForm">
-  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
       <xy x="20" y="24" width="688" height="448"/>
@@ -12,7 +12,7 @@
     <children>
       <component id="53323" class="javax.swing.JPasswordField" binding="passwordField">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="34"/>
           </grid>
         </constraints>
@@ -23,7 +23,7 @@
       </component>
       <component id="735d0" class="javax.swing.JTextField" binding="usernameField">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="300" height="34"/>
           </grid>
         </constraints>
@@ -32,27 +32,14 @@
           <toolTipText value="login"/>
         </properties>
       </component>
-      <component id="87bde" class="javax.swing.JLabel" binding="passwordLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="111" height="17"/>
-          </grid>
-        </constraints>
-        <properties>
-          <foreground color="-16777216"/>
-          <horizontalAlignment value="0"/>
-          <horizontalTextPosition value="0"/>
-          <text value="Password"/>
-        </properties>
-      </component>
       <component id="752f7" class="javax.swing.JLabel" binding="usernameLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="111" height="17"/>
           </grid>
         </constraints>
         <properties>
-          <foreground color="-16777216"/>
+          <foreground color="-1378817"/>
           <horizontalAlignment value="0"/>
           <horizontalTextPosition value="0"/>
           <text value="Username"/>
@@ -60,7 +47,7 @@
       </component>
       <component id="e3075" class="javax.swing.JButton" binding="loginButton">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="400" height="34"/>
           </grid>
         </constraints>
@@ -69,6 +56,29 @@
           <horizontalTextPosition value="0"/>
           <text value="Login"/>
           <toolTipText value=""/>
+        </properties>
+      </component>
+      <component id="87bde" class="javax.swing.JLabel" binding="passwordLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="111" height="17"/>
+          </grid>
+        </constraints>
+        <properties>
+          <foreground color="-1378817"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Password"/>
+        </properties>
+      </component>
+      <component id="456f8" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Arial Rounded MT Bold" size="48" style="1"/>
+          <foreground color="-1378817"/>
+          <text value="PLAYER"/>
         </properties>
       </component>
     </children>
