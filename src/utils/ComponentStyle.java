@@ -2,19 +2,21 @@ package utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public interface ComponentStyle {
+    // zmienne ktore pomagaja syzbciej edytowac kod
+    Color ButtonDefaultColor = new Color(0, 120, 215);
+    Color BackgroundDefaultColor = new Color(43, 39, 39);
+    Color OnPressColor = new Color(87, 98, 149, 255); // Kolor zmieniający się na hover
+
     // Metoda do zaokrąglania przycisków
-    default void roundButton(JButton button) {
+    default void roundButton(JButton button, Color backgroundColor) {
         button.setOpaque(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        button.setContentAreaFilled(false);
+        button.setBorderPainted(false); // Wyłącza domyślne obramowanie
+        button.setFocusPainted(false); // Wyłącza domyślny efekt fokusa
+        button.setContentAreaFilled(false); // Umożliwia niestandardowe rysowanie tła
 
         button.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
             @Override
@@ -22,9 +24,13 @@ public interface ComponentStyle {
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+                // Kolor tla przycisku w zależności od stanu noramlny czy klikniety ale mzona dac na hoover
+                //do przekmiineia
+                Color buttonColor = button.getModel().isPressed() ? OnPressColor : ButtonDefaultColor;
+
                 // Tworzenie zaokrąglonego tła przycisku
-                int arcSize = 30; // promień zaokrąglenia
-                g2d.setColor(button.getBackground());
+                int arcSize = 30; // Promień zaokrąglenia
+                g2d.setColor(buttonColor); // Użycie odpowiedniego koloru tła
                 g2d.fillRoundRect(0, 0, button.getWidth(), button.getHeight(), arcSize, arcSize);
 
                 super.paint(g2d, c); // Rysowanie tekstu i ikony
@@ -34,36 +40,46 @@ public interface ComponentStyle {
             @Override
             protected void installDefaults(AbstractButton b) {
                 super.installDefaults(b);
-                b.setBackground(new Color(0, 120, 215)); // Kolor domyślny tła przycisku
                 b.setForeground(Color.WHITE); // Kolor tekstu
             }
         });
+
+        // Dodanie efektu klikniecia naprzycisk
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.repaint(); // odwiezenie do zaminy koloru
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.repaint();
+            }
+        });
+
     }
 
-
-    // Metoda do tworzenia obramowań
-    default void createBorder(JComponent component, Color color, int thickness, int radius) {
+    // metoda do obramowan tez do ulatwienia zycia ale nie dziala dobrze wiec
+    // to sei zrobi pozniej jzezli siebdzie bardzo chiualo komus bo narazie to zmienia button na kwadrat
+    default void createBorder(JComponent component) {
+        int thickness = 10;
+        int radius = 10;
         component.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(color, thickness),
+                BorderFactory.createLineBorder(Color.WHITE, thickness),
                 BorderFactory.createEmptyBorder(radius, radius, radius, radius)
         ));
+
+    }
+    // metoda ktora daje nam kolor przycisku w jakby bardziej przejrzysty sposob do wykrozsytania oraz
+    // izoluje nam roundbutton zeby on tylko zaokraglal
+    // pozniej w projekcie jak np bedzimy mieli przycisk na kupo subskrypcji fajnei byy byl innego koloru poprsotu
+    // i majac takie funkcje (bedziemy tworzyc nowe ) poporstu bedzie to czytalniej jak dla mn
+    default void setPrimaryButtonStyle(JButton button) {
+        roundButton(button, ButtonDefaultColor); // Niebieski
     }
 
-    // Metoda do zmiany koloru tła
-    default void changeBackground(JPanel panel, Color color) {
-        panel.setBackground(color);
-    }
-
-    // Metoda do logowania zamknięcia aplikacji
-    default void logApplicationClose() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String logMessage = "Aplikacja została zamknięta: " + now.format(formatter) + "\n";
-
-        try (FileWriter writer = new FileWriter("application_log.txt", true)) {
-            writer.write(logMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // metoda na podstawowe tlo tez do ulatwienia zycia
+    default void setBackgroundDefault(JPanel panel) {
+        panel.setBackground(BackgroundDefaultColor);
     }
 }

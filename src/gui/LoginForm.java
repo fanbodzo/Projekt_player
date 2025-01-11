@@ -20,7 +20,8 @@ public class LoginForm implements ComponentStyle {
     private boolean loginSuccessful = false;
 
     public LoginForm() {
-        contentPane.setBackground(new Color(61, 61, 59));
+        //zmiana wykorzystujemy metode na bazowe tlo z intefejsu
+        setBackgroundDefault(contentPane);
 
         usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -29,7 +30,9 @@ public class LoginForm implements ComponentStyle {
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
 
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        roundButton(loginButton);
+        // wykorzystujemy metode na bazowy kolor przycisku
+        setPrimaryButtonStyle(loginButton);
+
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -42,13 +45,15 @@ public class LoginForm implements ComponentStyle {
 
                 for (User user : users) {
                     if (user.getLogin().equals(username) && user.getPassword().equals(password)) {
-                        JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
+                        // w komentarzu bo zawadza tylko to powaidomienie i jest brzydkie
+//                        JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
                         loginSuccessful = true;
                         break;
                     }
                 }
                 if (!loginSuccessful) {
-                    JOptionPane.showMessageDialog(contentPane, "Invalid username or password.");
+                    // dodalem tytul i jaki jest to typ waidomosci co daje taka fajna ikonke
+                    JOptionPane.showMessageDialog(contentPane, "Nieprawidlowy login lub haslo","blad logowania", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
