@@ -2,12 +2,16 @@ package utils;
 
 import gui.LoginForm;
 import gui.MainPageUser;
+import gui.MojeKonto;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FrameLoader {
     private JFrame frame;
     private LoginForm loginForm;
+    private MainPageUser mainPageUser;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -22,38 +26,54 @@ public class FrameLoader {
         loginChecker();
     }
 
-    private void loginChecker (){
-        //uzywamy nowego watku zeby przyspieszyc dzialanie kodu
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(500); // Sprawdzanie co 500ms
-                    if (loginForm.getLoginConfirmation()) {
-                        switchToUserMainPage(); // Otwórz główną stronę po zalogowaniu
-                        break;
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    private void loginChecker() {
+        // bez watku bo byl useless
+        Timer loginTimer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (loginForm.getLoginConfirmation()) {
+                    ((Timer) e.getSource()).stop();  // Zatrzymaj timer, gdy użytkownik się zaloguje
+                    switchToUserMainPage(); // Otwórz główną stronę po zalogowaniu
                 }
             }
-        }).start();
+        });
+        loginTimer.start();
     }
+
     private void switchToUserMainPage() {
 
-        MainPageUser mainPageUser = new MainPageUser();
+        mainPageUser = new MainPageUser();
+        MojeKonto mojeKonto = new MojeKonto();
+        // zrobilem to jako przekazanie przycisku przez metode i poczekanie na akcje zwaizana z nim
+        // uwzam ze jest to lepiej niz metoda ktora zwraaca czy przycisk zostal nacisniety
+
+        mainPageUser.getMojeKontoButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // utworzenie obiektu moje konto i podmiana
+                MojeKonto mojeKontoUser = new MojeKonto();
+                frame.setContentPane(mojeKontoUser.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+
+        // trzeba to naprawic zeby mozna bylo sie wyologwac
+        mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // utworzenie obiektu moje konto i podmiana
+                frame.setContentPane(loginForm.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
         // podmiana jframe
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
+
     }
 
-
-//    public JFrame getFrame() {
-//        return frame;
-//    }
-//
-//    public LoginForm getLoginForm() {
-//        return loginForm;
-//    }
 }

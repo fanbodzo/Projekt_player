@@ -15,6 +15,11 @@ public class MainPageUser implements ComponentStyle{
         setPrimaryButtonStyle(koszykButton);
         setPrimaryButtonStyle(mojeKontoButton);
         setBackgroundDefault(contentPane);
+
+    }
+    // przekazuje przycisk co jest chyba efektywniejsze
+    public JButton getMojeKontoButton() {
+        return mojeKontoButton;
     }
     public JPanel getContentPane() {
         return contentPane;
