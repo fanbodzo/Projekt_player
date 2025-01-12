@@ -12,7 +12,7 @@ public class FrameLoader {
     private JFrame frame;
     private LoginForm loginForm;
     private MainPageUser mainPageUser;
-
+    private MojeKonto mojeKonto;
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
@@ -41,39 +41,55 @@ public class FrameLoader {
     }
 
     private void switchToUserMainPage() {
-
         mainPageUser = new MainPageUser();
-        MojeKonto mojeKonto = new MojeKonto();
-        // zrobilem to jako przekazanie przycisku przez metode i poczekanie na akcje zwaizana z nim
-        // uwzam ze jest to lepiej niz metoda ktora zwraaca czy przycisk zostal nacisniety
+        mojeKonto = new MojeKonto();
 
+        // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // utworzenie obiektu moje konto i podmiana
-                MojeKonto mojeKontoUser = new MojeKonto();
-                frame.setContentPane(mojeKontoUser.getContentPane());
+                frame.setContentPane(mojeKonto.getContentPane());
                 frame.revalidate();
                 frame.repaint();
             }
         });
 
-        // trzeba to naprawic zeby mozna bylo sie wyologwac
+        // Obsluga przyciskow , wylogowania i powrotu do glownejstrony
         mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // utworzenie obiektu moje konto i podmiana
-                frame.setContentPane(loginForm.getContentPane());
-                frame.revalidate();
-                frame.repaint();
+                logout();
             }
         });
 
-        // podmiana jframe
+        mojeKonto.getPowrotButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                backToMainPage();
+            }
+        });
+
+        // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
+    }
 
+    private void logout() {
+
+        loginForm = new LoginForm();
+        frame.setContentPane(loginForm.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+
+        //znowu wlaczamy logowanie jak sie wylogowalismy
+        loginChecker();
+    }
+
+    private void backToMainPage(){
+        frame.setContentPane(mainPageUser.getContentPane());
+        frame.revalidate();
+        frame.repaint();
     }
 
 }
