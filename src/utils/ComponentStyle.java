@@ -9,7 +9,7 @@ public interface ComponentStyle {
     // zmienne ktore pomagaja syzbciej edytowac kod
     Color ButtonDefaultColor = new Color(0, 120, 215);
     Color BackgroundDefaultColor = new Color(43, 39, 39);
-    Color OnPressColor = new Color(87, 98, 149, 255); // Kolor zmieniający się na hover
+    Color OnPressColor = new Color(87, 98, 149, 255);
 
     // Metoda do zaokrąglania przycisków
     default void roundButton(JButton button, Color backgroundColor) {
@@ -82,4 +82,13 @@ public interface ComponentStyle {
     default void setBackgroundDefault(JPanel panel) {
         panel.setBackground(BackgroundDefaultColor);
     }
+    // ustawianie customowego koloru przycisku
+    default void setButtonColor(JButton button, Color color) {
+        roundButton(button ,color);
+    }
+    //customowe tlo
+    default void setBackgroundColor(JPanel panel, Color color) {
+        panel.setBackground(color);
+    }
+
 }
