@@ -13,6 +13,8 @@ import utils.Film;
 
 public class Biblioteka extends JFrame {
 
+    private JPanel panel1;
+
     public Biblioteka(String folderFilmy) {
         setTitle("Biblioteka Filmów");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,5 +70,9 @@ public class Biblioteka extends JFrame {
         // Ścieżka do folderu z filmami
         String folderFilmy = "Filmy";
         new Biblioteka(folderFilmy);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
