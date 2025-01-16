@@ -14,7 +14,7 @@ public class Accounts {
         return login.equals(inputLogin) && password.equals(inputPassword);
     }
 
-    //zwarcanie loginu
+    //zwracanie loginu
     public String getLogin() {
         return login;
     }
