@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+//trzeba dodac komponent na kolor textboxow i dobrac inaczej kolory w apce
 public interface ComponentStyle {
     // zmienne ktore pomagaja syzbciej edytowac kod
     Color ButtonDefaultColor = new Color(0, 120, 215);

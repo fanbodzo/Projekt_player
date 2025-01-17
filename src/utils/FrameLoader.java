@@ -1,6 +1,8 @@
 package utils;
 
 import gui.*;
+import users.Admin;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,52 +13,33 @@ public class FrameLoader {
     private MainPageUser mainPageUser;
     private MainPageAdmin mainPageAdmin;
     private MojeKonto mojeKonto;
-
+    private AdminAddFilm dodajFilm;
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
 
-        // Dodanie obsługi przycisku rejestracji
-        loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
-
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
-        frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null); // Wyśrodkowanie okna
         frame.setVisible(true);
 
         loginChecker();
     }
 
-    private void switchToRegisterForm() {
-        RegisterForm registerForm = new RegisterForm();
-
-        // Obsługa przycisku powrotu
-        registerForm.getBackButton().addActionListener(e -> {
-            loginForm = new LoginForm();
-            loginForm.getRegisterButton().addActionListener(ev -> switchToRegisterForm());
-            frame.setContentPane(loginForm.getContentPane());
-            frame.revalidate();
-            frame.repaint();
-            loginChecker();
-        });
-
-        frame.setContentPane(registerForm.getContentPane());
-        frame.revalidate();
-        frame.repaint();
-    }
-
     private void loginChecker() {
+        // bez watku bo byl useless
         Timer loginTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loginForm.getLoginConfirmation()) {
-                    ((Timer) e.getSource()).stop();
+                    ((Timer) e.getSource()).stop();  // Zatrzymaj timer, gdy użytkownik się zaloguje
                     if(loginForm.getAccountTypeLoggedIn()){
-                        switchToAdminMainPage();
-                    } else {
-                        switchToUserMainPage();
+                        switchToAdminMainPage(); // admin main page
+                    }else{
+                        switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
                     }
+
                 }
             }
         });
@@ -67,15 +50,32 @@ public class FrameLoader {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
 
-        mainPageUser.getMojeKontoButton().addActionListener(e -> {
-            frame.setContentPane(mojeKonto.getContentPane());
-            frame.revalidate();
-            frame.repaint();
+        // obsluga przycisku moje konto
+        mainPageUser.getMojeKontoButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(mojeKonto.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
         });
 
-        mojeKonto.getWyologujButton().addActionListener(e -> logout());
-        mojeKonto.getPowrotButton().addActionListener(e -> backToMainPage());
+        // Obsluga przyciskow , wylogowania i powrotu do glownejstrony
+        mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
 
+        mojeKonto.getPowrotButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                backToMainPage();
+            }
+        });
+
+        // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
@@ -83,24 +83,43 @@ public class FrameLoader {
 
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
-        mainPageAdmin.getWylogujButton().addActionListener(e -> logout());
+        dodajFilm = new AdminAddFilm();
+
+        mainPageAdmin.getWylogujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
+        mainPageAdmin.getDodajFilmButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(dodajFilm.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+
         frame.setContentPane(mainPageAdmin.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
 
     private void logout() {
+
         loginForm = new LoginForm();
-        loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
         frame.setContentPane(loginForm.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        //znowu wlaczamy logowanie jak sie wylogowalismy
         loginChecker();
     }
 
-    private void backToMainPage() {
+    private void backToMainPage(){
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
+
 }
