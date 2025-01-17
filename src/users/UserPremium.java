@@ -1,19 +1,24 @@
 package users;
 
+
+import java.time.LocalDate;
+
 public class UserPremium extends User {
 
     private boolean premium;
-    private String premiumExpiryDate;
+    private LocalDate premiumExpiryDate;
     private String videoQuality; // Jakość wideo (np. 4K, Full HD, HD)
-    private boolean adFree; // Brak reklam
+    private boolean adFree;
 
-    public UserPremium(String name, String password, String email, boolean premium, String premiumExpiryDate) {
-        super(name, password, email, premium, premiumExpiryDate);
-        super(userId,login,password,email,fullName,premium);
-        this.premium = premium;
+    public UserPremium(String userId, String login, String password, String email, String name, boolean premium, LocalDate premiumExpiryDate) {
+        // wywolanie kostruktoora klasy nadrzednej user bez bledow
+        super(userId, login, password, email, name, premium);
+
         this.premiumExpiryDate = premiumExpiryDate;
-        this.videoQuality = "HD"; // Domyślna jakość
-        this.adFree = false; // Domyślnie reklamy są włączone
+        // z ta jakoscia to ciekawe jak zaimplementujemy XDDD
+        this.videoQuality = "HD";
+        // nie wiem czy tych reklam nie lepiej usunac ogolnie
+        this.adFree = false;
     }
 
     public boolean isPremium() {
@@ -24,12 +29,12 @@ public class UserPremium extends User {
         this.premium = premium;
     }
 
-    public String getPremiumExpiryDate() {
+    public LocalDate getPremiumExpiryDate() {
         return premiumExpiryDate;
     }
 
-    public void setPremiumExpiryDate(String premiumExpiryDate) {
-        this.premiumExpiryDate = premiumExpiryDate;
+    public void setPremiumExpiryDate() {
+        this.premiumExpiryDate = LocalDate.now().plusDays(30);
     }
 
     public String getVideoQuality() {
@@ -51,19 +56,18 @@ public class UserPremium extends User {
     @Override
     public String toString() {
         return "UserPremium{" +
-                "username='" + getUsername() + '\'' +
+                "username='" + getName() + '\'' +
                 ", premium=" + premium +
                 ", premiumExpiryDate='" + premiumExpiryDate + '\'' +
                 ", videoQuality='" + videoQuality + '\'' +
                 ", adFree=" + adFree +
                 '}';
     }
-
     public void upgradeToPremium() {
         this.premium = true;
         this.adFree = true;
         this.videoQuality = "4K";
-        this.premiumExpiryDate = "YYYY-MM-DD"; // Placeholder, wymaga implementacji logiki dat
+        setPremiumExpiryDate();
         System.out.println("Konto zostało uaktualnione do Premium.");
     }
 
