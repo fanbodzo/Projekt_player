@@ -1,6 +1,7 @@
 package utils;
 
 import gui.LoginForm;
+import gui.MainPageAdmin;
 import gui.MainPageUser;
 import gui.MojeKonto;
 
@@ -12,6 +13,7 @@ public class FrameLoader {
     private JFrame frame;
     private LoginForm loginForm;
     private MainPageUser mainPageUser;
+    private MainPageAdmin mainPageAdmin;
     private MojeKonto mojeKonto;
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -33,7 +35,12 @@ public class FrameLoader {
             public void actionPerformed(ActionEvent e) {
                 if (loginForm.getLoginConfirmation()) {
                     ((Timer) e.getSource()).stop();  // Zatrzymaj timer, gdy użytkownik się zaloguje
-                    switchToUserMainPage(); // Otwórz główną stronę po zalogowaniu
+                    if(loginForm.getAccountTypeLoggedIn()){
+                        switchToAdminMainPage(); // admin main page
+                    }else{
+                        switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
+                    }
+
                 }
             }
         });
@@ -71,6 +78,21 @@ public class FrameLoader {
 
         // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void switchToAdminMainPage() {
+        mainPageAdmin = new MainPageAdmin();
+
+        mainPageAdmin.getWylogujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
+
+        frame.setContentPane(mainPageAdmin.getContentPane());
         frame.revalidate();
         frame.repaint();
     }

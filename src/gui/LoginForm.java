@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class LoginForm implements ComponentStyle {
@@ -18,6 +19,8 @@ public class LoginForm implements ComponentStyle {
     private JLabel passwordLabel;
     private JLabel usernameLabel;
     private boolean loginSuccessful = false;
+    //false oznacza user a true ozanacza admina
+    private boolean accountTypeLoggedIn = false;
 
     public LoginForm() {
         //zmiana wykorzystujemy metode na bazowe tlo z intefejsu
@@ -48,6 +51,10 @@ public class LoginForm implements ComponentStyle {
                         // w komentarzu bo zawadza tylko to powaidomienie i jest brzydkie
 //                        JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
                         loginSuccessful = true;
+                        if (isAdminLogin(user.getLogin())) {
+                            accountTypeLoggedIn = true;
+                            //JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome admin " + user.getLogin());
+                        }
                         break;
                     }
                 }
@@ -62,8 +69,14 @@ public class LoginForm implements ComponentStyle {
     public boolean getLoginConfirmation() {
         return loginSuccessful;
     }
-
     public JPanel getContentPane() {
         return contentPane;
+    }
+    public boolean isAdminLogin(String login) {
+        String[] adminLogins = {"admin1", "admin2", "admin3"};
+        return Arrays.asList(adminLogins).contains(login);
+    }
+    public boolean getAccountTypeLoggedIn(){
+        return accountTypeLoggedIn;
     }
 }

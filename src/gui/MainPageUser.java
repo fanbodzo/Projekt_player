@@ -9,6 +9,7 @@ public class MainPageUser implements ComponentStyle{
     private JButton filmyButton;
     private JButton koszykButton;
     private JButton mojeKontoButton;
+    private JLabel regulaminLabel;
 
     public MainPageUser() {
         setPrimaryButtonStyle(filmyButton);

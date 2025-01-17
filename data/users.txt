@@ -1,5 +1,5 @@
 ID,LOGIN,HASLO,EMAIL,NAME,PREMIUM
-0,admin1,mocnehaslo111,admin1@gmail.com,adminek1,false
+0,admin1,xyz,admin1@gmail.com,adminek1,false
 1,admin2,bardzomocnehaslo22,admin2@gmail.com,adminek2,false
 2,admin3,najmocniejszehaslo333,admin3@gmail.com,adminek3,false
 13,wika123,oghaslo123,wika123@gmail.com,Wiktoria,false
