@@ -12,31 +12,75 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginForm implements ComponentStyle {
-    private JPanel contentPane;  // Nazwa musi być dokładnie taka sama jak w pliku .form
+    private JPanel contentPane;
     private JButton loginButton;
+    private JButton registerButton; // Nowy przycisk
     private JPasswordField passwordField;
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JLabel usernameLabel;
     private boolean loginSuccessful = false;
-    //false oznacza user a true ozanacza admina
     private boolean accountTypeLoggedIn = false;
 
     public LoginForm() {
-        //zmiana wykorzystujemy metode na bazowe tlo z intefejsu
+        contentPane = new JPanel();
+        contentPane.setLayout(new GridBagLayout());
         setBackgroundDefault(contentPane);
 
+        // Inicjalizacja komponentów
+        usernameLabel = new JLabel("Login:");
+        passwordLabel = new JLabel("Hasło:");
+        usernameField = new JTextField(20);
+        passwordField = new JPasswordField(20);
+        loginButton = new JButton("Zaloguj się");
+        registerButton = new JButton("Zarejestruj się");
+
+        // Ustawienia czcionek
         usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
         usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        // wykorzystujemy metode na bazowy kolor przycisku
+        // Ustawienia kolorów tekstu
+        usernameLabel.setForeground(Color.WHITE);
+        passwordLabel.setForeground(Color.WHITE);
+
+        // Stylizacja przycisków
         setPrimaryButtonStyle(loginButton);
+        setPrimaryButtonStyle(registerButton);
 
+        // Layout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Dodawanie komponentów
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        contentPane.add(usernameLabel, gbc);
+
+        gbc.gridx = 1;
+        contentPane.add(usernameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        contentPane.add(passwordLabel, gbc);
+
+        gbc.gridx = 1;
+        contentPane.add(passwordField, gbc);
+
+        // Panel przycisków
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(BackgroundDefaultColor);
+        buttonPanel.add(loginButton);
+        buttonPanel.add(registerButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        contentPane.add(buttonPanel, gbc);
+
+        // Logika logowania
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,19 +92,18 @@ public class LoginForm implements ComponentStyle {
 
                 for (User user : users) {
                     if (user.getLogin().equals(username) && user.getPassword().equals(password)) {
-                        // w komentarzu bo zawadza tylko to powaidomienie i jest brzydkie
-//                        JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome " + user.getLogin());
                         loginSuccessful = true;
                         if (isAdminLogin(user.getLogin())) {
                             accountTypeLoggedIn = true;
-                            //JOptionPane.showMessageDialog(contentPane, "Login successful! Welcome admin " + user.getLogin());
                         }
                         break;
                     }
                 }
                 if (!loginSuccessful) {
-                    // dodalem tytul i jaki jest to typ waidomosci co daje taka fajna ikonke
-                    JOptionPane.showMessageDialog(contentPane, "Nieprawidlowy login lub haslo","blad logowania", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(contentPane,
+                            "Nieprawidłowy login lub hasło",
+                            "Błąd logowania",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -69,14 +112,21 @@ public class LoginForm implements ComponentStyle {
     public boolean getLoginConfirmation() {
         return loginSuccessful;
     }
+
     public JPanel getContentPane() {
         return contentPane;
     }
+
     public boolean isAdminLogin(String login) {
         String[] adminLogins = {"admin1", "admin2", "admin3"};
         return Arrays.asList(adminLogins).contains(login);
     }
-    public boolean getAccountTypeLoggedIn(){
+
+    public boolean getAccountTypeLoggedIn() {
         return accountTypeLoggedIn;
+    }
+
+    public JButton getRegisterButton() {
+        return registerButton;
     }
 }

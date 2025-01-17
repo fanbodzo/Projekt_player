@@ -6,3 +6,4 @@ ID,LOGIN,HASLO,EMAIL,NAME,PREMIUM
 14,fryta123,fiflak,fryta123@gmail.com,Filip,false
 15,julka123,haslojulki123,julka123@gmail.com,Julia,false
 16,xyz,xyz,xyz@gmail.com,Xyz,false
+dbefdbcf-849a-4790-8ce4-39587264ef1b,xyz1,xyz1,xyz1@gmail.com,XYZ1,false

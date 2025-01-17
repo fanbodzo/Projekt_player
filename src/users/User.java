@@ -5,7 +5,6 @@ public class User extends Accounts {
     private String name;
     private String userId;
     private boolean premium;
-    //login i password dziedziczymy z accounts
 
     public User(String userId, String login, String password, String email, String name, boolean premium) {
         super(login, password);
@@ -16,16 +15,28 @@ public class User extends Accounts {
     }
 
     @Override
-    public String getLogin(){
-        //w ten sposob zwracamy login dziedziczony z accounts
+    public String getLogin() {
         return super.getLogin();
     }
+
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return super.getPassword();
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public boolean isPremium() {
+        return premium;
     }
 }
