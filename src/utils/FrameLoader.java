@@ -1,9 +1,7 @@
 package utils;
 
-import gui.LoginForm;
-import gui.MainPageAdmin;
-import gui.MainPageUser;
-import gui.MojeKonto;
+import gui.*;
+import users.Admin;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +13,7 @@ public class FrameLoader {
     private MainPageUser mainPageUser;
     private MainPageAdmin mainPageAdmin;
     private MojeKonto mojeKonto;
+    private AdminAddFilm dodajFilm;
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
@@ -84,11 +83,20 @@ public class FrameLoader {
 
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
+        dodajFilm = new AdminAddFilm();
 
         mainPageAdmin.getWylogujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logout();
+            }
+        });
+        mainPageAdmin.getDodajFilmButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(dodajFilm.getContentPane());
+                frame.revalidate();
+                frame.repaint();
             }
         });
 
