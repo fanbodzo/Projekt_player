@@ -21,8 +21,12 @@ public class UserLoader {
                     continue;
                 }
                 String[] userData = line.split(",");
-                if (userData.length >= 4) {
-                    User newUser = new User(userData[0].trim(), userData[1].trim(), userData[2].trim(), userData[3].trim(), userData[4].trim());
+                if (userData.length >= 5) {
+                    boolean premium = false;
+                    if(userData[5].trim() == null ){
+                        premium = false;
+                    }
+                    User newUser = new User(userData[0].trim(), userData[1].trim(), userData[2].trim(), userData[3].trim(), userData[4].trim() ,premium);
                     users.add(newUser);
                 }
             }

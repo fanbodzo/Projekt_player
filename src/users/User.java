@@ -4,9 +4,9 @@ public class User extends Accounts {
     private String email;
     private String name;
     private String userId;
-    private Boolean premium;
+    private boolean premium;
 
-    public User(String userId, String login, String password, String email, String fullName, Boolean premium) {
+    public User(String userId, String login, String password, String email, String fullName, boolean premium) {
         super(login, password);
         this.email = email;
         this.name = fullName;

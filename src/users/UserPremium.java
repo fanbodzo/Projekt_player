@@ -7,8 +7,9 @@ public class UserPremium extends User {
     private String videoQuality; // Jakość wideo (np. 4K, Full HD, HD)
     private boolean adFree; // Brak reklam
 
-    public UserPremium(String username, String password, String email, Boolean premium, String premiumExpiryDate) {
-        super(username, password, email, premium, premiumExpiryDate);
+    public UserPremium(String name, String password, String email, boolean premium, String premiumExpiryDate) {
+        super(name, password, email, premium, premiumExpiryDate);
+        super(userId,login,password,email,fullName,premium);
         this.premium = premium;
         this.premiumExpiryDate = premiumExpiryDate;
         this.videoQuality = "HD"; // Domyślna jakość
