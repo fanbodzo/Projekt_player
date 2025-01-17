@@ -18,6 +18,9 @@ public class FrameLoader {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
 
+        // Dodanie obsługi przycisku rejestracji
+        loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
+
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
@@ -25,6 +28,24 @@ public class FrameLoader {
         frame.setVisible(true);
 
         loginChecker();
+    }
+
+    private void switchToRegisterForm() {
+        RegisterForm registerForm = new RegisterForm();
+
+        // Obsługa przycisku powrotu
+        registerForm.getBackButton().addActionListener(e -> {
+            loginForm = new LoginForm();
+            loginForm.getRegisterButton().addActionListener(ev -> switchToRegisterForm());
+            frame.setContentPane(loginForm.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+            loginChecker();
+        });
+
+        frame.setContentPane(registerForm.getContentPane());
+        frame.revalidate();
+        frame.repaint();
     }
 
     private void loginChecker() {
