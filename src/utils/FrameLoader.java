@@ -21,7 +21,6 @@ public class FrameLoader {
 
         // Dodanie obsługi przycisku rejestracji
         loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
-
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
@@ -79,11 +78,10 @@ public class FrameLoader {
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
         // obsluga przycisku moje konto
-        mainPageUser.getBibliotekaButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToBiblioteka();
-            }
+        mainPageUser.getMojeKontoButton().addActionListener(e -> {
+            frame.setContentPane(mojeKonto.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
         mainPageUser.getBibliotekaButton().addActionListener(new ActionListener() {
             @Override
