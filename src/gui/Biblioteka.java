@@ -1,5 +1,6 @@
 package gui;
 
+import utils.ComponentStyle;
 import utils.Film; // Import modelu Film z pakietu utils
 import utils.FilmLoader; // Import loadera FilmLoader z pakietu utils
 
@@ -9,17 +10,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
-import utils.Film;
 
-public class Biblioteka extends JFrame {
+public class Biblioteka extends JPanel implements ComponentStyle {
 
-    private JPanel panel1;
+    private JPanel contentPane;
+    private JButton powrotButton; // Dodajemy przycisk "Powrót"
+    // Domyślna ścieżka do folderu z filmami
+    private static final String DOMYSLNY_FOLDER = "Filmy";
 
+    // Konstruktor bez argumentów – używa domyślnej wartości
+    public Biblioteka() {
+        this(DOMYSLNY_FOLDER); // Wywołanie przeciążonego konstruktora z domyślną wartością
+    }
+
+    // Konstruktor z argumentem – umożliwia zmianę ścieżki
     public Biblioteka(String folderFilmy) {
-        setTitle("Biblioteka Filmów");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600); // Rozmiar okna
-
         // Dynamiczne wczytywanie listy filmów z folderu
         List<utils.Film> filmy = FilmLoader.wczytajFilmy(folderFilmy);
 
@@ -66,13 +71,7 @@ public class Biblioteka extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        // Ścieżka do folderu z filmami
-        String folderFilmy = "Filmy";
-        new Biblioteka(folderFilmy);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    public JPanel getContentPane() {
+        return contentPane;
     }
 }

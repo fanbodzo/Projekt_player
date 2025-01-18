@@ -12,6 +12,7 @@ public class FrameLoader {
     private LoginForm loginForm;
     private MainPageUser mainPageUser;
     private MainPageAdmin mainPageAdmin;
+    private Biblioteka biblioteka;
     private MojeKonto mojeKonto;
     private AdminAddFilm dodajFilm;
     public FrameLoader() {
@@ -67,19 +68,31 @@ public class FrameLoader {
         loginTimer.start();
     }
 
+    private void switchToBiblioteka() {
+        frame.setContentPane(biblioteka.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
+
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
-
+        biblioteka = new Biblioteka();
         // obsluga przycisku moje konto
-        mainPageUser.getMojeKontoButton().addActionListener(new ActionListener() {
+        mainPageUser.getBibliotekaButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(mojeKonto.getContentPane());
-                frame.revalidate();
-                frame.repaint();
+                switchToBiblioteka();
             }
         });
+        mainPageUser.getBibliotekaButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToBiblioteka();
+            }
+        });
+
+
 
         // Obsluga przyciskow , wylogowania i powrotu do glownejstrony
         mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
@@ -96,10 +109,13 @@ public class FrameLoader {
             }
         });
 
+
+
         // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
+
     }
 
     private void switchToAdminMainPage() {
@@ -125,6 +141,7 @@ public class FrameLoader {
         frame.revalidate();
         frame.repaint();
     }
+
 
     private void logout() {
 

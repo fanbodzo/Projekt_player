@@ -25,4 +25,8 @@ public class MainPageUser implements ComponentStyle{
     public JPanel getContentPane() {
         return contentPane;
     }
+    public JButton getBibliotekaButton() {
+        return filmyButton;
+    }
+
 }
