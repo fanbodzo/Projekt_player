@@ -74,4 +74,9 @@ public class Biblioteka extends JPanel implements ComponentStyle {
     public JPanel getContentPane() {
         return contentPane;
     }
+
+    // Getter dla przycisku "Powrót"
+    public JButton getPowrotButton() {
+        return powrotButton;
+    }
 }

@@ -89,6 +89,12 @@ public class FrameLoader {
                 switchToBiblioteka();
             }
         });
+        biblioteka.getPowrotButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                backToMainPage(); // Wracamy do strony głównej
+            }
+        });
 
 
 
@@ -106,8 +112,6 @@ public class FrameLoader {
                 backToMainPage();
             }
         });
-
-
 
         // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
