@@ -63,7 +63,6 @@ public class FrameLoader {
                     }else{
                         switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
                     }
-
                 }
             }
         });
@@ -87,9 +86,15 @@ public class FrameLoader {
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
         koszyk = new Koszyk();
+        PremiumKupno premiumKupno = new PremiumKupno();
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
             frame.setContentPane(mojeKonto.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+        });
+        mojeKonto.getPrzejdzDoStrefyPremiumButton().addActionListener(e -> {
+            frame.setContentPane(premiumKupno.getPremiumPanel()); // Przełączamy na widok premium
             frame.revalidate();
             frame.repaint();
         });
