@@ -67,8 +67,8 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             // Dodaj przycisk do panelu
             this.add(button);
         }
-        revalidate();
-        repaint();
+
+        setVisible(true);
     }
 
     /**

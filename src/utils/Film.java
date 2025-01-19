@@ -1,22 +1,24 @@
 package utils;
 
 public class Film {
-    private String nazwa;
+    private String tytul;
     private String sciezkaVideo;
     private String sciezkaIkony;
     private String opis;
+    private String tagi;
 
     // Konstruktor
-    public Film(String nazwa, String sciezkaVideo, String sciezkaIkony, String opis) {
-        this.nazwa = nazwa;
+    public Film(String nazwa, String sciezkaVideo, String sciezkaIkony, String opis, String tagi) {
+        this.tytul = nazwa;
         this.sciezkaVideo = sciezkaVideo;
         this.sciezkaIkony = sciezkaIkony;
         this.opis = opis;
+        this.tagi = tagi;
     }
 
     // Gettery
-    public String getNazwa() {
-        return nazwa;
+    public String getTytul() {
+        return tytul;
     }
 
     public String getSciezkaVideo() {
@@ -30,12 +32,15 @@ public class Film {
     public String getOpis() {
         return opis;
     }
+    public String getTagi() {
+        return tagi;
+    }
 
     // Prosta reprezentacja tekstowa
     @Override
     public String toString() {
         return "Film{" +
-                "nazwa='" + nazwa + '\'' +
+                "nazwa='" + tytul + '\'' +
                 ", sciezkaVideo='" + sciezkaVideo + '\'' +
                 ", sciezkaIkony='" + sciezkaIkony + '\'' +
                 ", opis='" + opis + '\'' +

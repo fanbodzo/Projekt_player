@@ -2,6 +2,7 @@ package utils;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 // Klasa odpowiedzialna za wczytywanie danych z katalogu "Filmy"
@@ -30,12 +31,13 @@ public class FilmLoader {
             String nazwaFilmu = podfolder.getName(); // nazwa filmu to nazwa podfolderu
             String sciezkaIkony = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".png", ".jpg"));
             String sciezkaVideo = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".mp4"));
+            String tagi = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".txt"));
             String opis = wczytajOpis(podfolder);
 
             // Aby dodać film, musi mieć co najmniej ścieżkę ikony
             if (sciezkaIkony != null) {
                 // Tworzymy obiekt reprezentujący film i dodajemy go do listy
-                filmy.add(new Film(nazwaFilmu, sciezkaVideo, sciezkaIkony, opis));
+                filmy.add(new Film(nazwaFilmu, sciezkaVideo, sciezkaIkony, opis ,tagi));
             } else {
                 System.err.println("Podfolder '" + podfolder.getName() + "' nie zawiera pliku .jpg lub .png. Film pominięty.");
             }
@@ -55,7 +57,7 @@ public class FilmLoader {
                 System.out.println("Dodano przycisk dla filmu: " + film.getNazwa());
                 System.out.println("Ścieżka do ikony: " + film.getSciezkaIkony());
             } else {
-                System.err.println("Brak pliku ikony dla filmu: " + film.getNazwa());
+                System.err.println("Brak pliku ikony dla filmu: " + film.getTytul());
             }
         }
 
