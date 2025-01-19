@@ -15,6 +15,7 @@ public class FrameLoader {
     private Biblioteka biblioteka;
     private MojeKonto mojeKonto;
     private AdminAddFilm dodajFilm;
+    private AdminEditFilm editFilm;
     private Koszyk koszyk;
 
     public FrameLoader() {
@@ -138,6 +139,7 @@ public class FrameLoader {
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
         dodajFilm = new AdminAddFilm();
+        editFilm = new AdminEditFilm();
 
         mainPageAdmin.getWylogujButton().addActionListener(new ActionListener() {
             @Override
@@ -153,7 +155,23 @@ public class FrameLoader {
                 frame.repaint();
             }
         });
+        mainPageAdmin.getEdytujFilmButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(editFilm.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
         dodajFilm.getAnulujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(mainPageAdmin.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+        editFilm.getAnulujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setContentPane(mainPageAdmin.getContentPane());
