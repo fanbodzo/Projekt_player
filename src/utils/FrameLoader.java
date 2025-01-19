@@ -63,7 +63,6 @@ public class FrameLoader {
                     }else{
                         switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
                     }
-
                 }
             }
         });
