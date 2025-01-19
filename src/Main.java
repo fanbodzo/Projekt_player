@@ -32,7 +32,7 @@ public class Main {
         Map<Film, ImageIcon> mapowanieIkon = FilmLoader.utworzIkonkiFilmow(filmy);
         System.out.println("Załadowane ikonki:");
         for (Map.Entry<Film, ImageIcon> entry : mapowanieIkon.entrySet()) {
-            System.out.println("Film: " + entry.getKey().getNazwa() + ", Ikona: " + (entry.getValue() != null));
+            System.out.println("Film: " + entry.getKey().getTytul() + ", Ikona: " + (entry.getValue() != null));
         }
 
     }
