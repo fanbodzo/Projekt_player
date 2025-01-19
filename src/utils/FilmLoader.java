@@ -52,6 +52,8 @@ public class FilmLoader {
             if (film.getSciezkaIkony() != null) {
                 ImageIcon ikona = new ImageIcon(film.getSciezkaIkony());
                 mapowanieIkon.put(film, ikona);
+                System.out.println("Dodano przycisk dla filmu: " + film.getNazwa());
+                System.out.println("Ścieżka do ikony: " + film.getSciezkaIkony());
             } else {
                 System.err.println("Brak pliku ikony dla filmu: " + film.getNazwa());
             }
