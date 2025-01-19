@@ -1,86 +1,101 @@
 package utils;
-import utils.Film;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+import javax.swing.*;
+import java.io.*;
+import java.util.*;
+
+// Klasa odpowiedzialna za wczytywanie danych z katalogu "Filmy"
 public class FilmLoader {
 
-    /**
-     * Wczytuje listę filmów (podfoldery w katalogu głównym).
-     * - Szuka plików graficznych (np. okładki: .png, .jpg).
-     * - Opcjonalnie sprawdza, czy w podfolderze znajduje się plik `.mp4` (film).
-     */
-    public static List<utils.Film> wczytajFilmy(String folderGlowny) {
-        List<utils.Film> filmy = new ArrayList<>();
-        File folder = new File(folderGlowny);
+    // Wczytuje filmy z podanego katalogu
+    public static List<Film> wczytajFilmy(String folderFilmy) {
+        List<Film> filmy = new ArrayList<>();
+        File folder = new File(folderFilmy); // użycie dynamicznej ścieżki zamiast DOMYSLNY_FOLDER
 
+        // Sprawdź, czy folder istnieje i jest katalogiem
         if (!folder.exists() || !folder.isDirectory()) {
-            System.out.println("Folder " + folderGlowny + " nie istnieje lub nie jest katalogiem.");
+            System.err.println("Folder '" + folderFilmy + "' nie istnieje lub nie jest katalogiem!");
             return filmy;
         }
 
-        // Przeszukaj podfoldery w katalogu głównym
+        // Znajdź wszystkie podfoldery w katalogu
         File[] podfoldery = folder.listFiles(File::isDirectory);
-        if (podfoldery == null) return filmy;
+        if (podfoldery == null || podfoldery.length == 0) {
+            System.err.println("Folder '" + folderFilmy + "' jest pusty!");
+            return filmy;
+        }
 
+        // Iteruj przez podfoldery reprezentujące filmy
         for (File podfolder : podfoldery) {
-            String nazwaFilmu = podfolder.getName(); // Nazwa filmu to nazwa podfolderu
-            String sciezkaIkony = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".png", ".jpg")); // Znalezienie okładki
-            String sciezkaVideo = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".mp4")); // Znalezienie filmu (jeśli istnieje)
-            String opis = wczytajOpis(podfolder); // Wczytanie opisu filmu
+            String nazwaFilmu = podfolder.getName(); // nazwa filmu to nazwa podfolderu
+            String sciezkaIkony = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".png", ".jpg"));
+            String sciezkaVideo = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".mp4"));
+            String opis = wczytajOpis(podfolder);
 
-            if (sciezkaIkony != null) { // Jeśli okładka istnieje
-                filmy.add(new utils.Film(nazwaFilmu, sciezkaVideo, sciezkaIkony, opis));
+            // Aby dodać film, musi mieć co najmniej ścieżkę ikony
+            if (sciezkaIkony != null) {
+                // Tworzymy obiekt reprezentujący film i dodajemy go do listy
+                filmy.add(new Film(nazwaFilmu, sciezkaVideo, sciezkaIkony, opis));
+            } else {
+                System.err.println("Podfolder '" + podfolder.getName() + "' nie zawiera pliku .jpg lub .png. Film pominięty.");
             }
         }
 
-        return filmy;
+        return filmy; // Zwracamy listę filmów
     }
 
-    /**
-     * Metoda pomocnicza: Znajdź pierwszy plik z podanym rozszerzeniem (np. .png, .jpg, .mp4) w folderze.
-     */
+    // Tworzy mapę z ikonami na podstawie listy filmów
+    public static Map<Film, ImageIcon> utworzIkonkiFilmow(List<Film> filmy) {
+        Map<Film, ImageIcon> mapowanieIkon = new HashMap<>(); // Mapa przechowująca filmy i ich ikonki
+
+        for (Film film : filmy) {
+            if (film.getSciezkaIkony() != null) {
+                ImageIcon ikona = new ImageIcon(film.getSciezkaIkony());
+                mapowanieIkon.put(film, ikona);
+            } else {
+                System.err.println("Brak pliku ikony dla filmu: " + film.getNazwa());
+            }
+        }
+
+        return mapowanieIkon;
+    }
+
+    // Znajduje plik o podanym rozszerzeniu w folderze
     private static String znajdzPlikZRozszerzeniem(File folder, List<String> rozszerzenia) {
-        File[] pliki = folder.listFiles();
+        File[] pliki = folder.listFiles(); // pobieramy wszystkie pliki w folderze
         if (pliki == null) return null;
 
         for (File plik : pliki) {
             for (String rozszerzenie : rozszerzenia) {
                 if (plik.getName().toLowerCase().endsWith(rozszerzenie)) {
-                    return plik.getAbsolutePath();
+                    return plik.getAbsolutePath(); // zwracamy pełną ścieżkę
                 }
             }
         }
-        return null; // Brak pliku z podanym rozszerzeniem
+
+        return null; // jeśli nie znaleziono pliku o podanym rozszerzeniu
     }
 
-    /**
-     * Metoda pomocnicza: Wczytaj opis filmu z pliku "opis.txt".
-     * @param folder Folder, w którym szukamy pliku z opisem.
-     * @return Zawartość pliku z opisem lub domyślny tekst, jeśli pliku nie znaleziono.
-     */
+    // Wczytuje opis filmu z pliku opis.txt
     private static String wczytajOpis(File folder) {
-        File opisFile = new File(folder, "opis.txt");
+        File opisFile = new File(folder, "opis.txt"); // szukamy pliku opis.txt w folderze
+
         if (!opisFile.exists()) {
-            return "Brak opisu dla tego filmu.";
+            return "Brak opisu dla tego filmu."; // brak pliku -> zwracamy domyślny tekst
         }
 
+        // Wczytujemy dane z pliku opis.txt
         StringBuilder opis = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(opisFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                opis.append(line).append(" ");
+            String linia;
+            while ((linia = br.readLine()) != null) {
+                opis.append(linia).append("\n"); // dodajemy każdą linię opisu
             }
         } catch (IOException e) {
-            System.err.println("Błąd podczas wczytywania opisu z pliku: " + opisFile.getPath());
+            System.err.println("Błąd podczas wczytywania opisu: " + e.getMessage());
             return "Nie udało się wczytać opisu.";
         }
 
-        return opis.toString().trim(); // Zwrot zawartości pliku jako opisu
+        return opis.toString(); // zwracamy opis jako String
     }
 }

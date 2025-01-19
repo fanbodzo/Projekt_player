@@ -1,14 +1,12 @@
 package utils;
 
-/**
- * Klasa modelująca dane filmów.
- */
 public class Film {
-    private String nazwa; // Tytuł filmu (nazwa katalogu)
-    private String sciezkaVideo; // Ścieżka do pliku .mp4 (jeśli istnieje)
-    private String sciezkaIkony; // Ścieżka do pliku graficznego (okładki)
+    private String nazwa;
+    private String sciezkaVideo;
+    private String sciezkaIkony;
     private String opis;
 
+    // Konstruktor
     public Film(String nazwa, String sciezkaVideo, String sciezkaIkony, String opis) {
         this.nazwa = nazwa;
         this.sciezkaVideo = sciezkaVideo;
@@ -16,6 +14,7 @@ public class Film {
         this.opis = opis;
     }
 
+    // Gettery
     public String getNazwa() {
         return nazwa;
     }
@@ -31,7 +30,15 @@ public class Film {
     public String getOpis() {
         return opis;
     }
-    public boolean maFilm() {
-        return sciezkaVideo != null && !sciezkaVideo.isBlank();
+
+    // Prosta reprezentacja tekstowa
+    @Override
+    public String toString() {
+        return "Film{" +
+                "nazwa='" + nazwa + '\'' +
+                ", sciezkaVideo='" + sciezkaVideo + '\'' +
+                ", sciezkaIkony='" + sciezkaIkony + '\'' +
+                ", opis='" + opis + '\'' +
+                '}';
     }
 }

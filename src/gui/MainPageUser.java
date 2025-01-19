@@ -28,5 +28,8 @@ public class MainPageUser implements ComponentStyle{
     public JButton getBibliotekaButton() {
         return filmyButton;
     }
+    public JButton getKoszykButton() {
+        return koszykButton;
+    }
 
 }

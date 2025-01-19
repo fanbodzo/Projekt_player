@@ -15,6 +15,7 @@ public class FrameLoader {
     private Biblioteka biblioteka;
     private MojeKonto mojeKonto;
     private AdminAddFilm dodajFilm;
+    private Koszyk koszyk;
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
@@ -73,10 +74,17 @@ public class FrameLoader {
         frame.repaint();
     }
 
+    private void switchToKoszyk() {
+        frame.setContentPane(koszyk.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
+
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
+        koszyk = new Koszyk();
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
             frame.setContentPane(mojeKonto.getContentPane());
@@ -93,6 +101,12 @@ public class FrameLoader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 backToMainPage(); // Wracamy do strony głównej
+            }
+        });
+        mainPageUser.getKoszykButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToKoszyk(); // Wywołanie metody przejścia do koszyka
             }
         });
 

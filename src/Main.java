@@ -4,6 +4,7 @@ import gui.*;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,6 +18,22 @@ public class Main {
 
         // uruchamianie login forma czyli tego gui co zrobilem
        FrameLoader frameLoader = new FrameLoader();
+
+        // Wczytaj filmy z katalogu "Filmy"
+        String folderFilmy = "Filmy";
+        List<Film> filmy = FilmLoader.wczytajFilmy(folderFilmy);
+
+        // Sprawdź, czy wczytano jakiekolwiek filmy
+        if (filmy.isEmpty()) {
+            System.err.println("Nie znaleziono żadnych filmów w folderze: " + folderFilmy);
+            return;
+        }
+        // Spróbuj załadować ikony
+        Map<Film, ImageIcon> mapowanieIkon = FilmLoader.utworzIkonkiFilmow(filmy);
+        System.out.println("Załadowane ikonki:");
+        for (Map.Entry<Film, ImageIcon> entry : mapowanieIkon.entrySet()) {
+            System.out.println("Film: " + entry.getKey().getNazwa() + ", Ikona: " + (entry.getValue() != null));
+        }
 
     }
 }

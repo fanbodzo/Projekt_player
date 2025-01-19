@@ -12,12 +12,21 @@ import java.io.File;
 import java.util.List;
 
 public class Biblioteka extends JPanel implements ComponentStyle {
-
     private JPanel contentPane;
     private JButton powrotButton; // Dodajemy przycisk "Powrót"
     // Domyślna ścieżka do folderu z filmami
     private static final String DOMYSLNY_FOLDER = "Filmy";
 
+    private ImageIcon scaleIcon(String iconPath, int width, int height) {
+        ImageIcon originalIcon = new ImageIcon(iconPath);
+        if (originalIcon.getIconWidth() > 0 && originalIcon.getIconHeight() > 0) { // Pewność, że ikona istnieje
+            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        } else {
+            System.err.println("Nie udało się załadować ikony: " + iconPath);
+            return null; // W razie problemów zwracamy null
+        }
+    }
     // Konstruktor bez argumentów – używa domyślnej wartości
     public Biblioteka() {
         this(DOMYSLNY_FOLDER); // Wywołanie przeciążonego konstruktora z domyślną wartością
@@ -32,28 +41,31 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         int columns = 4; // Liczba kolumn
         setLayout(new GridLayout(0, columns, 10, 10)); // rows = 0 -> automatyczne dostosowanie liczby wierszy
 
-        // Dodawanie przycisków dla każdego filmu
         for (Film film : filmy) {
             JButton button = new JButton(film.getNazwa());
-            button.setIcon(new ImageIcon(film.getSciezkaIkony())); // Dodanie ikony filmu
-            button.setVerticalTextPosition(SwingConstants.BOTTOM);
-            button.setHorizontalTextPosition(SwingConstants.CENTER);
 
-            // Obsługa kliknięcia w przycisk
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (film.maFilm()) {
-                        // Jeśli film ma plik MP4, odtwórz go
-                        odtworzFilm(film.getSciezkaVideo());
-                    } else {
-                        // Wyświetl komunikat, jeśli brak filmu
-                        JOptionPane.showMessageDialog(Biblioteka.this, "Ten film nie posiada wideo!");
-                    }
+            // Ścieżka do ikony
+            String sciezkaIkony = film.getSciezkaIkony();
+
+            if (sciezkaIkony != null && !sciezkaIkony.isEmpty()) {
+                ImageIcon scaledIcon = scaleIcon(sciezkaIkony, 120, 120); // Skalowanie ikony
+                if (scaledIcon != null) {
+                    button.setIcon(scaledIcon); // Ustaw ikonę tylko jeśli się załadowała
+                } else {
+                    System.err.println("Nie udało się załadować poprawnej ikony dla: " + film.getNazwa());
+                    button.setIcon(scaleIcon("sciezka_do_placeholdera/brak_ikony.png", 120, 120)); // Placeholder
                 }
-            });
+            } else {
+                System.err.println("Ścieżka ikony jest pusta dla: " + film.getNazwa());
+                button.setIcon(scaleIcon("sciezka_do_placeholdera/brak_ikony.png", 120, 120));
+            }
 
-            add(button); // Dodanie przycisku do GUI
+            // Ustawienia tekstu i layoutu przycisku
+            button.setHorizontalTextPosition(SwingConstants.CENTER); // Wyśrodkowanie tekstu
+            button.setVerticalTextPosition(SwingConstants.BOTTOM);   // Tekst pod ikoną
+
+            // Dodaj przycisk do panelu
+            this.add(button);
         }
 
         setVisible(true);
