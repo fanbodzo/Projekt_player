@@ -97,7 +97,9 @@ public class AdminAddFilm implements ComponentStyle {
             writer.write(content);
         }
     }
-
+    public JButton getAnulujButton() {
+        return anulujButton;
+    }
 
 
     public JPanel getContentPane() {

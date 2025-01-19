@@ -7,10 +7,14 @@ public class MainPageAdmin implements ComponentStyle{
     private JPanel contentPane;
     private JButton wylogujButton;
     private JButton dodajFilmButton;
+    private JButton edytujFilmButton;
+    private JButton wysweitlLogiButton;
 
     public MainPageAdmin() {
         setPrimaryButtonStyle(wylogujButton);
         setPrimaryButtonStyle(dodajFilmButton);
+        setPrimaryButtonStyle(edytujFilmButton);
+        setPrimaryButtonStyle(wysweitlLogiButton);
         setBackgroundDefault(contentPane);
     }
 
@@ -21,4 +25,5 @@ public class MainPageAdmin implements ComponentStyle{
         return contentPane;
     }
     public JButton getDodajFilmButton() {return dodajFilmButton;}
+    public JButton getEdytujFilmButton() {return edytujFilmButton;}
 }

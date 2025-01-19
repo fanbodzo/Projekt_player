@@ -16,6 +16,7 @@ public class FrameLoader {
     private MojeKonto mojeKonto;
     private AdminAddFilm dodajFilm;
     private Koszyk koszyk;
+
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
@@ -148,6 +149,14 @@ public class FrameLoader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setContentPane(dodajFilm.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+        dodajFilm.getAnulujButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(mainPageAdmin.getContentPane());
                 frame.revalidate();
                 frame.repaint();
             }
