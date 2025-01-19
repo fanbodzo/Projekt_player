@@ -24,9 +24,8 @@ public interface ComponentStyle {
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Kolor tla przycisku w zależności od stanu noramlny czy klikniety ale mzona dac na hoover
-                //do przekmiineia
-                Color buttonColor = button.getModel().isPressed() ? OnPressColor : ButtonDefaultColor;
+                // Użycie przekazanego koloru dla tła
+                Color buttonColor = button.getModel().isPressed() ? OnPressColor : backgroundColor;
 
                 // Tworzenie zaokrąglonego tła przycisku
                 int arcSize = 30; // Promień zaokrąglenia
@@ -44,11 +43,11 @@ public interface ComponentStyle {
             }
         });
 
-        // Dodanie efektu klikniecia naprzycisk
+        // Dodanie efektu odświeżania podczas najeżdżania myszką
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.repaint(); // odwiezenie do zaminy koloru
+                button.repaint();
             }
 
             @Override
@@ -56,8 +55,8 @@ public interface ComponentStyle {
                 button.repaint();
             }
         });
-
     }
+
 
     // metoda do obramowan tez do ulatwienia zycia ale nie dziala dobrze wiec
     // to sei zrobi pozniej jzezli siebdzie bardzo chiualo komus bo narazie to zmienia button na kwadrat
