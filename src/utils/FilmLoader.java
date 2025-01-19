@@ -56,6 +56,7 @@ public class FilmLoader {
                 mapowanieIkon.put(film, ikona);
             } else {
                 System.err.println("Brak pliku ikony dla filmu: " + film.getTytul());
+
             }
         }
 
