@@ -29,8 +29,8 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         // Inicjalizacja panelu na filmy
         filmy = new JPanel();
         setBackgroundDefault(filmy);
-        int columns = 4; // Liczba kolumn w siatce
-        filmy.setLayout(new GridLayout(0, columns, 10, 10)); // Automatyczna liczba wierszy, odstępy 10px
+        int columns = 8; // Liczba kolumn w siatce
+        filmy.setLayout(new GridLayout(2, columns, 10, 10)); // Automatyczna liczba wierszy, odstępy 10px
 
         // Inicjalizacja przycisku powrotu
         powrotButton = new JButton("Powrót");
