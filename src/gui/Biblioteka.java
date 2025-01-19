@@ -130,6 +130,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                 "Tytuł: " + film.getTytul() + "\nOpis: " + film.getOpis() + "\nTagi: " + film.getTagi(),
                 "Szczegóły filmu",
                 JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     public JPanel getContentPane() {
