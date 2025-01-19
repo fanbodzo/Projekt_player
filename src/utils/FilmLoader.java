@@ -42,7 +42,6 @@ public class FilmLoader {
                 System.err.println("Podfolder '" + podfolder.getName() + "' nie zawiera pliku .jpg lub .png. Film pominięty.");
             }
         }
-
         return filmy; // Zwracamy listę filmów
     }
 
