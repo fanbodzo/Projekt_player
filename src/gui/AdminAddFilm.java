@@ -25,11 +25,11 @@ public class AdminAddFilm implements ComponentStyle {
         setPrimaryButtonStyle(anulujButton);
         setButtonColor(dodajOkladkeButton,new Color(230, 110, 61));
 
-        dodajOkladke();
+        dodawanieFilmuHandler();
 
     }
 
-    public void dodajOkladke(){
+    public void dodawanieFilmuHandler(){
         final File[] selectedFile = {null};
         dodajOkladkeButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
