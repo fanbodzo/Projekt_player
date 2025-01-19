@@ -138,5 +138,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
 
     public JButton getPowrotButton() {
         return powrotButton;
+
     }
 }
