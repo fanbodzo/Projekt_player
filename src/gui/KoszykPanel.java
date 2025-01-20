@@ -1,12 +1,13 @@
 package gui;
 
+import utils.ComponentStyle;
 import utils.Koszyk;
 import utils.Film;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class KoszykPanel extends JPanel {
+public class KoszykPanel extends JPanel{
     private JPanel contentPane; // Dodane brakujące pole
     private Koszyk koszyk;
     private JPanel filmyPanel;
