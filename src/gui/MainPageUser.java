@@ -9,12 +9,14 @@ public class MainPageUser implements ComponentStyle{
     private JButton filmyButton;
     private JButton koszykButton;
     private JButton mojeKontoButton;
+    private JPanel filmyPanel;
 
     public MainPageUser() {
         setPrimaryButtonStyle(filmyButton);
         setPrimaryButtonStyle(koszykButton);
         setPrimaryButtonStyle(mojeKontoButton);
         setBackgroundDefault(contentPane);
+        setBackgroundDefault(filmyPanel);
 
     }
     // przekazuje przycisk co jest chyba efektywniejsze
@@ -30,5 +32,6 @@ public class MainPageUser implements ComponentStyle{
     public JButton getKoszykButton() {
         return koszykButton;
     }
+    public JPanel getFilmyPanel() {return filmyPanel;}
 
 }

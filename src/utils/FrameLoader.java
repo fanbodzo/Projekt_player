@@ -19,6 +19,7 @@ public class FrameLoader {
     private Koszyk koszyk;
     private OrderCheckout orderCheckout;
 
+
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
@@ -84,11 +85,14 @@ public class FrameLoader {
     }
     //obsluga uzytkownika
     private void switchToUserMainPage() {
+
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
         koszyk = new Koszyk();
         orderCheckout = new OrderCheckout();
+
+
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
             frame.setContentPane(mojeKonto.getContentPane());
