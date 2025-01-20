@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.List;
 
 public class KoszykPanel extends JPanel {
+    private JPanel contentPane;
     private Koszyk koszyk; // Obiekt Koszyk
     private JPanel panelFilmow;
     private JButton kupButton;
