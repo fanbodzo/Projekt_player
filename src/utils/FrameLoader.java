@@ -19,6 +19,7 @@ public class FrameLoader {
     private Koszyk koszyk;
     private OrderCheckout orderCheckout;
     private PremiumStrefa premiumStrefa;
+    private KupPremiumStrefa kupPremiumStrefa;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -81,6 +82,12 @@ public class FrameLoader {
         frame.repaint();
     }
 
+    private void switchToKupPremiumStrefa() {
+        frame.setContentPane(kupPremiumStrefa.getKupPremiumPanel());
+        frame.revalidate();
+        frame.repaint();
+    }
+
     private void switchToKoszyk() {
         KoszykPanel koszykPanel = new KoszykPanel(koszyk, frame, mainPageUser); // Przekazanie MainPageUser
         frame.setContentPane(koszykPanel.getContentPane());
@@ -96,6 +103,7 @@ public class FrameLoader {
         koszyk = new Koszyk();
         orderCheckout = new OrderCheckout();
         premiumStrefa = new PremiumStrefa();
+        kupPremiumStrefa = new KupPremiumStrefa();
 
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
@@ -146,6 +154,13 @@ public class FrameLoader {
             }
         });
 
+        premiumStrefa.getKupPremiumButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToKupPremiumStrefa(); // przejscie do strony kupna premium
+            }
+        });
+
         mojeKonto.getWylogujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -159,6 +174,7 @@ public class FrameLoader {
                 backToMainPage();
             }
         });
+
 
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
