@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterForm implements ComponentStyle {
     private JPanel contentPane;
@@ -112,8 +113,41 @@ public class RegisterForm implements ComponentStyle {
         return true;
     }
 
+    // Metoda do znajdowania następnego dostępnego ID
+    private String getNextAvailableId() {
+        List<Integer> existingIds = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("data/users.txt"))) {
+            String line;
+            boolean isFirstLine = true;
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+                String[] parts = line.split(",");
+                try {
+                    // Próbujemy przekonwertować ID na liczbę
+                    int id = Integer.parseInt(parts[0].trim());
+                    existingIds.add(id);
+                } catch (NumberFormatException ignored) {
+                    // Ignorujemy ID, które nie są liczbami (np. UUID)
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "0"; // Domyślne ID w przypadku błędu
+        }
+
+        // Znajdź najwyższe istniejące ID
+        int nextId = 0;
+        if (!existingIds.isEmpty()) {
+            nextId = existingIds.stream().mapToInt(Integer::intValue).max().orElse(-1) + 1;
+        }
+        return String.valueOf(nextId);
+    }
+
     private void registerUser() {
-        String userId = UUID.randomUUID().toString();
+        String userId = getNextAvailableId();
         User newUser = new User(
                 userId,
                 loginField.getText().trim(),
