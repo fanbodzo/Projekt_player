@@ -120,7 +120,7 @@ public class FrameLoader {
         koszyk.getWsteczButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(biblioteka.getContentPane());
+                frame.setContentPane(mainPageUser.getContentPane());
                 frame.revalidate();
                 frame.repaint();
             }
