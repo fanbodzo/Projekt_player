@@ -18,6 +18,7 @@ public class FrameLoader {
     private AdminEditFilm editFilm;
     private Koszyk koszyk;
     private OrderCheckout orderCheckout;
+    private PremiumStrefa premiumStrefa;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -74,6 +75,11 @@ public class FrameLoader {
         frame.revalidate();
         frame.repaint();
     }
+    private void switchToPremiumStrefa() {
+        frame.setContentPane(premiumStrefa.getPremiumPanel());
+        frame.revalidate();
+        frame.repaint();
+    }
 
     private void switchToKoszyk() {
         KoszykPanel koszykPanel = new KoszykPanel(koszyk, frame, mainPageUser); // Przekazanie MainPageUser
@@ -89,6 +95,7 @@ public class FrameLoader {
         biblioteka = new Biblioteka();
         koszyk = new Koszyk();
         orderCheckout = new OrderCheckout();
+        premiumStrefa = new PremiumStrefa();
 
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
@@ -130,6 +137,12 @@ public class FrameLoader {
                 frame.setContentPane(orderCheckout.getContentPane());
                 frame.revalidate();
                 frame.repaint();
+            }
+        });
+        mojeKonto.getPremiumButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToPremiumStrefa(); // przejscie do strony z info o premium
             }
         });
 

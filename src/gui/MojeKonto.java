@@ -9,11 +9,13 @@ public class MojeKonto implements ComponentStyle {
     private JButton mojeDaneButton;
     private JButton powrotButton;
     private JButton wylogujButton;
+    private JButton premiumButton;
 
     public MojeKonto() {
         setPrimaryButtonStyle(mojeDaneButton);
         setPrimaryButtonStyle(powrotButton);
         setPrimaryButtonStyle(wylogujButton);
+        setPrimaryButtonStyle(premiumButton);
         setBackgroundDefault(contentPane);
     }
 
@@ -25,6 +27,7 @@ public class MojeKonto implements ComponentStyle {
     public JButton getPowrotButton() {
         return powrotButton;
     }
+    public JButton getPremiumButton() {return premiumButton;}
 
 
     public JPanel getContentPane() {
