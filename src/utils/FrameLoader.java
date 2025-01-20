@@ -1,7 +1,6 @@
 package utils;
 
 import gui.*;
-import utils.Koszyk;
 import users.Admin;
 
 import javax.swing.*;
@@ -62,7 +61,7 @@ public class FrameLoader {
                     if(loginForm.getAccountTypeLoggedIn()){
                         switchToAdminMainPage(); // admin main page
                     } else {
-                        switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
+                        switchToUserMainPage(); // otwiera glowna strone dla uzytkownika po zalogowaniu
                     }
                 }
             }
@@ -77,8 +76,8 @@ public class FrameLoader {
     }
 
     private void switchToKoszyk() {
-        KoszykPanel koszykPanel = new KoszykPanel(koszyk);
-        frame.setContentPane(koszykPanel); // Poprawione wywołanie
+        KoszykPanel koszykPanel = new KoszykPanel(koszyk, frame, mainPageUser); // Przekazanie MainPageUser
+        frame.setContentPane(koszykPanel.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
@@ -115,6 +114,7 @@ public class FrameLoader {
                 switchToKoszyk(); // Wywołanie metody przejścia do koszyka
             }
         });
+
         koszyk.getWsteczButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,7 +133,7 @@ public class FrameLoader {
             }
         });
 
-        mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
+        mojeKonto.getWylogujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logout();

@@ -17,7 +17,7 @@ public class MojeKonto implements ComponentStyle {
         setBackgroundDefault(contentPane);
     }
 
-    public JButton getWyologujButton() {
+    public JButton getWylogujButton() {
         return wylogujButton;
     }
     // do przemyslenia czy to ma sens bo ten powrot bedziemy stosowac wiele razy jeszcze

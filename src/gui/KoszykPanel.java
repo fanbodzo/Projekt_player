@@ -3,26 +3,34 @@ package gui;
 import utils.ComponentStyle;
 import utils.Koszyk;
 import utils.Film;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class KoszykPanel extends JPanel{
-    private JPanel contentPane; // Dodane brakujące pole
+public class KoszykPanel extends JPanel {
+    private JPanel contentPane;
     private Koszyk koszyk;
     private JPanel filmyPanel;
     private JButton kupButton;
     private JButton wsteczButton;
     private JScrollPane scrollPane;
+    private ComponentStyle componentStyle = new ComponentStyle() {}; // Instancja ComponentStyle
+    private JFrame parentFrame; // Dodajemy parentFrame, by przejść do poprzedniego ekranu
+    private MainPageUser mainPageUserPanel; // Panel główny użytkownika (MainPageUser)
 
-    public KoszykPanel(Koszyk koszyk) {
+    public KoszykPanel(Koszyk koszyk, JFrame parentFrame, MainPageUser mainPageUserPanel) {
         this.koszyk = koszyk;
-        contentPane = new JPanel(); // Inicjalizacja contentPane
+        this.parentFrame = parentFrame;
+        this.mainPageUserPanel = mainPageUserPanel;
+
+        contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPane.setBackground(new Color(40, 40, 40)); // Ciemne tło dla całego panelu
 
         setLayout(new BorderLayout());
-        add(contentPane); // Dodanie contentPane do głównego panelu
+        add(contentPane);
 
         initComponents();
         layoutComponents();
@@ -33,7 +41,7 @@ public class KoszykPanel extends JPanel{
         // Panel na filmy z przewijaniem
         filmyPanel = new JPanel();
         filmyPanel.setLayout(new BoxLayout(filmyPanel, BoxLayout.Y_AXIS));
-        filmyPanel.setBackground(Color.WHITE);
+        filmyPanel.setBackground(new Color(40, 40, 40)); // Tło panelu filmów na ciemno
 
         // ScrollPane dla filmów
         scrollPane = new JScrollPane(filmyPanel);
@@ -46,12 +54,35 @@ public class KoszykPanel extends JPanel{
 
         wsteczButton = new JButton("Wstecz");
         wsteczButton.setPreferredSize(new Dimension(150, 30));
+
+        // Ustawienia stylu przycisków
+        componentStyle.setPrimaryButtonStyle(kupButton);
+        componentStyle.setPrimaryButtonStyle(wsteczButton);
+
+        // Akcja dla przycisku „Wstecz”
+        wsteczButton.addActionListener(e -> {
+            // Przechodzi do panelu głównego (MainPageUser)
+            parentFrame.setContentPane(mainPageUserPanel.getContentPane()); // Zmieniamy na MainPageUser
+            parentFrame.revalidate();
+            parentFrame.repaint();
+        });
+
+        // Akcja dla przycisku „Kup”
+        kupButton.addActionListener(e -> {
+            if (koszyk.getFilmy().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Koszyk jest pusty!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Przejdź do realizacji zakupu (możesz dodać logikę zakupu tutaj)
+                JOptionPane.showMessageDialog(this, "Zakup dokonany!", "Sukces", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 
     private void layoutComponents() {
         // Panel na przyciski
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBackground(new Color(40, 40, 40)); // Zmieniamy tło na ciemniejsze
         buttonPanel.add(kupButton);
         buttonPanel.add(wsteczButton);
 
