@@ -2,9 +2,9 @@ ID,LOGIN,HASLO,EMAIL,NAME,PREMIUM
 0,admin1,xyz,admin1@gmail.com,adminek1,false
 1,admin2,xyz,admin2@gmail.com,adminek2,false
 2,admin3,xyz,admin3@gmail.com,adminek3,false
-13,wika123,oghaslo123,wika123@gmail.com,Wiktoria,false
-14,fryta123,fiflak,fryta123@gmail.com,Filip,false
-15,julka123,haslojulki123,julka123@gmail.com,Julia,false
-16,xyz,xyz,xyz@gmail.com,Xyz,false
-17,java,java123,java@gmail.com,Java,false
-18,java2,java1234,java2@gmail.com,Java2,false
+11,wika123,oghaslo123,wika123@gmail.com,Wiktoria,false
+12,fryta123,fiflak,fryta123@gmail.com,Filip,false
+13,julka123,haslojulki123,julka123@gmail.com,Julia,false
+14,xyz,xyz,xyz@gmail.com,Xyz,false
+15,java,java123,java@gmail.com,Java,false
+16,java2,java1234,java2@gmail.com,Java2,false

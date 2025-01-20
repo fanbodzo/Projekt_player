@@ -1,13 +1,18 @@
 package gui;
 
+import utils.ComponentStyle;
 import utils.Film;
 import utils.Koszyk;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Biblioteka extends JPanel {
+public class Biblioteka extends JPanel implements ComponentStyle {
     private JPanel contentPane;
     private JButton powrotButton;
     private JPanel filmy;
@@ -22,15 +27,19 @@ public class Biblioteka extends JPanel {
         // Inicjalizacja głównego panelu (contentPane)
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
+        setBackgroundDefault(contentPane);
+
+        // Inicjalizacja panelu na filmy
         filmy = new JPanel();
+        setBackgroundDefault(filmy);
         filmy.setLayout(new GridLayout(2, 8, 10, 10)); // Automatyczna liczba wierszy, odstępy 10px
 
         // Inicjalizacja przycisku powrotu
         powrotButton = new JButton("Powrót");
-        powrotButton.setBackground(new Color(199, 61, 230, 98));
+        setPrimaryButtonStyle(powrotButton);
 
         // Inicjalizacja koszyka
-        koszyk = new Koszyk(); // Tutaj tworzysz nowy obiekt Koszyk
+        koszyk = new Koszyk();
 
         // Pobieranie i dodawanie filmów
         List<Film> listaFilmow = wczytajFilmy(folderFilmy);
@@ -52,15 +61,18 @@ public class Biblioteka extends JPanel {
             button.addActionListener(e -> wyswietlSzczegolyFilmu(film));
 
             // Przyciski "Dodaj do koszyka"
-            JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka");
+            JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
+            setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
             dodajDoKoszykaButton.addActionListener(e -> {
-                koszyk.dodajFilm(film); // Wywołanie metody dodajFilm z klasy Koszyk
+                koszyk.dodajFilm(film);
                 JOptionPane.showMessageDialog(this, film.getTytul() + " dodany do koszyka!");
             });
 
             // Panel z filmem i przyciskiem
             JPanel filmPanel = new JPanel();
+            setBackgroundDefault(filmPanel);
             filmPanel.setLayout(new BorderLayout());
+            setButtonColor(button, new Color(199, 61, 230, 98));
             filmPanel.add(button, BorderLayout.NORTH);
             filmPanel.add(dodajDoKoszykaButton, BorderLayout.SOUTH);
 
@@ -78,12 +90,56 @@ public class Biblioteka extends JPanel {
     }
 
     private List<Film> wczytajFilmy(String folderFilmy) {
-        // Zwracamy przykładową listę filmów - tutaj musisz dodać kod do wczytywania filmów z folderu
-        return List.of(
-                new Film("Film 1", "sciezka_video_1.mp4", "sciezka_ikony_1.png", "Opis 1", "Tagi 1", 19.99),
-                new Film("Film 2", "sciezka_video_2.mp4", "sciezka_ikony_2.png", "Opis 2", "Tagi 2", 24.99),
-                new Film("Film 3", "sciezka_video_3.mp4", "sciezka_ikony_3.png", "Opis 3", "Tagi 3", 14.99)
-        );
+        List<Film> filmy = new ArrayList<>();
+        File folder = new File(folderFilmy);
+
+        if (!folder.exists() || !folder.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "Folder z filmami nie istnieje!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            return filmy;
+        }
+
+        for (File podfolder : folder.listFiles()) {
+            if (podfolder.isDirectory()) {
+                try {
+                    String tytul = new String(Files.readAllBytes(new File(podfolder, "tytul.txt").toPath())).trim();
+                    String opis = new String(Files.readAllBytes(new File(podfolder, "opis.txt").toPath())).trim();
+                    String tagi = new String(Files.readAllBytes(new File(podfolder, "tagi.txt").toPath())).trim();
+                    File ikona = znajdzPlikIkony(podfolder);
+                    String sciezkaWideo = podfolder.getAbsolutePath() + "/film.mp4";
+
+                    // Próba odczytania ceny, jeśli plik istnieje
+                    double cena = 0.0;
+                    File cenaPlik = new File(podfolder, "cena.txt");
+                    if (cenaPlik.exists()) {
+                        try {
+                            cena = Double.parseDouble(new String(Files.readAllBytes(cenaPlik.toPath())).trim());
+                        } catch (NumberFormatException e) {
+                            System.err.println("Nieprawidłowy format ceny w folderze: " + podfolder.getName());
+                            // Używamy domyślnej ceny 0.0
+                        }
+                    }
+
+                    if (ikona != null) {
+                        filmy.add(new Film(tytul, sciezkaWideo, ikona.getAbsolutePath(), opis, tagi, cena));
+                    } else {
+                        System.err.println("Brak pliku ikony w folderze: " + podfolder.getName());
+                    }
+                } catch (IOException e) {
+                    System.err.println("Błąd odczytu danych z folderu: " + podfolder.getName());
+                    e.printStackTrace();
+                }
+            }
+        }
+        return filmy;
+    }
+
+    private File znajdzPlikIkony(File folder) {
+        for (File plik : folder.listFiles()) {
+            if (plik.isFile() && (plik.getName().endsWith(".png") || plik.getName().endsWith(".jpg") || plik.getName().endsWith(".jpeg"))) {
+                return plik;
+            }
+        }
+        return null;
     }
 
     private ImageIcon scaleIcon(String iconPath, int width, int height) {
@@ -101,7 +157,10 @@ public class Biblioteka extends JPanel {
 
     private void wyswietlSzczegolyFilmu(Film film) {
         JOptionPane.showMessageDialog(this,
-                "Tytuł: " + film.getTytul() + "\nOpis: " + film.getOpis() + "\nTagi: " + film.getTagi() + "\nCena: " + film.getCena() + " PLN",
+                "Tytuł: " + film.getTytul() + "\n" +
+                        "Opis: " + film.getOpis() + "\n" +
+                        "Tagi: " + film.getTagi() + "\n" +
+                        "Cena: " + String.format("%.2f PLN", film.getCena()),
                 "Szczegóły filmu",
                 JOptionPane.INFORMATION_MESSAGE);
     }
