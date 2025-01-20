@@ -17,6 +17,7 @@ public class FrameLoader {
     private AdminAddFilm dodajFilm;
     private AdminEditFilm editFilm;
     private Koszyk koszyk;
+    private OrderCheckout orderCheckout;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -81,12 +82,13 @@ public class FrameLoader {
         frame.revalidate();
         frame.repaint();
     }
-
+    //obsluga uzytkownika
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
         koszyk = new Koszyk();
+        orderCheckout = new OrderCheckout();
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
             frame.setContentPane(mojeKonto.getContentPane());
@@ -111,8 +113,23 @@ public class FrameLoader {
                 switchToKoszyk(); // Wywołanie metody przejścia do koszyka
             }
         });
+        koszyk.getWsteczButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(biblioteka.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
-
+        koszyk.getKupButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(orderCheckout.getContentPane());
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
         // Obsluga przyciskow , wylogowania i powrotu do glownejstrony
         mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
@@ -135,7 +152,7 @@ public class FrameLoader {
         frame.repaint();
 
     }
-
+    //obsluga admina
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
         dodajFilm = new AdminAddFilm();
