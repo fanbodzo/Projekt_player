@@ -1,6 +1,7 @@
 package utils;
 
 import gui.*;
+import utils.Koszyk;
 import users.Admin;
 
 import javax.swing.*;
@@ -18,7 +19,6 @@ public class FrameLoader {
     private AdminEditFilm editFilm;
     private Koszyk koszyk;
     private OrderCheckout orderCheckout;
-
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -54,7 +54,6 @@ public class FrameLoader {
     }
 
     private void loginChecker() {
-        // bez watku bo byl useless
         Timer loginTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,10 +61,9 @@ public class FrameLoader {
                     ((Timer) e.getSource()).stop();  // Zatrzymaj timer, gdy użytkownik się zaloguje
                     if(loginForm.getAccountTypeLoggedIn()){
                         switchToAdminMainPage(); // admin main page
-                    }else{
+                    } else {
                         switchToUserMainPage(); // otwiera glowna strone dl auzytkownika po zalogowaniu
                     }
-
                 }
             }
         });
@@ -79,19 +77,19 @@ public class FrameLoader {
     }
 
     private void switchToKoszyk() {
-        frame.setContentPane(koszyk.getContentPane());
+        KoszykPanel koszykPanel = new KoszykPanel(koszyk);
+        frame.setContentPane(koszykPanel); // Poprawione wywołanie
         frame.revalidate();
         frame.repaint();
     }
-    //obsluga uzytkownika
-    private void switchToUserMainPage() {
 
+    // obsługa uzytkownika
+    private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka();
         koszyk = new Koszyk();
         orderCheckout = new OrderCheckout();
-
 
         // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
@@ -135,7 +133,6 @@ public class FrameLoader {
             }
         });
 
-        // Obsluga przyciskow , wylogowania i powrotu do glownejstrony
         mojeKonto.getWyologujButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,13 +147,12 @@ public class FrameLoader {
             }
         });
 
-        // pwodrot na strone glowna
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
-
     }
-    //obsluga admina
+
+    // obsługa admina
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
         dodajFilm = new AdminAddFilm();
@@ -206,22 +202,18 @@ public class FrameLoader {
         frame.repaint();
     }
 
-
     private void logout() {
-
         loginForm = new LoginForm();
         frame.setContentPane(loginForm.getContentPane());
         frame.revalidate();
         frame.repaint();
 
-        //znowu wlaczamy logowanie jak sie wylogowalismy
         loginChecker();
     }
 
-    private void backToMainPage(){
+    private void backToMainPage() {
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
-
 }
