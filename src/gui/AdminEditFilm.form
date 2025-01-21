@@ -34,7 +34,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="69e81" class="javax.swing.JLabel">
+      <component id="69e81" class="javax.swing.JLabel" binding="tytulLabel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -42,7 +42,7 @@
           <text value="Edytuj Tytul"/>
         </properties>
       </component>
-      <component id="24d84" class="javax.swing.JLabel">
+      <component id="24d84" class="javax.swing.JLabel" binding="opisLabel">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -66,7 +66,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="bdf21" class="javax.swing.JLabel">
+      <component id="bdf21" class="javax.swing.JLabel" binding="tagiLabel">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

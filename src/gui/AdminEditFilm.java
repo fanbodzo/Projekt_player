@@ -19,6 +19,9 @@ public class AdminEditFilm implements ComponentStyle {
     private JButton zapiszButton;
     private JButton anulujButton;
     private JButton edytujOkladkeButton;
+    private JLabel tytulLabel;
+    private JLabel opisLabel;
+    private JLabel tagiLabel;
 
     public AdminEditFilm() {
         setBackgroundDefault(contentPane);
@@ -26,6 +29,12 @@ public class AdminEditFilm implements ComponentStyle {
         setPrimaryButtonStyle(anulujButton);
         setPrimaryButtonStyle(zapiszButton);
         setButtonColor(edytujOkladkeButton,new Color(230, 110, 61));
+        setTextFieldStyle(titleField);
+        setTextFieldStyle(descriptionField);
+        setTextFieldStyle(tagsField);
+        setLabelStyle(tagiLabel);
+        setLabelStyle(opisLabel);
+        setLabelStyle(tytulLabel);
 
         edytowanieFilmuHandler();
     }

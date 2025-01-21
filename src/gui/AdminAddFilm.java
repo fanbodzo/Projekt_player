@@ -18,13 +18,21 @@ public class AdminAddFilm implements ComponentStyle {
     private JButton anulujButton;
     private JTextField tagsField;
     private JButton dodajOkladkeButton;
+    private JLabel tagiLabel;
+    private JLabel opisLabel;
+    private JLabel tytulLabel;
 
     public AdminAddFilm() {
         setBackgroundDefault(contentPane);
         setPrimaryButtonStyle(dodajButton);
         setPrimaryButtonStyle(anulujButton);
         setButtonColor(dodajOkladkeButton,new Color(230, 110, 61));
-
+        setTextFieldStyle(titleField);
+        setTextFieldStyle(descriptionField);
+        setTextFieldStyle(tagsField);
+        setLabelStyle(tagiLabel);
+        setLabelStyle(opisLabel);
+        setLabelStyle(tytulLabel);
         dodawanieFilmuHandler();
 
     }

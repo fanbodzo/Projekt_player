@@ -1,11 +1,13 @@
 package gui;
 
+import utils.ComponentStyle;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
-public class KupPremiumStrefa {
+public class KupPremiumStrefa implements ComponentStyle {
     private JPanel kupPremiumPanel;
     private JTextField eMailTextField;
     private JTextField numerKartyTextField;
@@ -23,9 +25,30 @@ public class KupPremiumStrefa {
     private JEditorPane tekstSubskrypcjiLabel;
     private JButton SfinalizujZakupButton;
     private JPanel daneDoPremiumPanel;
+    private JLabel adresRozliczeniowyLabel;
     private JButton kupPremiumButton;
 
     public KupPremiumStrefa() {
+        setBackgroundDefault(kupPremiumPanel);
+        setBackgroundDefault(daneDoPremiumPanel);
+        setPrimaryButtonStyle(kupPremiumButton);
+        setPrimaryButtonStyle(SfinalizujZakupButton);
+        setTextFieldStyle(eMailTextField);
+        setTextFieldStyle(numerKartyTextField);
+        setTextFieldStyle(imieNazwiskoTextField);
+        setTextFieldStyle(adresUlicaTextField);
+        setTextFieldStyle(adresNumerDomuTextField);
+        setTextFieldStyle(adresKodPocztowyTextField);
+        setTextFieldStyle(AdresMiastoTextField);
+        setTextFieldStyle(kartaMMRRTextField);
+        setTextFieldStyle(kartaKodCVCTextField);
+        setLabelStyle(emailKupujacegoLabel);
+        setLabelStyle(infoKartaLabel);
+        setLabelStyle(ImieNazwiskoLabel);
+        setLabelStyle(adresRozliczeniowyLabel);
+        setComboBoxStyle(adresKrajComboBox);
+        setEditorPaneStyle( tekstSubskrypcjiLabel);
+
         tekstSubskrypcjiLabel.setContentType("text/html"); // Ustaw typ zawartości
         wypiszSzczegolySubskrypcji(); // Wywołanie metody
         SfinalizujZakupButton.addActionListener(new ActionListener() {

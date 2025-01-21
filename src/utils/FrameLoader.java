@@ -22,7 +22,6 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private AdminAddFilm dodajFilm;
     private AdminEditFilm editFilm;
     private Koszyk koszyk;
-    private OrderCheckout orderCheckout;
     private PremiumStrefa premiumStrefa;
     private KupPremiumStrefa kupPremiumStrefa;
     private String currentUsername;
@@ -123,7 +122,6 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
         biblioteka = new Biblioteka("Filmy", koszyk);
-        orderCheckout = new OrderCheckout();
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
 
@@ -142,12 +140,6 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         koszyk.getWsteczButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Wstecz w Koszyku"));
 
-        koszyk.getKupButton().addActionListener(new SwitchPanelAction(() -> {
-            frame.setContentPane(orderCheckout.getContentPane());
-            frame.revalidate();
-            frame.repaint();
-            logEvent("Przełączono na zamówienie.");
-        }, "Kliknięto przycisk Kup w Koszyku"));
 
         mojeKonto.getPremiumButton().addActionListener(new SwitchPanelAction(this::switchToPremiumStrefa, "Kliknięto przycisk Premium"));
 

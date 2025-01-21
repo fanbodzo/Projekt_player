@@ -4,19 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-//trzeba dodac komponent na kolor textboxow i dobrac inaczej kolory w apce
+
 public interface ComponentStyle {
-    // zmienne ktore pomagaja syzbciej edytowac kod
+    // Kolory podstawowe
     Color ButtonDefaultColor = new Color(0, 120, 215);
     Color BackgroundDefaultColor = new Color(43, 39, 39);
     Color OnPressColor = new Color(87, 98, 149, 255);
+    Color TextFieldBackgroundColor = new Color(60, 63, 65);
+    Color TextFieldFontColor = Color.WHITE;
+    Color LabelFontColor = Color.WHITE;
+    Color ScrollPaneBackgroundColor = new Color(60, 63, 65);
+    Color EditorPaneBackgroundColor = new Color(165, 155, 155, 244);
+    Color EditorPaneFontColor = Color.WHITE;
+    Color ComboBoxBackgroundColor = new Color(60, 63, 65);
+    Color ComboBoxFontColor = Color.WHITE;
+    Color ComboBoxBorderColor = Color.GRAY;
+
+    // Czcionki
+    Font DefaultFont = new Font("Arial", Font.PLAIN, 14);
+    Font BoldFont = new Font("Arial", Font.BOLD, 14);
 
     // Metoda do zaokrąglania przycisków
     default void roundButton(JButton button, Color backgroundColor) {
+        if (button == null) return; // Sprawdzenie, czy przycisk nie jest null
+
         button.setOpaque(false);
-        button.setBorderPainted(false); // Wyłącza domyślne obramowanie
-        button.setFocusPainted(false); // Wyłącza domyślny efekt fokusa
-        button.setContentAreaFilled(false); // Umożliwia niestandardowe rysowanie tła
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
 
         button.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
             @Override
@@ -24,26 +39,23 @@ public interface ComponentStyle {
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Użycie przekazanego koloru dla tła
                 Color buttonColor = button.getModel().isPressed() ? OnPressColor : backgroundColor;
 
-                // Tworzenie zaokrąglonego tła przycisku
-                int arcSize = 30; // Promień zaokrąglenia
-                g2d.setColor(buttonColor); // Użycie odpowiedniego koloru tła
+                int arcSize = 30;
+                g2d.setColor(buttonColor);
                 g2d.fillRoundRect(0, 0, button.getWidth(), button.getHeight(), arcSize, arcSize);
 
-                super.paint(g2d, c); // Rysowanie tekstu i ikony
+                super.paint(g2d, c);
                 g2d.dispose();
             }
 
             @Override
             protected void installDefaults(AbstractButton b) {
                 super.installDefaults(b);
-                b.setForeground(Color.WHITE); // Kolor tekstu
+                b.setForeground(Color.WHITE);
             }
         });
 
-        // Dodanie efektu odświeżania podczas najeżdżania myszką
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -57,9 +69,61 @@ public interface ComponentStyle {
         });
     }
 
+    // Metoda do stylizacji JTextField
+    default void setTextFieldStyle(JTextField textField) {
+        textField.setBackground(TextFieldBackgroundColor);
+        textField.setForeground(TextFieldFontColor);
+        textField.setCaretColor(TextFieldFontColor);
+        textField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        textField.setFont(DefaultFont);
+    }
 
-    // metoda do obramowan tez do ulatwienia zycia ale nie dziala dobrze wiec
-    // to sei zrobi pozniej jzezli siebdzie bardzo chiualo komus bo narazie to zmienia button na kwadrat
+    // Metoda do stylizacji JLabel
+    default void setLabelStyle(JLabel label) {
+        label.setForeground(LabelFontColor);
+        label.setFont(BoldFont);
+    }
+
+    // Metoda do stylizacji JScrollPane
+    default void setScrollPaneStyle(JScrollPane scrollPane) {
+        scrollPane.getViewport().setBackground(ScrollPaneBackgroundColor);
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    }
+
+    // Metoda do stylizacji JEditorPane
+    default void setEditorPaneStyle(JEditorPane editorPane) {
+        editorPane.setForeground(Color.GRAY);
+        editorPane.setBackground(EditorPaneBackgroundColor);
+        editorPane.setCaretColor(EditorPaneFontColor);
+        editorPane.setFont(DefaultFont);
+    }
+
+    // Metoda do stylizacji JComboBox
+    default void setComboBoxStyle(JComboBox<?> comboBox) {
+        comboBox.setBackground(ComboBoxBackgroundColor);
+        comboBox.setForeground(ComboBoxFontColor);
+        comboBox.setFont(DefaultFont);
+        comboBox.setBorder(BorderFactory.createLineBorder(ComboBoxBorderColor));
+
+        // Ustawienie rendererów, aby elementy listy miały odpowiedni styl
+        comboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (isSelected) {
+                    label.setBackground(OnPressColor);
+                } else {
+                    label.setBackground(ComboBoxBackgroundColor);
+                }
+                label.setForeground(ComboBoxFontColor);
+                label.setFont(DefaultFont);
+                return label;
+            }
+        });
+    }
+
+    // Metoda do tworzenia obramowania
     default void createBorder(JComponent component) {
         int thickness = 10;
         int radius = 10;
@@ -67,27 +131,25 @@ public interface ComponentStyle {
                 BorderFactory.createLineBorder(Color.WHITE, thickness),
                 BorderFactory.createEmptyBorder(radius, radius, radius, radius)
         ));
-
     }
-    // metoda ktora daje nam kolor przycisku w jakby bardziej przejrzysty sposob do wykrozsytania oraz
-    // izoluje nam roundbutton zeby on tylko zaokraglal
-    // pozniej w projekcie jak np bedzimy mieli przycisk na kupo subskrypcji fajnei byy byl innego koloru poprsotu
-    // i majac takie funkcje (bedziemy tworzyc nowe ) poporstu bedzie to czytalniej jak dla mn
+
+    // Metoda do ustawiania stylu przycisku
     default void setPrimaryButtonStyle(JButton button) {
-        roundButton(button, ButtonDefaultColor); // Niebieski
+        roundButton(button, ButtonDefaultColor);
     }
 
-    // metoda na podstawowe tlo tez do ulatwienia zycia
+    // Metoda do ustawiania podstawowego tła panelu
     default void setBackgroundDefault(JPanel panel) {
         panel.setBackground(BackgroundDefaultColor);
     }
-    // ustawianie customowego koloru przycisku
+
+    // Metoda do ustawiania niestandardowego koloru przycisku
     default void setButtonColor(JButton button, Color color) {
-        roundButton(button ,color);
+        roundButton(button, color);
     }
-    //customowe tlo
+
+    // Metoda do ustawiania niestandardowego tła panelu
     default void setBackgroundColor(JPanel panel, Color color) {
         panel.setBackground(color);
     }
-
 }

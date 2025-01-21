@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="30d25" class="javax.swing.JLabel">
+      <component id="30d25" class="javax.swing.JLabel" binding="tytulLabel">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -24,7 +24,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="b7040" class="javax.swing.JLabel">
+      <component id="b7040" class="javax.swing.JLabel" binding="opisLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -93,7 +93,7 @@
           <text value="Anuluj"/>
         </properties>
       </component>
-      <component id="15c04" class="javax.swing.JLabel">
+      <component id="15c04" class="javax.swing.JLabel" binding="tagiLabel">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

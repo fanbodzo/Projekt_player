@@ -49,3 +49,174 @@
 2025-01-21 20:27:52 - [admin1] - Przełączono na wyświetlanie logow.
 2025-01-21 20:27:52 - [admin1] - Kliknięto przycisk wyświetl logi
 2025-01-21 20:27:56 - [admin1] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 21:02:38 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 21:02:38 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 21:02:38 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 21:02:38 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 21:02:43 - [admin1] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 21:02:45 - [admin1] - Przełączono na edytowanie filmu.
+2025-01-21 21:02:45 - [admin1] - Kliknięto przycisk Edytuj Film
+2025-01-21 21:03:28 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 21:03:28 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 21:03:28 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 21:03:28 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 21:03:29 - [admin1] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 21:03:30 - [admin1] - Przełączono na edytowanie filmu.
+2025-01-21 21:03:30 - [admin1] - Kliknięto przycisk Edytuj Film
+2025-01-21 21:03:33 - [admin1] - Anulowano edytowanie filmu, powrót na stronę admina.
+2025-01-21 21:03:33 - [admin1] - Kliknięto przycisk Anuluj edytowanie filmu
+2025-01-21 21:05:46 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 21:05:46 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 21:05:47 - [admin1] - Przełączono na dodawanie filmu.
+2025-01-21 21:05:47 - [admin1] - Kliknięto przycisk Dodaj Film
+2025-01-21 21:05:49 - [admin1] - Anulowano dodawanie filmu, powrót na stronę admina.
+2025-01-21 21:05:49 - [admin1] - Kliknięto przycisk Anuluj dodawanie filmu
+2025-01-21 21:05:50 - [admin1] - Przełączono na edytowanie filmu.
+2025-01-21 21:05:50 - [admin1] - Kliknięto przycisk Edytuj Film
+2025-01-21 21:05:50 - [admin1] - Anulowano edytowanie filmu, powrót na stronę admina.
+2025-01-21 21:05:50 - [admin1] - Kliknięto przycisk Anuluj edytowanie filmu
+2025-01-21 21:05:51 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 21:05:51 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 21:05:52 - [admin1] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 21:05:53 - [admin1] - Użytkownik wylogował się: admin1
+2025-01-21 21:05:53 - [N/A] - Kliknięto przycisk Wyloguj jako Admin
+2025-01-21 21:12:09 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:12:09 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:12:10 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:12:10 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:12:15 - [xyz] - Przełączono na bibliotekę filmów.
+2025-01-21 21:12:15 - [xyz] - Kliknięto przycisk Biblioteka
+2025-01-21 21:12:20 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:12:20 - [xyz] - Kliknięto przycisk Powrotu z Biblioteki
+2025-01-21 21:12:20 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:12:20 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:12:26 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:12:26 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:12:27 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:12:27 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:12:28 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:12:28 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:13:43 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:13:43 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:13:44 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:13:44 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:13:45 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:13:45 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:13:48 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:13:48 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:14:58 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:14:58 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:14:59 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:14:59 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:15:00 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:15:00 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:15:01 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:15:01 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:16:03 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:16:03 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:16:04 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:16:04 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:16:05 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:16:05 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:16:06 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:16:06 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:20:56 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:20:56 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:20:57 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:20:57 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:21:00 - [xyz] - Przełączono na bibliotekę filmów.
+2025-01-21 21:21:00 - [xyz] - Kliknięto przycisk Biblioteka
+2025-01-21 21:21:03 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:21:03 - [xyz] - Kliknięto przycisk Powrotu z Biblioteki
+2025-01-21 21:21:04 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:21:04 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:21:10 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:21:10 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:21:11 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:21:11 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:21:16 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:21:16 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:23:47 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:23:47 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:23:48 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:23:48 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:23:49 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:23:49 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:23:50 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:23:50 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:24:35 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:24:35 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:24:36 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:24:36 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:24:37 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:24:37 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:24:38 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:24:38 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:25:24 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:25:24 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:25:25 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:25:25 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:25:25 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:25:25 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:26:17 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:26:17 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:26:18 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:26:18 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:26:19 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:26:19 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:26:30 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:26:30 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:26:31 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:26:31 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:26:32 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:26:32 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:26:33 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:26:33 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:26:44 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:26:44 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:26:45 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:26:45 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:26:46 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:26:46 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:27:16 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:27:16 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:27:17 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:27:17 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:27:18 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:27:18 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:27:18 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:27:18 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:27:53 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:27:53 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:27:53 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:27:53 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:27:54 - [xyz] - Przełączono na strefę premium.
+2025-01-21 21:27:54 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 21:27:55 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 21:27:55 - [xyz] - Kliknięto przycisk Kup Premium
+2025-01-21 21:31:09 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:31:09 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:31:10 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:31:10 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:31:52 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:31:52 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:31:53 - [xyz] - Przełączono na bibliotekę filmów.
+2025-01-21 21:31:53 - [xyz] - Kliknięto przycisk Biblioteka
+2025-01-21 21:31:56 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:31:56 - [xyz] - Kliknięto przycisk Powrotu z Biblioteki
+2025-01-21 21:31:56 - [xyz] - Przełączono na koszyk.
+2025-01-21 21:31:56 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 21:38:18 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:38:18 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:38:19 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:38:19 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:38:56 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 21:38:56 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 21:38:56 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 21:38:56 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 21:39:13 - [N/A] - Przełączono na formularz rejestracji.
+2025-01-21 21:39:13 - [N/A] - Kliknięto przycisk Rejestracji
+2025-01-21 21:39:15 - [N/A] - Kliknięto przycisk Powrotu z Rejestracji
+2025-01-21 21:40:27 - [N/A] - Przełączono na formularz rejestracji.
+2025-01-21 21:40:27 - [N/A] - Kliknięto przycisk Rejestracji
+2025-01-21 21:40:29 - [N/A] - Kliknięto przycisk Powrotu z Rejestracji

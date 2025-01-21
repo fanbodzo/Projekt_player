@@ -55,6 +55,12 @@ public class RegisterForm implements ComponentStyle {
         buttonPanel.setBackground(BackgroundDefaultColor);
         buttonPanel.add(registerButton);
         buttonPanel.add(backButton);
+        setTextFieldStyle(loginField);
+        setTextFieldStyle(passwordField);
+        setTextFieldStyle(confirmPasswordField);
+        setTextFieldStyle(emailField);
+        setTextFieldStyle(nameField);
+
 
         gbc.gridy = 5;
         gbc.gridwidth = 2;

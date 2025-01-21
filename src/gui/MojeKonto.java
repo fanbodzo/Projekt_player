@@ -3,6 +3,7 @@ package gui;
 import utils.ComponentStyle;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MojeKonto implements ComponentStyle {
     private JPanel contentPane;
@@ -15,7 +16,7 @@ public class MojeKonto implements ComponentStyle {
         setPrimaryButtonStyle(mojeDaneButton);
         setPrimaryButtonStyle(powrotButton);
         setPrimaryButtonStyle(wylogujButton);
-        setPrimaryButtonStyle(premiumButton);
+        setButtonColor(premiumButton,new Color(221, 183, 26));
         setBackgroundDefault(contentPane);
     }
 

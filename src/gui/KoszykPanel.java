@@ -8,14 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class KoszykPanel extends JPanel {
+public class KoszykPanel extends JPanel implements ComponentStyle{
     private JPanel contentPane;
     private Koszyk koszyk;
     private JPanel filmyPanel;
     private JButton kupButton;
     private JButton wsteczButton;
     private JScrollPane scrollPane;
-    private ComponentStyle componentStyle = new ComponentStyle() {}; // Instancja ComponentStyle
     private JFrame parentFrame; // Dodajemy parentFrame, by przejść do poprzedniego ekranu
     private MainPageUser mainPageUserPanel; // Panel główny użytkownika (MainPageUser)
 
@@ -28,7 +27,7 @@ public class KoszykPanel extends JPanel {
         contentPane.setLayout(new BorderLayout());
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setBackground(new Color(40, 40, 40)); // Ciemne tło dla całego panelu
-
+        setBackgroundDefault(filmyPanel);
         setLayout(new BorderLayout());
         add(contentPane);
 
@@ -55,9 +54,8 @@ public class KoszykPanel extends JPanel {
         wsteczButton = new JButton("Wstecz");
         wsteczButton.setPreferredSize(new Dimension(150, 30));
 
-        // Ustawienia stylu przycisków
-        componentStyle.setPrimaryButtonStyle(kupButton);
-        componentStyle.setPrimaryButtonStyle(wsteczButton);
+        setPrimaryButtonStyle(kupButton);
+        setPrimaryButtonStyle(wsteczButton);
 
         // Akcja dla przycisku „Wstecz”
         wsteczButton.addActionListener(e -> {

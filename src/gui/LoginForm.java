@@ -27,6 +27,7 @@ public class LoginForm implements ComponentStyle {
         contentPane.setLayout(new GridBagLayout());
         setBackgroundDefault(contentPane);
 
+
         // Inicjalizacja komponentów
         usernameLabel = new JLabel("Login:");
         passwordLabel = new JLabel("Hasło:");
@@ -34,16 +35,6 @@ public class LoginForm implements ComponentStyle {
         passwordField = new JPasswordField(20);
         loginButton = new JButton("Zaloguj się");
         registerButton = new JButton("Zarejestruj się");
-
-        // Ustawienia czcionek
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        // Ustawienia kolorów tekstu
-        usernameLabel.setForeground(Color.WHITE);
-        passwordLabel.setForeground(Color.WHITE);
 
         // Stylizacja przycisków
         setPrimaryButtonStyle(loginButton);
@@ -74,6 +65,10 @@ public class LoginForm implements ComponentStyle {
         buttonPanel.setBackground(BackgroundDefaultColor);
         buttonPanel.add(loginButton);
         buttonPanel.add(registerButton);
+        setLabelStyle(passwordLabel);
+        setLabelStyle(usernameLabel);
+        setTextFieldStyle(usernameField);
+        setTextFieldStyle(passwordField);
 
         gbc.gridx = 0;
         gbc.gridy = 2;

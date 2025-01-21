@@ -16,6 +16,8 @@ public class AdminLogShow implements ComponentStyle {
     public AdminLogShow() {
         setBackgroundDefault(contentPane);
         setPrimaryButtonStyle(powrot);
+        setEditorPaneStyle(editorPane1);
+        setScrollPaneStyle(scrollPane);
         loadLogs();
     }
 

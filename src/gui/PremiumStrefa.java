@@ -1,19 +1,30 @@
 package gui;
 
+import utils.ComponentStyle;
+
 import javax.swing.*;
 
-public class PremiumStrefa {
+public class PremiumStrefa implements ComponentStyle {
     private JPanel premiumPanel;
     private JPanel premiumStrefaNaglowek;
     private JLabel premiumNaglowek;
     private JButton kupPremiumButton;
     private JEditorPane opisPremiumLabel;
+    private JPanel panel2;
 
     public JPanel getPremiumPanel() {
         return premiumPanel;
     }
 
     public PremiumStrefa() {
+        setBackgroundDefault(premiumPanel);
+        setPrimaryButtonStyle(premiumButton);
+        setPrimaryButtonStyle(kupPremiumButton);
+        setBackgroundDefault(premiumStrefaNaglowek);
+        setLabelStyle(premiumNaglowek);
+        setBackgroundDefault(panel2);
+        setEditorPaneStyle(opisPremiumLabel);
+
         opisPremiumLabel.setContentType("text/html"); // Ustaw typ zawartości
         wypiszSzczegolyPremium(); // Wywołanie metody
     }
