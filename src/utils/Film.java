@@ -15,7 +15,7 @@ public class Film {
         this.sciezkaIkony = sciezkaIkony;
         this.opis = opis;
         this.tagi = tagi;
-        this.cena = cena;
+        this.cena = 19.99;
     }
 
     // Gettery
