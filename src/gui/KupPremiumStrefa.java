@@ -17,8 +17,15 @@ public class KupPremiumStrefa {
     private JTextField adresKodPocztowyTextField;
     private JTextField AdresMiastoTextField;
     private JComboBox adresKrajComboBox;
-    private JLabel tekstSubskrypcjiLabel;
+    private JEditorPane tekstSubskrypcjiLabel;
+    private JButton SfinalizujZakupButton;
+    private JPanel daneDoPremiumPanel;
     private JButton kupPremiumButton;
+
+    public KupPremiumStrefa() {
+        tekstSubskrypcjiLabel.setContentType("text/html"); // Ustaw typ zawartości
+        wypiszSzczegolySubskrypcji(); // Wywołanie metody
+    }
 
     public JPanel getKupPremiumPanel() {
         return kupPremiumPanel;
@@ -28,9 +35,7 @@ public class KupPremiumStrefa {
         return kupPremiumButton;
     }
 
-
     public void wypiszSzczegolySubskrypcji() {
-        // Szczegóły subskrypcji
         String tekstSubskrypcji = "<html>"
                 + "Subskrybuj Player Premium za 20 zł miesięcznie!<br>"
                 + "<br>"
@@ -39,7 +44,8 @@ public class KupPremiumStrefa {
                 + "<b>Łączna kwota do zapłaty: 20,00 zł</b><br>"
                 + "<br>"
                 + "Dołącz teraz i ciesz się nieograniczonym dostępem!"
-                + "</html>";
+                + "</html>"; // Twój kod HTML
         tekstSubskrypcjiLabel.setText(tekstSubskrypcji);
     }
+
 }
