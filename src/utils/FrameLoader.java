@@ -24,13 +24,14 @@ public class FrameLoader {
     public FrameLoader() {
         frame = new JFrame("Login Form");
         loginForm = new LoginForm();
+        koszyk = new Koszyk(); // Inicjalizacja koszyka na początku
 
         // Dodanie obsługi przycisku rejestracji
         loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
-        frame.setLocationRelativeTo(null); // Wyśrodkowanie okna
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         loginChecker();
@@ -59,11 +60,11 @@ public class FrameLoader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loginForm.getLoginConfirmation()) {
-                    ((Timer) e.getSource()).stop();  // Zatrzymaj timer, gdy użytkownik się zaloguje
+                    ((Timer) e.getSource()).stop();
                     if(loginForm.getAccountTypeLoggedIn()){
-                        switchToAdminMainPage(); // admin main page
+                        switchToAdminMainPage();
                     } else {
-                        switchToUserMainPage(); // otwiera glowna strone dla uzytkownika po zalogowaniu
+                        switchToUserMainPage();
                     }
                 }
             }
@@ -76,6 +77,7 @@ public class FrameLoader {
         frame.revalidate();
         frame.repaint();
     }
+
     private void switchToPremiumStrefa() {
         frame.setContentPane(premiumStrefa.getPremiumPanel());
         frame.revalidate();
@@ -89,141 +91,86 @@ public class FrameLoader {
     }
 
     private void switchToKoszyk() {
-        KoszykPanel koszykPanel = new KoszykPanel(koszyk, frame, mainPageUser); // Przekazanie MainPageUser
+        KoszykPanel koszykPanel = new KoszykPanel(koszyk, frame, mainPageUser);
         frame.setContentPane(koszykPanel.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
 
-    // obsługa uzytkownika
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
-        biblioteka = new Biblioteka();
-        koszyk = new Koszyk();
+        biblioteka = new Biblioteka("Filmy", koszyk);
         orderCheckout = new OrderCheckout();
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
 
-        // obsluga przycisku moje konto
         mainPageUser.getMojeKontoButton().addActionListener(e -> {
             frame.setContentPane(mojeKonto.getContentPane());
             frame.revalidate();
             frame.repaint();
         });
-        mainPageUser.getBibliotekaButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToBiblioteka();
-            }
-        });
-        biblioteka.getPowrotButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                backToMainPage(); // Wracamy do strony głównej
-            }
-        });
-        mainPageUser.getKoszykButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToKoszyk(); // Wywołanie metody przejścia do koszyka
-            }
+
+        mainPageUser.getBibliotekaButton().addActionListener(e -> switchToBiblioteka());
+
+        biblioteka.getPowrotButton().addActionListener(e -> backToMainPage());
+
+        mainPageUser.getKoszykButton().addActionListener(e -> switchToKoszyk());
+
+        koszyk.getWsteczButton().addActionListener(e -> {
+            frame.setContentPane(mainPageUser.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
 
-        koszyk.getWsteczButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(mainPageUser.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
+        koszyk.getKupButton().addActionListener(e -> {
+            frame.setContentPane(orderCheckout.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
 
-        koszyk.getKupButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(orderCheckout.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
-        });
-        mojeKonto.getPremiumButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToPremiumStrefa(); // przejscie do strony z info o premium
-            }
-        });
+        mojeKonto.getPremiumButton().addActionListener(e -> switchToPremiumStrefa());
 
-        premiumStrefa.getKupPremiumButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchToKupPremiumStrefa(); // przejscie do strony kupna premium
-            }
-        });
+        premiumStrefa.getKupPremiumButton().addActionListener(e -> switchToKupPremiumStrefa());
 
-        mojeKonto.getWylogujButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                logout();
-            }
-        });
+        mojeKonto.getWylogujButton().addActionListener(e -> logout());
 
-        mojeKonto.getPowrotButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                backToMainPage();
-            }
-        });
-
+        mojeKonto.getPowrotButton().addActionListener(e -> backToMainPage());
 
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
     }
 
-    // obsługa admina
     private void switchToAdminMainPage() {
         mainPageAdmin = new MainPageAdmin();
         dodajFilm = new AdminAddFilm();
         editFilm = new AdminEditFilm();
 
-        mainPageAdmin.getWylogujButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                logout();
-            }
+        mainPageAdmin.getWylogujButton().addActionListener(e -> logout());
+
+        mainPageAdmin.getDodajFilmButton().addActionListener(e -> {
+            frame.setContentPane(dodajFilm.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
-        mainPageAdmin.getDodajFilmButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(dodajFilm.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
+
+        mainPageAdmin.getEdytujFilmButton().addActionListener(e -> {
+            frame.setContentPane(editFilm.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
-        mainPageAdmin.getEdytujFilmButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(editFilm.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
+
+        dodajFilm.getAnulujButton().addActionListener(e -> {
+            frame.setContentPane(mainPageAdmin.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
-        dodajFilm.getAnulujButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(mainPageAdmin.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
-        });
-        editFilm.getAnulujButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(mainPageAdmin.getContentPane());
-                frame.revalidate();
-                frame.repaint();
-            }
+
+        editFilm.getAnulujButton().addActionListener(e -> {
+            frame.setContentPane(mainPageAdmin.getContentPane());
+            frame.revalidate();
+            frame.repaint();
         });
 
         frame.setContentPane(mainPageAdmin.getContentPane());

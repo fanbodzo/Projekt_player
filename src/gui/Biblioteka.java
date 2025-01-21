@@ -24,6 +24,15 @@ public class Biblioteka extends JPanel implements ComponentStyle {
     }
 
     public Biblioteka(String folderFilmy) {
+        this(folderFilmy, new Koszyk());
+    }
+
+    public Biblioteka(String folderFilmy, Koszyk koszyk) {
+        if (koszyk == null) {
+            throw new IllegalArgumentException("Koszyk nie może być null");
+        }
+        this.koszyk = koszyk;
+
         // Inicjalizacja głównego panelu (contentPane)
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
@@ -37,9 +46,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         // Inicjalizacja przycisku powrotu
         powrotButton = new JButton("Powrót");
         setPrimaryButtonStyle(powrotButton);
-
-        // Inicjalizacja koszyka
-        koszyk = new Koszyk();
 
         // Pobieranie i dodawanie filmów
         List<Film> listaFilmow = wczytajFilmy(folderFilmy);
@@ -63,9 +69,10 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             // Przyciski "Dodaj do koszyka"
             JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
             setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
+            Film finalFilm = film;
             dodajDoKoszykaButton.addActionListener(e -> {
-                koszyk.dodajFilm(film);
-                JOptionPane.showMessageDialog(this, film.getTytul() + " dodany do koszyka!");
+                koszyk.dodajFilm(finalFilm);
+                JOptionPane.showMessageDialog(this, finalFilm.getTytul() + " dodany do koszyka!");
             });
 
             // Panel z filmem i przyciskiem
@@ -107,7 +114,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                     File ikona = znajdzPlikIkony(podfolder);
                     String sciezkaWideo = podfolder.getAbsolutePath() + "/film.mp4";
 
-                    // Próba odczytania ceny, jeśli plik istnieje
                     double cena = 0.0;
                     File cenaPlik = new File(podfolder, "cena.txt");
                     if (cenaPlik.exists()) {
@@ -115,7 +121,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                             cena = Double.parseDouble(new String(Files.readAllBytes(cenaPlik.toPath())).trim());
                         } catch (NumberFormatException e) {
                             System.err.println("Nieprawidłowy format ceny w folderze: " + podfolder.getName());
-                            // Używamy domyślnej ceny 0.0
                         }
                     }
 
