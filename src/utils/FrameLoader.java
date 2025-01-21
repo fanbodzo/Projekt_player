@@ -206,7 +206,8 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     }
 
     private void logout() {
-        frame.setContentPane(new LoginForm().getContentPane());
+        loginForm = new LoginForm(); // Tworzenie nowej instancji LoginForm
+        frame.setContentPane(loginForm.getContentPane());
         frame.revalidate();
         frame.repaint();
 
