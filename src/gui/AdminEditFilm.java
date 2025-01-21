@@ -157,4 +157,7 @@ public class AdminEditFilm implements ComponentStyle {
     public JPanel getContentPane() {
         return contentPane;
     }
+    public JButton getZapiszButton() {
+        return zapiszButton;
+    }
 }

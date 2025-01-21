@@ -8,3 +8,44 @@
 2025-01-21 18:59:18 - [xyz] - Kliknięto przycisk Moje Konto
 2025-01-21 18:59:19 - [xyz] - Użytkownik wylogował się: xyz
 2025-01-21 18:59:19 - [N/A] - Kliknięto przycisk Wyloguj
+2025-01-21 19:00:07 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 19:00:07 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 19:00:08 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 19:00:08 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 19:00:09 - [xyz] - Użytkownik wylogował się: xyz
+2025-01-21 19:00:09 - [N/A] - Kliknięto przycisk Wyloguj
+2025-01-21 19:23:15 - [admin2] - Przełączono na główną stronę administratora.
+2025-01-21 19:23:15 - [admin2] - Logowanie zakończone dla użytkownika: admin2
+2025-01-21 19:24:53 - [admin3] - Przełączono na główną stronę administratora.
+2025-01-21 19:24:53 - [admin3] - Logowanie zakończone dla użytkownika: admin3
+2025-01-21 19:24:55 - [admin3] - Przełączono na wyświetlanie logow.
+2025-01-21 19:24:55 - [admin3] - Kliknięto przycisk wyświetl logi
+2025-01-21 19:24:56 - [admin3] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 19:38:21 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 19:38:21 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 19:38:22 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 19:38:22 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:26:31 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 20:26:31 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 20:26:32 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 20:26:32 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:26:51 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 20:26:51 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 20:26:52 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 20:26:52 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:27:21 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 20:27:21 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 20:27:22 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 20:27:22 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:27:30 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 20:27:30 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 20:27:30 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 20:27:30 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:27:31 - [admin1] - Kliknięto przycisk powrot w wyswietl logi
+2025-01-21 20:27:32 - [admin1] - Użytkownik wylogował się: admin1
+2025-01-21 20:27:32 - [N/A] - Kliknięto przycisk Wyloguj jako Admin
+2025-01-21 20:27:51 - [admin1] - Przełączono na główną stronę administratora.
+2025-01-21 20:27:51 - [admin1] - Logowanie zakończone dla użytkownika: admin1
+2025-01-21 20:27:52 - [admin1] - Przełączono na wyświetlanie logow.
+2025-01-21 20:27:52 - [admin1] - Kliknięto przycisk wyświetl logi
+2025-01-21 20:27:56 - [admin1] - Kliknięto przycisk powrot w wyswietl logi

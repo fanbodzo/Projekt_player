@@ -26,6 +26,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private PremiumStrefa premiumStrefa;
     private KupPremiumStrefa kupPremiumStrefa;
     private String currentUsername;
+    private AdminLogShow adminLogShow;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -167,6 +168,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         mainPageAdmin = new MainPageAdmin();
         dodajFilm = new AdminAddFilm();
         editFilm = new AdminEditFilm();
+        adminLogShow = new AdminLogShow();
 
         mainPageAdmin.getWylogujButton().addActionListener(new SwitchPanelAction(this::logout, "Kliknięto przycisk Wyloguj jako Admin"));
 
@@ -183,6 +185,12 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
             frame.repaint();
             logEvent("Przełączono na edytowanie filmu.");
         }, "Kliknięto przycisk Edytuj Film"));
+        mainPageAdmin.getWysweitlLogiButton().addActionListener(new SwitchPanelAction(() -> {
+            frame.setContentPane(adminLogShow.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+            logEvent("Przełączono na wyświetlanie logow.");
+        }, "Kliknięto przycisk wyświetl logi"));
 
         dodajFilm.getAnulujButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mainPageAdmin.getContentPane());
@@ -191,12 +199,33 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
             logEvent("Anulowano dodawanie filmu, powrót na stronę admina.");
         }, "Kliknięto przycisk Anuluj dodawanie filmu"));
 
+        dodajFilm.getDodajButton().addActionListener(new SwitchPanelAction(() -> {
+            frame.setContentPane(mainPageAdmin.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+            logEvent("Dodano film, powrót na stronę admina.");
+        }, "Kliknięto przycisk dodaj w dodawanie filmu"));
+
         editFilm.getAnulujButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mainPageAdmin.getContentPane());
             frame.revalidate();
             frame.repaint();
             logEvent("Anulowano edytowanie filmu, powrót na stronę admina.");
         }, "Kliknięto przycisk Anuluj edytowanie filmu"));
+
+        editFilm.getZapiszButton().addActionListener(new SwitchPanelAction(() -> {
+            frame.setContentPane(mainPageAdmin.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+            logEvent("Zapisano edytowanie filmu, powrót na stronę admina.");
+        }, "Kliknięto przycisk zapisz w edytowanie filmu"));
+
+        adminLogShow.getPowrot().addActionListener(new SwitchPanelAction(() -> {
+            frame.setContentPane(mainPageAdmin.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+        }, "Kliknięto przycisk powrot w wyswietl logi"));
+
 
         frame.setContentPane(mainPageAdmin.getContentPane());
         frame.revalidate();

@@ -26,4 +26,5 @@ public class MainPageAdmin implements ComponentStyle{
     }
     public JButton getDodajFilmButton() {return dodajFilmButton;}
     public JButton getEdytujFilmButton() {return edytujFilmButton;}
+    public JButton getWysweitlLogiButton() {return wysweitlLogiButton;}
 }

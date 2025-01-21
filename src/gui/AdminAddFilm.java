@@ -105,4 +105,7 @@ public class AdminAddFilm implements ComponentStyle {
     public JPanel getContentPane() {
         return contentPane;
     }
+    public JButton getDodajButton() {
+        return dodajButton;
+    }
 }
