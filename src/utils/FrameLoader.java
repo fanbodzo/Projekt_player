@@ -6,8 +6,13 @@ import users.Admin;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class FrameLoader {
+public class FrameLoader implements LogManager { // Implementacja LogManager
     private JFrame frame;
     private LoginForm loginForm;
     private MainPageUser mainPageUser;
@@ -20,6 +25,7 @@ public class FrameLoader {
     private OrderCheckout orderCheckout;
     private PremiumStrefa premiumStrefa;
     private KupPremiumStrefa kupPremiumStrefa;
+    private String currentUsername;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -27,7 +33,7 @@ public class FrameLoader {
         koszyk = new Koszyk(); // Inicjalizacja koszyka na początku
 
         // Dodanie obsługi przycisku rejestracji
-        loginForm.getRegisterButton().addActionListener(e -> switchToRegisterForm());
+        loginForm.getRegisterButton().addActionListener(new SwitchPanelAction(this::switchToRegisterForm, "Kliknięto przycisk Rejestracji"));
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
@@ -41,53 +47,66 @@ public class FrameLoader {
         RegisterForm registerForm = new RegisterForm();
 
         // Obsługa przycisku powrotu
-        registerForm.getBackButton().addActionListener(e -> {
+        registerForm.getBackButton().addActionListener(new SwitchPanelAction(() -> {
             loginForm = new LoginForm();
-            loginForm.getRegisterButton().addActionListener(ev -> switchToRegisterForm());
+            loginForm.getRegisterButton().addActionListener(new SwitchPanelAction(this::switchToRegisterForm, "Kliknięto przycisk Rejestracji"));
             frame.setContentPane(loginForm.getContentPane());
             frame.revalidate();
             frame.repaint();
             loginChecker();
-        });
+        }, "Kliknięto przycisk Powrotu z Rejestracji"));
 
         frame.setContentPane(registerForm.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na formularz rejestracji.");
     }
 
     private void loginChecker() {
-        Timer loginTimer = new Timer(500, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (loginForm.getLoginConfirmation()) {
-                    ((Timer) e.getSource()).stop();
-                    if(loginForm.getAccountTypeLoggedIn()){
-                        switchToAdminMainPage();
-                    } else {
-                        switchToUserMainPage();
-                    }
-                }
-            }
-        });
+        Timer loginTimer = new Timer(500, new LoginCheckerAction());
         loginTimer.start();
     }
+
+    private class LoginCheckerAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (loginForm.getLoginConfirmation()) {
+                ((Timer) e.getSource()).stop();
+                currentUsername = loginForm.getUsername(); // Zakładam, że masz metodę getUsername()
+                if (loginForm.getAccountTypeLoggedIn()) {
+                    switchToAdminMainPage();
+                } else {
+                    switchToUserMainPage();
+                }
+                logEvent("Logowanie zakończone dla użytkownika: " + currentUsername);
+            }
+        }
+    }
+
 
     private void switchToBiblioteka() {
         frame.setContentPane(biblioteka.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na bibliotekę filmów.");
     }
 
     private void switchToPremiumStrefa() {
         frame.setContentPane(premiumStrefa.getPremiumPanel());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na strefę premium.");
     }
 
     private void switchToKupPremiumStrefa() {
         frame.setContentPane(kupPremiumStrefa.getKupPremiumPanel());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na zakup strefy premium.");
     }
 
     private void switchToKoszyk() {
@@ -95,6 +114,8 @@ public class FrameLoader {
         frame.setContentPane(koszykPanel.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na koszyk.");
     }
 
     private void switchToUserMainPage() {
@@ -105,41 +126,41 @@ public class FrameLoader {
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
 
-        mainPageUser.getMojeKontoButton().addActionListener(e -> {
+        mainPageUser.getMojeKontoButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mojeKonto.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Przełączono na Moje Konto.");
+        }, "Kliknięto przycisk Moje Konto"));
 
-        mainPageUser.getBibliotekaButton().addActionListener(e -> switchToBiblioteka());
+        mainPageUser.getBibliotekaButton().addActionListener(new SwitchPanelAction(this::switchToBiblioteka, "Kliknięto przycisk Biblioteka"));
 
-        biblioteka.getPowrotButton().addActionListener(e -> backToMainPage());
+        biblioteka.getPowrotButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Powrotu z Biblioteki"));
 
-        mainPageUser.getKoszykButton().addActionListener(e -> switchToKoszyk());
+        mainPageUser.getKoszykButton().addActionListener(new SwitchPanelAction(this::switchToKoszyk, "Kliknięto przycisk Koszyk"));
 
-        koszyk.getWsteczButton().addActionListener(e -> {
-            frame.setContentPane(mainPageUser.getContentPane());
-            frame.revalidate();
-            frame.repaint();
-        });
+        koszyk.getWsteczButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Wstecz w Koszyku"));
 
-        koszyk.getKupButton().addActionListener(e -> {
+        koszyk.getKupButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(orderCheckout.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Przełączono na zamówienie.");
+        }, "Kliknięto przycisk Kup w Koszyku"));
 
-        mojeKonto.getPremiumButton().addActionListener(e -> switchToPremiumStrefa());
+        mojeKonto.getPremiumButton().addActionListener(new SwitchPanelAction(this::switchToPremiumStrefa, "Kliknięto przycisk Premium"));
 
-        premiumStrefa.getKupPremiumButton().addActionListener(e -> switchToKupPremiumStrefa());
+        premiumStrefa.getKupPremiumButton().addActionListener(new SwitchPanelAction(this::switchToKupPremiumStrefa, "Kliknięto przycisk Kup Premium"));
 
-        mojeKonto.getWylogujButton().addActionListener(e -> logout());
+        mojeKonto.getWylogujButton().addActionListener(new SwitchPanelAction(this::logout, "Kliknięto przycisk Wyloguj"));
 
-        mojeKonto.getPowrotButton().addActionListener(e -> backToMainPage());
+        mojeKonto.getPowrotButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Powrotu z Mojego Konta"));
 
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na główną stronę użytkownika.");
     }
 
     private void switchToAdminMainPage() {
@@ -147,43 +168,50 @@ public class FrameLoader {
         dodajFilm = new AdminAddFilm();
         editFilm = new AdminEditFilm();
 
-        mainPageAdmin.getWylogujButton().addActionListener(e -> logout());
+        mainPageAdmin.getWylogujButton().addActionListener(new SwitchPanelAction(this::logout, "Kliknięto przycisk Wyloguj jako Admin"));
 
-        mainPageAdmin.getDodajFilmButton().addActionListener(e -> {
+        mainPageAdmin.getDodajFilmButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(dodajFilm.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Przełączono na dodawanie filmu.");
+        }, "Kliknięto przycisk Dodaj Film"));
 
-        mainPageAdmin.getEdytujFilmButton().addActionListener(e -> {
+        mainPageAdmin.getEdytujFilmButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(editFilm.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Przełączono na edytowanie filmu.");
+        }, "Kliknięto przycisk Edytuj Film"));
 
-        dodajFilm.getAnulujButton().addActionListener(e -> {
+        dodajFilm.getAnulujButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mainPageAdmin.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Anulowano dodawanie filmu, powrót na stronę admina.");
+        }, "Kliknięto przycisk Anuluj dodawanie filmu"));
 
-        editFilm.getAnulujButton().addActionListener(e -> {
+        editFilm.getAnulujButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mainPageAdmin.getContentPane());
             frame.revalidate();
             frame.repaint();
-        });
+            logEvent("Anulowano edytowanie filmu, powrót na stronę admina.");
+        }, "Kliknięto przycisk Anuluj edytowanie filmu"));
 
         frame.setContentPane(mainPageAdmin.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na główną stronę administratora.");
     }
 
     private void logout() {
-        loginForm = new LoginForm();
-        frame.setContentPane(loginForm.getContentPane());
+        frame.setContentPane(new LoginForm().getContentPane());
         frame.revalidate();
         frame.repaint();
 
+        logEvent("Użytkownik wylogował się: " + currentUsername);
+        currentUsername = null; // Resetowanie nazwy użytkownika
         loginChecker();
     }
 
@@ -191,5 +219,48 @@ public class FrameLoader {
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();
+
+        logEvent("Przełączono na główną stronę użytkownika.");
     }
+
+    // Klasa wewnętrzna do obsługi przełączania paneli z logowaniem akcji
+    private class SwitchPanelAction implements ActionListener {
+        private Runnable action;
+        private String logMessage;
+
+        public SwitchPanelAction(Runnable action, String logMessage) {
+            this.action = action;
+            this.logMessage = logMessage;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            action.run();
+            logEvent(logMessage);
+        }
+    }
+
+    @Override
+    public void logEvent(String message) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String logMessage = now.format(formatter) + " - [" + (currentUsername != null ? currentUsername : "N/A") + "] - " + message + "\n";
+
+        // Ścieżka do folderu `data`
+        String logDirPath = "data";
+        String logFilePath = logDirPath + "/application_log.txt";
+
+        // Utwórz folder `data`, jeśli nie istnieje
+        File logDir = new File(logDirPath);
+        if (!logDir.exists()) {
+            logDir.mkdirs();
+        }
+
+        try (FileWriter writer = new FileWriter(logFilePath, true)) {
+            writer.write(logMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -129,4 +129,9 @@ public class LoginForm implements ComponentStyle {
     public JButton getRegisterButton() {
         return registerButton;
     }
+
+    public String getUsername() {
+        return usernameField.getText().trim();
+    }
+
 }

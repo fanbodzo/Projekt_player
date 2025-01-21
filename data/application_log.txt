@@ -1,0 +1,14 @@
+2025-01-21 18:50:27 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 18:50:27 - [xyz] - Logowanie zakończone dla użytkownika: xyz
+2025-01-21 18:50:28 - [xyz] - Przełączono na bibliotekę filmów.
+2025-01-21 18:50:28 - [xyz] - Kliknięto przycisk Biblioteka
+2025-01-21 18:50:35 - [xyz] - Przełączono na główną stronę użytkownika.
+2025-01-21 18:50:35 - [xyz] - Kliknięto przycisk Powrotu z Biblioteki
+2025-01-21 18:50:35 - [xyz] - Przełączono na koszyk.
+2025-01-21 18:50:35 - [xyz] - Kliknięto przycisk Koszyk
+2025-01-21 18:50:39 - [xyz] - Przełączono na Moje Konto.
+2025-01-21 18:50:39 - [xyz] - Kliknięto przycisk Moje Konto
+2025-01-21 18:50:40 - [xyz] - Przełączono na strefę premium.
+2025-01-21 18:50:40 - [xyz] - Kliknięto przycisk Premium
+2025-01-21 18:50:41 - [xyz] - Przełączono na zakup strefy premium.
+2025-01-21 18:50:41 - [xyz] - Kliknięto przycisk Kup Premium
