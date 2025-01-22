@@ -22,12 +22,12 @@ public class UserLoader {
                 }
                 String[] userData = line.split(",");
                 if (userData.length >= 5) {
-                    boolean premium = false;
-                    if(userData[5].trim() == null ){
-                        premium = false;
-                    }
+                    boolean premium = Boolean.parseBoolean(userData[5].trim());
                     User newUser = new User(userData[0].trim(), userData[1].trim(), userData[2].trim(), userData[3].trim(), userData[4].trim() ,premium);
                     users.add(newUser);
+                    }
+                else {
+                    System.err.println("Niepoprawny format danych w pliku: " + line);
                 }
             }
         } catch (IOException e) {

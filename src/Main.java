@@ -23,7 +23,7 @@ public class Main {
         String folderFilmy = "Filmy";
         List<Film> filmy = FilmLoader.wczytajFilmy(folderFilmy);
 
-        //filmy
+        // wczytano jakiekolwiek filmy
         if (filmy.isEmpty()) {
             System.err.println("Nie znaleziono żadnych filmów w folderze: " + folderFilmy);
             return;

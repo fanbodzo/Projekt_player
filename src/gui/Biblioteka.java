@@ -20,6 +20,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
     private JPanel filmy;
     private Koszyk koszyk;
     private static final String DOMYSLNY_FOLDER = "Filmy";
+    private FrameLoader frameLoader;
 
     public Biblioteka() {
         this(DOMYSLNY_FOLDER);
@@ -34,6 +35,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             throw new IllegalArgumentException("Koszyk nie może być null");
         }
         this.koszyk = koszyk;
+        this.frameLoader = frameLoader;
 
 
         // Inicjalizacja głównego panelu (contentPane)
@@ -71,8 +73,8 @@ public class Biblioteka extends JPanel implements ComponentStyle {
 
             // Przyciski "Dodaj do koszyka"
             JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
-   /*         dodajDoKoszykaButton.addActionListener(e -> {
-                User loggedInUser = FrameLoader.getLoggedInUser(); // Pobierz aktualnego użytkownika
+            dodajDoKoszykaButton.addActionListener(e -> {
+                User loggedInUser = this.frameLoader.getLoggedInUser(); // Pobierz aktualnego użytkownika
                         boolean czyPremium = loggedInUser.isPremium(); // Sprawdź, czy jest premium
                         double cenaDlaUzytkownika = film.getCena();
 
@@ -80,7 +82,8 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                         if (czyPremium) {
                             cenaDlaUzytkownika *= 0.5; // 20% zniżki dla premium
                         }
-            });*/
+                        film.setCena(cenaDlaUzytkownika);
+            });
             setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
             Film finalFilm = film;
             dodajDoKoszykaButton.addActionListener(e -> {

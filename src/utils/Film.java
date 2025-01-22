@@ -38,6 +38,9 @@ public class Film {
         return tagi;
     }
     public double getCena() { return cena; }
+    public void setCena(double cena) {
+        this.cena = cena;
+    }
 
     // Prosta reprezentacja tekstowa
     @Override
