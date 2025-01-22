@@ -1,6 +1,9 @@
 package gui;
 
 import utils.ComponentStyle;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +29,10 @@ public class KupPremiumStrefa implements ComponentStyle {
     private JButton SfinalizujZakupButton;
     private JPanel daneDoPremiumPanel;
     private JLabel adresRozliczeniowyLabel;
+    private JButton powrotZKupPremiumButton;
     private JButton kupPremiumButton;
+    private Runnable przejdzDoMainPage;
+    private static String currentUsername;
 
     public KupPremiumStrefa() {
         setBackgroundDefault(kupPremiumPanel);
@@ -48,6 +54,8 @@ public class KupPremiumStrefa implements ComponentStyle {
         setLabelStyle(adresRozliczeniowyLabel);
         setComboBoxStyle(adresKrajComboBox);
         setEditorPaneStyle( tekstSubskrypcjiLabel);
+        setPrimaryButtonStyle(powrotZKupPremiumButton);
+
 
         tekstSubskrypcjiLabel.setContentType("text/html"); // Ustaw typ zawartości
         wypiszSzczegolySubskrypcji(); // Wywołanie metody
@@ -56,6 +64,12 @@ public class KupPremiumStrefa implements ComponentStyle {
             public void actionPerformed(ActionEvent e) {
                 if (sprawdzPoprawnoscDanych()) {
                     JOptionPane.showMessageDialog(kupPremiumPanel, "Zakup zrealizowany pomyślnie!", "Sukces", JOptionPane.INFORMATION_MESSAGE);
+                    if (currentUsername != null && !currentUsername.isEmpty()) {
+                        ustawPremiumDlaZalogowanegoUzytkownika();
+                    }
+                    if (przejdzDoMainPage != null) {
+                        przejdzDoMainPage.run();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(kupPremiumPanel, "Wprowadzone dane są nieprawidłowe. Sprawdź formularz i spróbuj ponownie.", "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
@@ -70,6 +84,7 @@ public class KupPremiumStrefa implements ComponentStyle {
     public JButton getKupPremiumButton() {
         return kupPremiumButton;
     }
+    public JButton getPowrotZKupPremiumButton() {return powrotZKupPremiumButton;}
 
     public void wypiszSzczegolySubskrypcji() {
         String tekstSubskrypcji = "<html>"
@@ -83,6 +98,60 @@ public class KupPremiumStrefa implements ComponentStyle {
                 + "</html>";
         tekstSubskrypcjiLabel.setText(tekstSubskrypcji);
     }
+    public void setPrzejdzDoMainPage(Runnable przejdzDoMainPage) {
+        this.przejdzDoMainPage = przejdzDoMainPage;
+    }
+    public void ustawPremiumDlaZalogowanegoUzytkownika() {
+        String filePath = "data/users.txt"; // Ścieżka do pliku (dostosuj, jeśli potrzebne)
+        List<String> wszystkieLinie = new ArrayList<>();
+
+        try {
+            wszystkieLinie = Files.readAllLines(Paths.get(filePath));
+
+            boolean znalezionoUzytkownika = false;
+
+            for (int i = 0; i < wszystkieLinie.size(); i++) {
+                String linia = wszystkieLinie.get(i);
+
+                // Sprawdza, czy nazwa użytkownika znajduje się w pliku
+                String[] dane = linia.split(",");
+                if (dane.length >= 2 && dane[1].equals(currentUsername)) {
+                    System.out.println("Znaleziono użytkownika: " + currentUsername);
+
+                    // Ustaw flagę premium na true (w pliku)
+                    if (dane.length == 6) {
+                        dane[5] = "true";
+                    }
+
+                    wszystkieLinie.set(i, String.join(",", dane));
+                    znalezionoUzytkownika = true;
+                    break;
+                }
+            }
+
+            if (znalezionoUzytkownika) {
+                Files.write(Paths.get(filePath), wszystkieLinie);
+                System.out.println("Zaktualizowano status PREMIUM dla użytkownika: " + currentUsername);
+            } else {
+                JOptionPane.showMessageDialog(
+                        kupPremiumPanel,
+                        "Nie znaleziono użytkownika w pliku!",
+                        "Błąd",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                    kupPremiumPanel,
+                    "Wystąpił błąd podczas aktualizacji pliku użytkowników.",
+                    "Błąd",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+
     /**
      * Metoda sprawdzająca poprawność danych w formularzu.
      *

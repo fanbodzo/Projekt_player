@@ -73,7 +73,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         public void actionPerformed(ActionEvent e) {
             if (loginForm.getLoginConfirmation()) {
                 ((Timer) e.getSource()).stop();
-                currentUsername = loginForm.getUsername(); // Zakładam, że masz metodę getUsername()
+                currentUsername = loginForm.getUsername();
                 if (loginForm.getAccountTypeLoggedIn()) {
                     switchToAdminMainPage();
                 } else {
@@ -117,6 +117,11 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         logEvent("Przełączono na koszyk.");
     }
+    private void switchToMojeKonto() {
+        frame.setContentPane(mojeKonto.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
 
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
@@ -140,6 +145,9 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         koszyk.getWsteczButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Wstecz w Koszyku"));
 
+        premiumStrefa.getPowrotZPremiumButton().addActionListener(new SwitchPanelAction(this::switchToMojeKonto, "Kliknięto przycisk Powrotu z strefy premium"));
+
+        kupPremiumStrefa.getPowrotZKupPremiumButton().addActionListener(new SwitchPanelAction(this::switchToPremiumStrefa, "Kliknięto przycisk Powrotu z strefy kupowania premium"));
 
         mojeKonto.getPremiumButton().addActionListener(new SwitchPanelAction(this::switchToPremiumStrefa, "Kliknięto przycisk Premium"));
 
@@ -149,6 +157,13 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         mojeKonto.getPowrotButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Powrotu z Mojego Konta"));
 
+        kupPremiumStrefa.setPrzejdzDoMainPage(() -> {
+            frame.setContentPane(mainPageUser.getContentPane());
+            frame.revalidate();
+            frame.repaint();
+
+            logEvent("Przełączono z zakupu premium na główną stronę użytkownika.");
+        });
         frame.setContentPane(mainPageUser.getContentPane());
         frame.revalidate();
         frame.repaint();

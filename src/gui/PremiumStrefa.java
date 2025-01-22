@@ -11,6 +11,7 @@ public class PremiumStrefa implements ComponentStyle {
     private JButton kupPremiumButton;
     private JEditorPane opisPremiumLabel;
     private JPanel panel2;
+    private JButton powrótZPremiumButton;
 
     public JPanel getPremiumPanel() {
         return premiumPanel;
@@ -20,6 +21,7 @@ public class PremiumStrefa implements ComponentStyle {
         setBackgroundDefault(premiumPanel);
         setPrimaryButtonStyle(premiumButton);
         setPrimaryButtonStyle(kupPremiumButton);
+        setPrimaryButtonStyle(powrótZPremiumButton);
         setBackgroundDefault(premiumStrefaNaglowek);
         setLabelStyle(premiumNaglowek);
         setBackgroundDefault(panel2);
@@ -41,6 +43,7 @@ public class PremiumStrefa implements ComponentStyle {
         return premiumButton;
     }
 
+    public JButton getPowrotZPremiumButton() {return powrótZPremiumButton;}
     public JButton getKupPremiumButton() {
         return kupPremiumButton;
     }
