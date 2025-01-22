@@ -22,15 +22,8 @@ public class Biblioteka extends JPanel implements ComponentStyle {
     private static final String DOMYSLNY_FOLDER = "Filmy";
     private FrameLoader frameLoader;
 
-    public Biblioteka() {
-        this(DOMYSLNY_FOLDER);
-    }
 
-    public Biblioteka(String folderFilmy) {
-        this(folderFilmy, new Koszyk());
-    }
-
-    public Biblioteka(String folderFilmy, Koszyk koszyk) {
+    public Biblioteka(String folderFilmy, Koszyk koszyk , FrameLoader frameLoader) {
         if (koszyk == null) {
             throw new IllegalArgumentException("Koszyk nie może być null");
         }
@@ -54,47 +47,47 @@ public class Biblioteka extends JPanel implements ComponentStyle {
 
         // Pobieranie i dodawanie filmów
         List<Film> listaFilmow = wczytajFilmy(folderFilmy);
+        User loggedInUser = this.frameLoader.getLoggedInUser();
+
 
         for (Film film : listaFilmow) {
+            File filmFolder = new File(folderFilmy, film.getTytul()); // Zakładając, że nazwa folderu to tytuł filmu
+            boolean maDostep = czyUzytkownikMaDostepDoFilmu(loggedInUser, filmFolder, film);
+
             JButton button = new JButton(film.getTytul());
             button.setHorizontalTextPosition(SwingConstants.CENTER);
             button.setVerticalTextPosition(SwingConstants.BOTTOM);
 
             // Ładowanie ikony
-            ImageIcon icon = scaleIcon(film.getSciezkaIkony(), 120, 120);
+            ImageIcon icon = scaleIcon(film.getSciezkaIkony(), 200, 200);
             if (icon != null) {
                 button.setIcon(icon);
             } else {
                 button.setIcon(scaleIcon("sciezka_do_placeholdera/brak_ikony.png", 120, 120));
             }
 
-            // Dodanie akcji do przycisku
-            button.addActionListener(e -> wyswietlSzczegolyFilmu(film));
+            // Ustawianie koloru i akcji przycisku w zależności od dostępu
+            if (maDostep) {
+                setButtonColor(button, Color.GREEN);
+                button.addActionListener(e -> otworzLoadingScreen());
+            } else {
+                setButtonColor(button, new Color(199, 61, 230, 98));
+                button.addActionListener(e -> wyswietlSzczegolyFilmu(film));
+            }
 
             // Przyciski "Dodaj do koszyka"
             JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
             dodajDoKoszykaButton.addActionListener(e -> {
-                User loggedInUser = this.frameLoader.getLoggedInUser(); // Pobierz aktualnego użytkownika
-                        boolean czyPremium = loggedInUser.isPremium(); // Sprawdź, czy jest premium
-                        double cenaDlaUzytkownika = film.getCena();
-
-                        // Nalicz zniżkę, jeśli użytkownik jest premium
-                        if (czyPremium) {
-                            cenaDlaUzytkownika *= 0.5; // 20% zniżki dla premium
-                        }
-                        film.setCena(cenaDlaUzytkownika);
+                double cenaDlaUzytkownika = film.getCenaDlaUzytkownika(loggedInUser); // Pobierz cenę dla użytkownika
+                film.setCena(cenaDlaUzytkownika);
+                koszyk.dodajFilm(film);
             });
             setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
-            Film finalFilm = film;
-            dodajDoKoszykaButton.addActionListener(e -> {
-                koszyk.dodajFilm(finalFilm);
-            });
 
             // Panel z filmem i przyciskiem
             JPanel filmPanel = new JPanel();
             setBackgroundDefault(filmPanel);
             filmPanel.setLayout(new BorderLayout());
-            setButtonColor(button, new Color(199, 61, 230, 98));
             filmPanel.add(button, BorderLayout.NORTH);
             filmPanel.add(dodajDoKoszykaButton, BorderLayout.SOUTH);
 
@@ -104,7 +97,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
 
         // Dodanie komponentów do głównego panelu
         contentPane.add(powrotButton, BorderLayout.NORTH);
-        contentPane.add(filmy, BorderLayout.CENTER);
+        contentPane.add(new JScrollPane(filmy), BorderLayout.CENTER); // Dodanie JScrollPane dla lepszej nawigacji
 
         // Dodanie contentPane do głównego komponentu
         setLayout(new BorderLayout());
@@ -153,6 +146,44 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         return filmy;
     }
 
+    private void otworzLoadingScreen() {
+        JFrame loadingFrame = new JFrame("Loading");
+        ImageIcon loadingIcon = new ImageIcon("resources/loading_projket.gif");
+        JLabel loadingLabel = new JLabel(loadingIcon);
+        loadingFrame.add(loadingLabel);
+        loadingFrame.pack();
+        loadingFrame.setLocationRelativeTo(null);
+        loadingFrame.setVisible(true);
+
+        // Opcjonalnie, zamknij loadingFrame po pewnym czasie lub po zakończeniu ładowania filmu
+        // Możesz użyć Timer lub innego mechanizmu do zarządzania widocznością
+    }
+
+    private boolean czyUzytkownikMaDostepDoFilmu(User user, File folderFilmu, Film film) {
+        File userFile = new File(folderFilmu, "user.txt");
+        if (!userFile.exists()) {
+            System.out.println("Plik user.txt nie istnieje dla filmu: " + film.getTytul());
+            return false;
+        }
+
+        try {
+            List<String> lines = Files.readAllLines(userFile.toPath());
+            String userLogin = user.getLogin();
+            System.out.println("Sprawdzanie dostępu dla użytkownika: " + userLogin);
+            for (String line : lines) {
+                System.out.println("Porównywanie z linią: " + line.trim());
+                if (line.trim().equalsIgnoreCase(userLogin)) { // Użycie equalsIgnoreCase dla większej elastyczności
+                    System.out.println("Dostęp przyznany dla użytkownika: " + userLogin + " do filmu: " + film.getTytul());
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Błąd podczas odczytu pliku user.txt dla filmu: " + film.getTytul());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private double obliczCene(File podfolder) {
         double cena = 0.0;
         File cenaPlik = new File(podfolder, "cena.txt");
@@ -171,9 +202,12 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         return cena;
     }
 
+
     private File znajdzPlikIkony(File folder) {
-        for (File plik : folder.listFiles()) {
-            if (plik.isFile() && (plik.getName().endsWith(".png") || plik.getName().endsWith(".jpg") || plik.getName().endsWith(".jpeg"))) {
+        File[] pliki = folder.listFiles();
+        if (pliki == null) return null;
+        for (File plik : pliki) {
+            if (plik.isFile() && (plik.getName().toLowerCase().endsWith(".png") || plik.getName().toLowerCase().endsWith(".jpg") || plik.getName().toLowerCase().endsWith(".jpeg"))) {
                 return plik;
             }
         }

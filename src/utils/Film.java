@@ -1,5 +1,7 @@
 package utils;
 
+import users.User;
+
 public class Film {
     private String tytul;
     private String sciezkaVideo;
@@ -15,7 +17,7 @@ public class Film {
         this.sciezkaIkony = sciezkaIkony;
         this.opis = opis;
         this.tagi = tagi;
-        this.cena = 19.99;
+        this.cena = cena;
     }
 
     // Gettery
@@ -34,12 +36,25 @@ public class Film {
     public String getOpis() {
         return opis;
     }
+
     public String getTagi() {
         return tagi;
     }
-    public double getCena() { return cena; }
+
+    public double getCena() {
+        return cena;
+    }
+
     public void setCena(double cena) {
         this.cena = cena;
+    }
+
+    // Metoda obliczająca cenę z rabatem dla użytkowników premium
+    public double getCenaDlaUzytkownika(User user) {
+        if (user.isPremium()) {
+            return cena * 0.5;
+        }
+        return cena;
     }
 
     // Prosta reprezentacja tekstowa

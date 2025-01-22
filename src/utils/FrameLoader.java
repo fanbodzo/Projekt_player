@@ -148,7 +148,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
-        biblioteka = new Biblioteka("Filmy", koszyk);
+        biblioteka = new Biblioteka("Filmy", koszyk , this );
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
         regulamin = new Regulamin();
