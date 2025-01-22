@@ -92,7 +92,7 @@ public class LoginForm implements ComponentStyle {
                         if (isAdminLogin(user.getLogin())) {
                             accountTypeLoggedIn = true;
                         }
-                        // Tworzymy instancję MojeDane i przekazujemy zalogowanego użytkownika
+
                         MojeDane mojeDane = new MojeDane();
                         mojeDane.mojeDaneHandler(loggedInUser);
 

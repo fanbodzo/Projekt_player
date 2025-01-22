@@ -2,6 +2,7 @@ package utils;
 
 import gui.*;
 import users.Admin;
+import users.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private String currentUsername;
     private AdminLogShow adminLogShow;
     private Regulamin regulamin;
+    private MojeDane mojeDane;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -133,6 +135,16 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         frame.repaint();
     }
 
+    private void switchToMojeDane() {
+        User loggedInUser = loginForm.getLoggedInUser();
+        MojeDane mojeDane = new MojeDane();
+        mojeDane.mojeDaneHandler(loggedInUser); // Przekazujemy użytkownika do handlera
+        frame.setContentPane(mojeDane.getContentPane());
+        mojeDane.getPowrot().addActionListener(new SwitchPanelAction(this::switchToMojeKonto, "Kliknięto przycisk Powrotu z Moich Danych"));
+        frame.revalidate();
+        frame.repaint();
+    }
+
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
         mojeKonto = new MojeKonto();
@@ -140,6 +152,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
         regulamin = new Regulamin();
+        mojeDane = new MojeDane();
 
         mainPageUser.getMojeKontoButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mojeKonto.getContentPane());
@@ -171,6 +184,10 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         mainPageUser.getRegulaminButton().addActionListener(new SwitchPanelAction(this::switchToRegulamin, "Kliknięto przycisk Regulamin."));
 
         regulamin.getPowrotRegulaminButton().addActionListener(new SwitchPanelAction(this::switchToUserMainPage, "Kliknięto przysk powrót z regulaminu."));
+
+        mojeKonto.getMojeDaneButton().addActionListener(new SwitchPanelAction(this::switchToMojeDane, "Kliknięto przycisk moje dane"));
+
+
 
         kupPremiumStrefa.setPrzejdzDoMainPage(() -> {
             frame.setContentPane(mainPageUser.getContentPane());
