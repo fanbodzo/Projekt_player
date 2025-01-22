@@ -1,15 +1,22 @@
 package gui;
 
+import utils.ComponentStyle;
+
 import javax.swing.*;
 
-public class Regulamin {
+public class Regulamin implements ComponentStyle {
     private JPanel regulaminPanel;
     private JLabel regulaminLabel;
     private JLabel regulaminTrescLabel;
     private JButton powrotRegulaminButton;
+    private JPanel jpanel2;
 
     public Regulamin() {
         // Ładowanie treści regulaminu podczas inicjalizacji klasy.
+        setBackgroundDefault(regulaminPanel);
+        setPrimaryButtonStyle(powrotRegulaminButton);
+        setLabelStyle( regulaminLabel);
+        setBackgroundDefault( jpanel2);
         ustawRegulamin();
     }
 
