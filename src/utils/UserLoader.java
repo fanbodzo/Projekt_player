@@ -36,4 +36,10 @@ public class UserLoader {
 
         return users;
     }
+    public User findUserByLogin(String login, List<User> userList) {
+        return userList.stream()
+                .filter(user -> user.getLogin().equalsIgnoreCase(login))
+                .findFirst()
+                .orElse(null);
+    }
 }

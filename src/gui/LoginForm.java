@@ -14,19 +14,19 @@ import java.util.List;
 public class LoginForm implements ComponentStyle {
     private JPanel contentPane;
     private JButton loginButton;
-    private JButton registerButton; // Nowy przycisk
+    private JButton registerButton;
     private JPasswordField passwordField;
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JLabel usernameLabel;
     private boolean loginSuccessful = false;
     private boolean accountTypeLoggedIn = false;
+    private User loggedInUser;
 
     public LoginForm() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
         setBackgroundDefault(contentPane);
-
 
         // Inicjalizacja komponentów
         usernameLabel = new JLabel("Login:");
@@ -88,9 +88,14 @@ public class LoginForm implements ComponentStyle {
                 for (User user : users) {
                     if (user.getLogin().equals(username) && user.getPassword().equals(password)) {
                         loginSuccessful = true;
+                        loggedInUser = user;
                         if (isAdminLogin(user.getLogin())) {
                             accountTypeLoggedIn = true;
                         }
+                        // Tworzymy instancję MojeDane i przekazujemy zalogowanego użytkownika
+                        MojeDane mojeDane = new MojeDane();
+                        mojeDane.mojeDaneHandler(loggedInUser);
+
                         break;
                     }
                 }
@@ -129,4 +134,7 @@ public class LoginForm implements ComponentStyle {
         return usernameField.getText().trim();
     }
 
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
 }

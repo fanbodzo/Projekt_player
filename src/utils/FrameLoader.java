@@ -2,6 +2,7 @@ package utils;
 
 import gui.*;
 import users.Admin;
+import users.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,6 +27,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private KupPremiumStrefa kupPremiumStrefa;
     private String currentUsername;
     private AdminLogShow adminLogShow;
+    private MojeDane mojeDane;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -122,6 +124,15 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         frame.revalidate();
         frame.repaint();
     }
+    private void switchToMojeDane() {
+        User loggedInUser = loginForm.getLoggedInUser();
+        MojeDane mojeDane = new MojeDane();
+        mojeDane.mojeDaneHandler(loggedInUser); // Przekazujemy użytkownika do handlera
+        frame.setContentPane(mojeDane.getContentPane());
+        mojeDane.getPowrot().addActionListener(new SwitchPanelAction(this::switchToMojeKonto, "Kliknięto przycisk Powrotu z Moich Danych"));
+        frame.revalidate();
+        frame.repaint();
+    }
 
     private void switchToUserMainPage() {
         mainPageUser = new MainPageUser();
@@ -129,6 +140,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         biblioteka = new Biblioteka("Filmy", koszyk);
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
+        mojeDane = new MojeDane();
 
         mainPageUser.getMojeKontoButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mojeKonto.getContentPane());
@@ -151,11 +163,15 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         mojeKonto.getPremiumButton().addActionListener(new SwitchPanelAction(this::switchToPremiumStrefa, "Kliknięto przycisk Premium"));
 
+        mojeKonto.getMojeDaneButton().addActionListener(new SwitchPanelAction(this::switchToMojeDane, "Kliknięto przycisk Premium"));
+
         premiumStrefa.getKupPremiumButton().addActionListener(new SwitchPanelAction(this::switchToKupPremiumStrefa, "Kliknięto przycisk Kup Premium"));
 
         mojeKonto.getWylogujButton().addActionListener(new SwitchPanelAction(this::logout, "Kliknięto przycisk Wyloguj"));
 
         mojeKonto.getPowrotButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Powrotu z Mojego Konta"));
+
+
 
         kupPremiumStrefa.setPrzejdzDoMainPage(() -> {
             frame.setContentPane(mainPageUser.getContentPane());

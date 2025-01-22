@@ -20,18 +20,16 @@ public class MojeKonto implements ComponentStyle {
         setBackgroundDefault(contentPane);
     }
 
+
     public JButton getWylogujButton() {
         return wylogujButton;
     }
-    // do przemyslenia czy to ma sens bo ten powrot bedziemy stosowac wiele razy jeszcze
-    // a takie cos ma zasotsoawnie do jednego formularza hmmm
     public JButton getPowrotButton() {
         return powrotButton;
     }
     public JButton getPremiumButton() {return premiumButton;}
-
-
     public JPanel getContentPane() {
         return contentPane;
     }
+    public JButton getMojeDaneButton() {return mojeDaneButton;}
 }
