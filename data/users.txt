@@ -8,3 +8,4 @@ ID,LOGIN,HASLO,EMAIL,NAME,PREMIUM
 14,xyz,xyz,xyz@gmail.com,Xyz,false
 15,java,java123,java@gmail.com,Java,false
 16,java2,java1234,java2@gmail.com,Java2,false
+17,zzz,zzz,zzz@gmail.com,UzytkownikZ,true
