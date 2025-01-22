@@ -6,6 +6,7 @@ public class Regulamin {
     private JPanel regulaminPanel;
     private JLabel regulaminLabel;
     private JLabel regulaminTrescLabel;
+    private JButton powrotRegulaminButton;
 
     public Regulamin() {
         // Ładowanie treści regulaminu podczas inicjalizacji klasy.
@@ -36,7 +37,7 @@ public class Regulamin {
                 2. Użytkownicy "Player Premium":
                    a) Subskrypcja "Player Premium" daje dostęp do dodatkowych funkcji, takich jak:
                       - Brak reklam,
-                      - Nielimitowany dostęp do treści premium,
+                      - Niższe ceny za filmy,
                       - Lepsza jakość odtwarzania (jeśli dotyczy).
                    b) Koszt subskrypcji wynosi 20,00 PLN miesięcznie, w tym podatek VAT (23%).
                    c) Subskrypcja jest płatna z góry za ustawiony okres rozliczeniowy.
@@ -93,6 +94,9 @@ public class Regulamin {
         }
     }
 
+    public JButton getPowrotRegulaminButton() {
+        return powrotRegulaminButton;
+    }
     public JPanel getRegulaminPanel() {
         return regulaminPanel;
     }

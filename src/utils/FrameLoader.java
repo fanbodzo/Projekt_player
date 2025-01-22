@@ -170,6 +170,8 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
 
         mainPageUser.getRegulaminButton().addActionListener(new SwitchPanelAction(this::switchToRegulamin, "Kliknięto przycisk Regulamin."));
 
+        regulamin.getPowrotRegulaminButton().addActionListener(new SwitchPanelAction(this::switchToUserMainPage, "Kliknięto przysk powrót z regulaminu."));
+
         kupPremiumStrefa.setPrzejdzDoMainPage(() -> {
             frame.setContentPane(mainPageUser.getContentPane());
             frame.revalidate();
