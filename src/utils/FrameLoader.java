@@ -332,4 +332,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         }
     }
 
+    public User getLoggedInUser() {
+        return loginForm.getLoggedInUser();
+    }
 }

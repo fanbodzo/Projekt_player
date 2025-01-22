@@ -5,7 +5,7 @@ ID,LOGIN,HASLO,EMAIL,NAME,PREMIUM
 11,wika123,oghaslo123,wika123@gmail.com,Wiktoria,false
 12,fryta123,fiflak,fryta123@gmail.com,Filip,false
 13,julka123,haslojulki123,julka123@gmail.com,Julia,false
-14,xyz,xyz,xyz@gmail.com,Xyz,false
+14,xyz,xyz,xyz@gmail.com,Xyz,true
 15,java,java123,java@gmail.com,Java,false
 16,java2,java1234,java2@gmail.com,Java2,false
 17,zzz,zzz,zzz@gmail.com,UzytkownikZ,true

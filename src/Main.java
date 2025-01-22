@@ -23,12 +23,12 @@ public class Main {
         String folderFilmy = "Filmy";
         List<Film> filmy = FilmLoader.wczytajFilmy(folderFilmy);
 
-        // Sprawdź, czy wczytano jakiekolwiek filmy
+        //filmy
         if (filmy.isEmpty()) {
             System.err.println("Nie znaleziono żadnych filmów w folderze: " + folderFilmy);
             return;
         }
-        // Spróbuj załadować ikony
+        //ikony
         Map<Film, ImageIcon> mapowanieIkon = FilmLoader.utworzIkonkiFilmow(filmy);
         System.out.println("Załadowane ikonki:");
         for (Map.Entry<Film, ImageIcon> entry : mapowanieIkon.entrySet()) {

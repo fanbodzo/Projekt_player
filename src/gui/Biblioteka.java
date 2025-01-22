@@ -3,6 +3,8 @@ package gui;
 import utils.ComponentStyle;
 import utils.Film;
 import utils.Koszyk;
+import users.User;
+import utils.FrameLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +34,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             throw new IllegalArgumentException("Koszyk nie może być null");
         }
         this.koszyk = koszyk;
+
 
         // Inicjalizacja głównego panelu (contentPane)
         contentPane = new JPanel();
@@ -68,6 +71,16 @@ public class Biblioteka extends JPanel implements ComponentStyle {
 
             // Przyciski "Dodaj do koszyka"
             JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
+   /*         dodajDoKoszykaButton.addActionListener(e -> {
+                User loggedInUser = FrameLoader.getLoggedInUser(); // Pobierz aktualnego użytkownika
+                        boolean czyPremium = loggedInUser.isPremium(); // Sprawdź, czy jest premium
+                        double cenaDlaUzytkownika = film.getCena();
+
+                        // Nalicz zniżkę, jeśli użytkownik jest premium
+                        if (czyPremium) {
+                            cenaDlaUzytkownika *= 0.5; // 20% zniżki dla premium
+                        }
+            });*/
             setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
             Film finalFilm = film;
             dodajDoKoszykaButton.addActionListener(e -> {
@@ -113,7 +126,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                     File ikona = znajdzPlikIkony(podfolder);
                     String sciezkaWideo = podfolder.getAbsolutePath() + "/film.mp4";
 
-                    double cena = 0.0;
+                    double cena = obliczCene(podfolder);
                     File cenaPlik = new File(podfolder, "cena.txt");
                     if (cenaPlik.exists()) {
                         try {
@@ -135,6 +148,24 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             }
         }
         return filmy;
+    }
+
+    private double obliczCene(File podfolder) {
+        double cena = 0.0;
+        File cenaPlik = new File(podfolder, "cena.txt");
+
+        if (cenaPlik.exists()) {
+            try {
+                cena = Double.parseDouble(new String(Files.readAllBytes(cenaPlik.toPath())).trim());
+            } catch (IOException e) {
+                System.err.println("Błąd podczas odczytu pliku z ceną w folderze: " + podfolder.getName());
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                System.err.println("Nieprawidłowy format ceny w folderze: " + podfolder.getName());
+            }
+        }
+
+        return cena;
     }
 
     private File znajdzPlikIkony(File folder) {
@@ -168,6 +199,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                 "Szczegóły filmu",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     public JPanel getContentPane() {
         return contentPane;
