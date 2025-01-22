@@ -6,7 +6,6 @@ import utils.Film;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.EmptyBorder;
 
 public class KoszykPanel extends JPanel implements ComponentStyle {
     private JPanel contentPane;
@@ -26,7 +25,7 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
 
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setBackgroundDefault(contentPane);
         setLayout(new BorderLayout());
         add(contentPane);
@@ -38,7 +37,7 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
 
     private void initComponents() {
         filmyPanel = new JPanel();
-        filmyPanel.setLayout(new GridLayout(0, 8, 10, 10)); // Similar to library layout
+        filmyPanel.setLayout(new GridLayout(0, 8, 10, 10));
         setBackgroundDefault(filmyPanel);
 
         scrollPane = new JScrollPane(filmyPanel);
@@ -63,7 +62,10 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
             if (koszyk.getFilmy().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Koszyk jest pusty!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
-                pokazPodsumowanieZakupow();
+                KoszykPodsumowanie podsumowanie = new KoszykPodsumowanie(koszyk, parentFrame, mainPageUserPanel);
+                parentFrame.setContentPane(podsumowanie);
+                parentFrame.revalidate();
+                parentFrame.repaint();
             }
         });
     }
@@ -106,42 +108,6 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
         filmyPanel.revalidate();
         filmyPanel.repaint();
     }
-
-    private void pokazPodsumowanieZakupow() {
-        // Stwórz główny panel w stylu KupPremiumStrefa
-        JPanel panelZakupow = new JPanel(new BorderLayout(10, 10));
-        setBackgroundDefault(panelZakupow);
-
-        // Panel lewy - lista filmów
-        JPanel listaFilmowPanel = new JPanel(new BorderLayout());
-        setBackgroundDefault(listaFilmowPanel);
-
-        JTextPane tekstZamowienia = new JTextPane();
-        tekstZamowienia.setContentType("text/html");
-        StringBuilder sb = new StringBuilder("<html>");
-        double suma = 0;
-
-        for (Film film : koszyk.getFilmy()) {
-            sb.append(film.getTytul()).append("<br>");
-            sb.append("Cena: ").append(String.format("%.2f zł", film.getCena())).append("<br><br>");
-            suma += film.getCena();
-        }
-
-        sb.append("<b>Łączna kwota do zapłaty: ").append(String.format("%.2f zł</b>", suma));
-        sb.append("</html>");
-
-        tekstZamowienia.setText(sb.toString());
-        tekstZamowienia.setEditable(false);
-
-        // Dodaj panele
-        listaFilmowPanel.add(new JScrollPane(tekstZamowienia), BorderLayout.CENTER);
-        panelZakupow.add(listaFilmowPanel, BorderLayout.WEST);
-
-        parentFrame.setContentPane(panelZakupow);
-        parentFrame.revalidate();
-        parentFrame.repaint();
-    }
-
 
     private JPanel createFilmPanel(Film film) {
         JPanel panel = new JPanel();
