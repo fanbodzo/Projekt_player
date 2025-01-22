@@ -26,6 +26,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private KupPremiumStrefa kupPremiumStrefa;
     private String currentUsername;
     private AdminLogShow adminLogShow;
+    private Regulamin regulamin;
 
     public FrameLoader() {
         frame = new JFrame("Login Form");
@@ -93,6 +94,15 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         logEvent("Przełączono na bibliotekę filmów.");
     }
 
+
+    private void switchToRegulamin() {
+        frame.setContentPane(regulamin.getRegulaminPanel());
+        frame.revalidate();
+        frame.repaint();
+
+        logEvent("Przełączono na regulamin.");
+    }
+
     private void switchToPremiumStrefa() {
         frame.setContentPane(premiumStrefa.getPremiumPanel());
         frame.revalidate();
@@ -129,6 +139,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         biblioteka = new Biblioteka("Filmy", koszyk);
         premiumStrefa = new PremiumStrefa();
         kupPremiumStrefa = new KupPremiumStrefa();
+        regulamin = new Regulamin();
 
         mainPageUser.getMojeKontoButton().addActionListener(new SwitchPanelAction(() -> {
             frame.setContentPane(mojeKonto.getContentPane());
@@ -156,6 +167,8 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         mojeKonto.getWylogujButton().addActionListener(new SwitchPanelAction(this::logout, "Kliknięto przycisk Wyloguj"));
 
         mojeKonto.getPowrotButton().addActionListener(new SwitchPanelAction(this::backToMainPage, "Kliknięto przycisk Powrotu z Mojego Konta"));
+
+        mainPageUser.getRegulaminButton().addActionListener(new SwitchPanelAction(this::switchToRegulamin, "Kliknięto przycisk Regulamin."));
 
         kupPremiumStrefa.setPrzejdzDoMainPage(() -> {
             frame.setContentPane(mainPageUser.getContentPane());

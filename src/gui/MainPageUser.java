@@ -10,11 +10,13 @@ public class MainPageUser implements ComponentStyle{
     private JButton koszykButton;
     private JButton mojeKontoButton;
     private JPanel filmyPanel;
+    private JButton regulaminButton;
 
     public MainPageUser() {
         setPrimaryButtonStyle(filmyButton);
         setPrimaryButtonStyle(koszykButton);
         setPrimaryButtonStyle(mojeKontoButton);
+        setPrimaryButtonStyle(regulaminButton);
         setBackgroundDefault(contentPane);
         setBackgroundDefault(filmyPanel);
 
@@ -32,6 +34,7 @@ public class MainPageUser implements ComponentStyle{
     public JButton getKoszykButton() {
         return koszykButton;
     }
+    public JButton getRegulaminButton() {return regulaminButton;}
     public JPanel getFilmyPanel() {return filmyPanel;}
 
 }
