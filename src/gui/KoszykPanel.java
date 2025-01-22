@@ -8,15 +8,16 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class KoszykPanel extends JPanel implements ComponentStyle{
+public class KoszykPanel extends JPanel implements ComponentStyle {
     private JPanel contentPane;
     private Koszyk koszyk;
     private JPanel filmyPanel;
     private JButton kupButton;
     private JButton wsteczButton;
     private JScrollPane scrollPane;
-    private JFrame parentFrame; // Dodajemy parentFrame, by przejść do poprzedniego ekranu
-    private MainPageUser mainPageUserPanel; // Panel główny użytkownika (MainPageUser)
+    private JFrame parentFrame;
+    private MainPageUser mainPageUserPanel;
+    private JLabel sumaLabel;
 
     public KoszykPanel(Koszyk koszyk, JFrame parentFrame, MainPageUser mainPageUserPanel) {
         this.koszyk = koszyk;
@@ -26,8 +27,7 @@ public class KoszykPanel extends JPanel implements ComponentStyle{
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-        contentPane.setBackground(new Color(40, 40, 40)); // Ciemne tło dla całego panelu
-        setBackgroundDefault(filmyPanel);
+        setBackgroundDefault(contentPane);
         setLayout(new BorderLayout());
         add(contentPane);
 
@@ -37,56 +37,53 @@ public class KoszykPanel extends JPanel implements ComponentStyle{
     }
 
     private void initComponents() {
-        // Panel na filmy z przewijaniem
         filmyPanel = new JPanel();
-        filmyPanel.setLayout(new BoxLayout(filmyPanel, BoxLayout.Y_AXIS));
-        filmyPanel.setBackground(new Color(40, 40, 40)); // Tło panelu filmów na ciemno
+        filmyPanel.setLayout(new GridLayout(0, 8, 10, 10)); // Similar to library layout
+        setBackgroundDefault(filmyPanel);
 
-        // ScrollPane dla filmów
         scrollPane = new JScrollPane(filmyPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        // Przyciski
         kupButton = new JButton("Kup");
-        kupButton.setPreferredSize(new Dimension(150, 30));
-
         wsteczButton = new JButton("Wstecz");
-        wsteczButton.setPreferredSize(new Dimension(150, 30));
+        sumaLabel = new JLabel("Suma: 0.00 PLN");
 
         setPrimaryButtonStyle(kupButton);
         setPrimaryButtonStyle(wsteczButton);
+        setLabelStyle(sumaLabel);
 
-        // Akcja dla przycisku „Wstecz”
         wsteczButton.addActionListener(e -> {
-            // Przechodzi do panelu głównego (MainPageUser)
-            parentFrame.setContentPane(mainPageUserPanel.getContentPane()); // Zmieniamy na MainPageUser
+            parentFrame.setContentPane(mainPageUserPanel.getContentPane());
             parentFrame.revalidate();
             parentFrame.repaint();
         });
 
-        // Akcja dla przycisku „Kup”
         kupButton.addActionListener(e -> {
             if (koszyk.getFilmy().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Koszyk jest pusty!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
-                // Przejdź do realizacji zakupu (możesz dodać logikę zakupu tutaj)
-                JOptionPane.showMessageDialog(this, "Zakup dokonany!", "Sukces", JOptionPane.INFORMATION_MESSAGE);
+                pokazPodsumowanieZakupow();
             }
         });
     }
 
     private void layoutComponents() {
-        // Panel na przyciski
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buttonPanel.setBackground(new Color(40, 40, 40)); // Zmieniamy tło na ciemniejsze
+        setBackgroundDefault(buttonPanel);
         buttonPanel.add(kupButton);
         buttonPanel.add(wsteczButton);
+        buttonPanel.add(sumaLabel);
 
-        // Dodawanie komponentów do contentPane
         contentPane.add(scrollPane, BorderLayout.CENTER);
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private double obliczSume() {
+        return koszyk.getFilmy().stream()
+                .mapToDouble(Film::getCena)
+                .sum();
     }
 
     public void updateKoszyk() {
@@ -95,56 +92,97 @@ public class KoszykPanel extends JPanel implements ComponentStyle{
         for (Film film : koszyk.getFilmy()) {
             JPanel filmPanel = createFilmPanel(film);
             filmyPanel.add(filmPanel);
-            filmyPanel.add(Box.createRigidArea(new Dimension(0, 5))); // odstęp między filmami
         }
 
-        // Jeśli koszyk jest pusty, wyświetl informację
         if (koszyk.getFilmy().isEmpty()) {
             JLabel emptyLabel = new JLabel("Koszyk jest pusty", SwingConstants.CENTER);
             emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             filmyPanel.add(emptyLabel);
         }
 
+        double suma = obliczSume();
+        sumaLabel.setText(String.format("Suma: %.2f PLN", suma));
+
         filmyPanel.revalidate();
         filmyPanel.repaint();
     }
 
+    private void pokazPodsumowanieZakupow() {
+        // Stwórz główny panel w stylu KupPremiumStrefa
+        JPanel panelZakupow = new JPanel(new BorderLayout(10, 10));
+        setBackgroundDefault(panelZakupow);
+
+        // Panel lewy - lista filmów
+        JPanel listaFilmowPanel = new JPanel(new BorderLayout());
+        setBackgroundDefault(listaFilmowPanel);
+
+        JTextPane tekstZamowienia = new JTextPane();
+        tekstZamowienia.setContentType("text/html");
+        StringBuilder sb = new StringBuilder("<html>");
+        double suma = 0;
+
+        for (Film film : koszyk.getFilmy()) {
+            sb.append(film.getTytul()).append("<br>");
+            sb.append("Cena: ").append(String.format("%.2f zł", film.getCena())).append("<br><br>");
+            suma += film.getCena();
+        }
+
+        sb.append("<b>Łączna kwota do zapłaty: ").append(String.format("%.2f zł</b>", suma));
+        sb.append("</html>");
+
+        tekstZamowienia.setText(sb.toString());
+        tekstZamowienia.setEditable(false);
+
+        // Dodaj panele
+        listaFilmowPanel.add(new JScrollPane(tekstZamowienia), BorderLayout.CENTER);
+        panelZakupow.add(listaFilmowPanel, BorderLayout.WEST);
+
+        parentFrame.setContentPane(panelZakupow);
+        parentFrame.revalidate();
+        parentFrame.repaint();
+    }
+
+
     private JPanel createFilmPanel(Film film) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        panel.setLayout(new BorderLayout(5, 5));
         panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        panel.setBackground(Color.WHITE);
+        setBackgroundDefault(panel);
 
-        // Informacje o filmie
-        JPanel infoPanel = new JPanel(new GridLayout(2, 1));
-        infoPanel.setBackground(Color.WHITE);
-        infoPanel.add(new JLabel(film.getTytul()));
-        infoPanel.add(new JLabel("Cena: " + film.getCena() + " zł"));
+        // Film image
+        ImageIcon icon = new ImageIcon(film.getSciezkaIkony());
+        Image scaledImage = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Przycisk usuwania
-        JButton usunButton = new JButton("Usuń");
+        // Film info
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new GridLayout(3, 1));
+        setBackgroundDefault(infoPanel);
+
+        JLabel titleLabel = new JLabel(film.getTytul(), SwingConstants.CENTER);
+        titleLabel.setForeground(Color.WHITE);
+        JLabel priceLabel = new JLabel(String.format("Cena: %.2f PLN", film.getCena()), SwingConstants.CENTER);
+        priceLabel.setForeground(Color.WHITE);
+
+        // Remove button
+        JButton usunButton = new JButton("Usuń z koszyka");
+        setPrimaryButtonStyle(usunButton);
         usunButton.addActionListener(e -> {
             koszyk.usunFilm(film);
             updateKoszyk();
         });
 
-        panel.add(infoPanel, BorderLayout.CENTER);
-        panel.add(usunButton, BorderLayout.EAST);
+        infoPanel.add(titleLabel);
+        infoPanel.add(priceLabel);
+        infoPanel.add(usunButton);
+
+        panel.add(imageLabel, BorderLayout.CENTER);
+        panel.add(infoPanel, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    // Gettery dla przycisków
-    public JButton getKupButton() {
-        return kupButton;
-    }
-
-    public JButton getWsteczButton() {
-        return wsteczButton;
-    }
-
-    // Getter dla contentPane
     public JPanel getContentPane() {
         return contentPane;
     }

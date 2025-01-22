@@ -1,7 +1,5 @@
 package utils;
 
-import utils.Film;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,54 +15,56 @@ public class Koszyk extends JPanel {
         this.filmyWKoszyku = new ArrayList<>();
         this.setLayout(new BorderLayout());
 
-        // Tworzymy przyciski
         kupButton = new JButton("Kup");
         wsteczButton = new JButton("Wstecz");
         podsumowanieArea = new JTextArea();
         podsumowanieArea.setEditable(false);
 
-        // Dodajemy do panelu
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(kupButton);
         buttonPanel.add(wsteczButton);
 
-        // Panel do podsumowania
         JPanel podsumowaniePanel = new JPanel();
         podsumowaniePanel.setLayout(new BorderLayout());
         podsumowaniePanel.add(new JScrollPane(podsumowanieArea), BorderLayout.CENTER);
 
-        // Dodajemy przyciski i podsumowanie
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(podsumowaniePanel, BorderLayout.CENTER);
     }
 
-    // Dodajemy film do koszyka
     public void dodajFilm(Film film) {
-        filmyWKoszyku.add(film);
+        if (!czyFilmJestWKoszyku(film)) {
+            filmyWKoszyku.add(film);
+            JOptionPane.showMessageDialog(this, film.getTytul() + " dodany do koszyka.", "Sukces", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, film.getTytul() + " jest już w koszyku!", "Informacja", JOptionPane.INFORMATION_MESSAGE);
+        }
         zaktualizujPodsumowanie();
     }
 
-    // Usuwamy film z koszyka
+    private boolean czyFilmJestWKoszyku(Film film) {
+        return filmyWKoszyku.stream()
+                .anyMatch(f -> f.getTytul().equals(film.getTytul()));
+    }
+
     public void usunFilm(Film film) {
         filmyWKoszyku.remove(film);
         zaktualizujPodsumowanie();
     }
 
-    // Metoda do pobierania listy filmów w koszyku
     public List<Film> getFilmy() {
-        return filmyWKoszyku; // Poprawione: zwrócenie filmyWKoszyku
+        return filmyWKoszyku;
     }
 
-    // Zaktualizuj podsumowanie koszyka
     private void zaktualizujPodsumowanie() {
         double cenaRazem = 0;
         StringBuilder sb = new StringBuilder();
         for (Film film : filmyWKoszyku) {
             sb.append(film.getTytul()).append("\n");
-            sb.append("Cena: ").append(film.getCena()).append(" PLN\n\n");
+            sb.append("Cena: ").append(String.format("%.2f", film.getCena())).append(" PLN\n\n");
             cenaRazem += film.getCena();
         }
-        sb.append("Łączna cena: ").append(cenaRazem).append(" PLN");
+        sb.append("Łączna cena: ").append(String.format("%.2f", cenaRazem)).append(" PLN");
 
         podsumowanieArea.setText(sb.toString());
     }
