@@ -72,7 +72,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             Film finalFilm = film;
             dodajDoKoszykaButton.addActionListener(e -> {
                 koszyk.dodajFilm(finalFilm);
-                JOptionPane.showMessageDialog(this, finalFilm.getTytul() + " dodany do koszyka!");
             });
 
             // Panel z filmem i przyciskiem
