@@ -9,15 +9,43 @@ public class MainPageUser implements ComponentStyle{
     private JButton filmyButton;
     private JButton koszykButton;
     private JButton mojeKontoButton;
-    private JPanel filmyPanel;
+    private JPanel welcomePanel;
+    private JButton regulaminButton;
+    private JLabel welcomeLabel;
+    private JLabel playerLabel;
 
     public MainPageUser() {
         setPrimaryButtonStyle(filmyButton);
         setPrimaryButtonStyle(koszykButton);
         setPrimaryButtonStyle(mojeKontoButton);
+        setPrimaryButtonStyle(regulaminButton);
         setBackgroundDefault(contentPane);
-        setBackgroundDefault(filmyPanel);
+        setBackgroundDefault(welcomePanel);
 
+        ustawPowitanie();
+
+    }
+    private String getPowitanieTresc() {
+        return """
+            Witaj w naszej aplikacji!
+            
+            Korzystaj z pełni możliwości naszej platformy:
+            - Oglądaj filmy w bibliotece,
+            - Zarządzaj swoimi zakupami w koszyku,
+            - Sprawdź szczegóły swojego konta,
+            - Odkryj wyjątkowe promocje i nowości!
+            
+            Dziękujemy, że jesteś z nami i miłego dnia!
+            """;
+    }
+
+    /**
+     * Ustawia treść powitalną w elemencie JLabel.
+     */
+    private void ustawPowitanie() {
+        if (welcomeLabel != null) {
+            welcomeLabel.setText("<html>" + getPowitanieTresc().replace("\n", "<br>") + "</html>");
+        }
     }
     // przekazuje przycisk co jest chyba efektywniejsze
     public JButton getMojeKontoButton() {
@@ -32,6 +60,7 @@ public class MainPageUser implements ComponentStyle{
     public JButton getKoszykButton() {
         return koszykButton;
     }
-    public JPanel getFilmyPanel() {return filmyPanel;}
+    public JButton getRegulaminButton() {return regulaminButton;}
+    public JPanel getWelcomePanel() {return welcomePanel;}
 
 }
