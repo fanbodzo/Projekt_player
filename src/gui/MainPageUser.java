@@ -12,6 +12,7 @@ public class MainPageUser implements ComponentStyle{
     private JPanel welcomePanel;
     private JButton regulaminButton;
     private JLabel welcomeLabel;
+    private JLabel playerLabel;
 
     public MainPageUser() {
         setPrimaryButtonStyle(filmyButton);
