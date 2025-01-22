@@ -65,24 +65,28 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             } else {
                 button.setIcon(scaleIcon("sciezka_do_placeholdera/brak_ikony.png", 120, 120));
             }
-
-            // Ustawianie koloru i akcji przycisku w zależności od dostępu
-            if (maDostep) {
-                setButtonColor(button, Color.GREEN);
-                button.addActionListener(e -> otworzLoadingScreen());
-            } else {
-                setButtonColor(button, new Color(199, 61, 230, 98));
-                button.addActionListener(e -> wyswietlSzczegolyFilmu(film));
-            }
-
-            // Przyciski "Dodaj do koszyka"
             JButton dodajDoKoszykaButton = new JButton("Dodaj do koszyka (" + String.format("%.2f", film.getCena()) + " PLN)");
             dodajDoKoszykaButton.addActionListener(e -> {
                 double cenaDlaUzytkownika = film.getCenaDlaUzytkownika(loggedInUser); // Pobierz cenę dla użytkownika
                 film.setCena(cenaDlaUzytkownika);
                 koszyk.dodajFilm(film);
             });
-            setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
+
+            // Ustawianie koloru i akcji przycisku w zależności od dostępu
+            if (maDostep) {
+                setButtonColor(button, new Color(173, 251, 21, 98));
+                setButtonColor(dodajDoKoszykaButton, new Color(173, 251, 21, 98));
+                dodajDoKoszykaButton.setText("");
+                dodajDoKoszykaButton.setText(" Oglądaj ");
+                dodajDoKoszykaButton.setEnabled(false);
+                button.addActionListener(e -> otworzLoadingScreen());
+            } else {
+                setButtonColor(button, new Color(199, 61, 230, 98));
+                setButtonColor(dodajDoKoszykaButton, new Color(199, 61, 230, 98));
+                button.addActionListener(e -> wyswietlSzczegolyFilmu(film));
+            }
+
+
 
             // Panel z filmem i przyciskiem
             JPanel filmPanel = new JPanel();
@@ -155,8 +159,6 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         loadingFrame.setLocationRelativeTo(null);
         loadingFrame.setVisible(true);
 
-        // Opcjonalnie, zamknij loadingFrame po pewnym czasie lub po zakończeniu ładowania filmu
-        // Możesz użyć Timer lub innego mechanizmu do zarządzania widocznością
     }
 
     private boolean czyUzytkownikMaDostepDoFilmu(User user, File folderFilmu, Film film) {
@@ -169,11 +171,11 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         try {
             List<String> lines = Files.readAllLines(userFile.toPath());
             String userLogin = user.getLogin();
-            System.out.println("Sprawdzanie dostępu dla użytkownika: " + userLogin);
+            //System.out.println("Sprawdzanie dostępu dla użytkownika: " + userLogin);
             for (String line : lines) {
-                System.out.println("Porównywanie z linią: " + line.trim());
-                if (line.trim().equalsIgnoreCase(userLogin)) { // Użycie equalsIgnoreCase dla większej elastyczności
-                    System.out.println("Dostęp przyznany dla użytkownika: " + userLogin + " do filmu: " + film.getTytul());
+                //System.out.println("Porównywanie z linią: " + line.trim());
+                if (line.trim().equalsIgnoreCase(userLogin)) {
+                    //System.out.println("Dostęp przyznany dla użytkownika: " + userLogin + " do filmu: " + film.getTytul());
                     return true;
                 }
             }
