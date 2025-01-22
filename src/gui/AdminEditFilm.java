@@ -22,24 +22,28 @@ public class AdminEditFilm implements ComponentStyle {
     private JLabel tytulLabel;
     private JLabel opisLabel;
     private JLabel tagiLabel;
+    private JTextField edytujCeneField;
+    private JLabel edytujCene;
 
     public AdminEditFilm() {
         setBackgroundDefault(contentPane);
         setPrimaryButtonStyle(wybierzFilmButton);
         setPrimaryButtonStyle(anulujButton);
         setPrimaryButtonStyle(zapiszButton);
-        setButtonColor(edytujOkladkeButton,new Color(230, 110, 61));
+        setButtonColor(edytujOkladkeButton, new Color(230, 110, 61));
         setTextFieldStyle(titleField);
         setTextFieldStyle(descriptionField);
         setTextFieldStyle(tagsField);
+        setTextFieldStyle(edytujCeneField);
         setLabelStyle(tagiLabel);
         setLabelStyle(opisLabel);
         setLabelStyle(tytulLabel);
+        setLabelStyle(edytujCene);
 
         edytowanieFilmuHandler();
     }
 
-    public void edytowanieFilmuHandler(){
+    public void edytowanieFilmuHandler() {
         final File[] selectedFile = {null}; // Plik okładki
         final File[] selectedFolder = {null}; // Wybrany folder z filmem (stary folder filmu)
 
@@ -48,7 +52,7 @@ public class AdminEditFilm implements ComponentStyle {
             // Ścieżka do domyślnego folderu "Filmy"
             File defaultFolder = new File("Filmy");
             if (!defaultFolder.exists() || !defaultFolder.isDirectory()) {
-                JOptionPane.showMessageDialog(contentPane, "Folder 'Filmy' nie istnieje w projekice", "Błąd", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(contentPane, "Folder 'Filmy' nie istnieje w projekcie", "Błąd", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -61,10 +65,26 @@ public class AdminEditFilm implements ComponentStyle {
                 File chosenFolder = folderChooser.getSelectedFile();
                 selectedFolder[0] = chosenFolder; // Ustawiamy wybrany folder
                 wybierzFilmButton.setText("Wybrano film do zmiany: " + selectedFolder[0].getName());
+
+                // Opcjonalnie, wczytaj obecne dane filmu do pól tekstowych
+                try {
+                    String currentTitle = new String(Files.readAllBytes(new File(chosenFolder, "tytul.txt").toPath())).trim();
+                    String currentDescription = new String(Files.readAllBytes(new File(chosenFolder, "opis.txt").toPath())).trim();
+                    String currentTags = new String(Files.readAllBytes(new File(chosenFolder, "tagi.txt").toPath())).trim();
+                    String currentPrice = new String(Files.readAllBytes(new File(chosenFolder, "cena.txt").toPath())).trim();
+
+                    titleField.setText(currentTitle);
+                    descriptionField.setText(currentDescription);
+                    tagsField.setText(currentTags);
+                    edytujCeneField.setText(currentPrice);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(contentPane, "Wystąpił błąd podczas odczytu danych filmu.", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             }
         });
 
-        // obslugiwaniej nowej okladki
+        // Obsługa nowej okładki
         edytujOkladkeButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Obrazy PNG i JPG", "png", "jpg", "jpeg");
@@ -72,8 +92,8 @@ public class AdminEditFilm implements ComponentStyle {
             int result = fileChooser.showOpenDialog(contentPane);
             if (result == JFileChooser.APPROVE_OPTION) {
                 selectedFile[0] = fileChooser.getSelectedFile();
-                setButtonColor(edytujOkladkeButton, new Color(103, 230, 61)); // Zmiana koloru przycisku po wybraniu pliku
-                edytujOkladkeButton.setText("okladka wybrana do zamiany: " + selectedFile[0].getName());
+                setButtonColor(edytujOkladkeButton, new Color(103, 230, 61));
+                edytujOkladkeButton.setText("Okładka wybrana do zamiany: " + selectedFile[0].getName());
             }
         });
 
@@ -88,15 +108,30 @@ public class AdminEditFilm implements ComponentStyle {
             String title = titleField.getText().trim();
             String description = descriptionField.getText().trim();
             String tags = tagsField.getText().trim();
+            String priceText = edytujCeneField.getText().trim();
 
             // Sprawdzanie, czy przynajmniej jedno pole zostało wypełnione lub wybrano nową okładkę
-            if (title.isEmpty() && description.isEmpty() && tags.isEmpty() && selectedFile[0] == null) {
+            if (title.isEmpty() && description.isEmpty() && tags.isEmpty() && priceText.isEmpty() && selectedFile[0] == null) {
                 JOptionPane.showMessageDialog(contentPane, "Wprowadź przynajmniej jedną zmianę, aby zapisać", "Błąd", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Walidacja ceny, jeśli została wprowadzona
+            double cena = 0.0;
+            if (!priceText.isEmpty()) {
+                try {
+                    cena = Double.parseDouble(priceText);
+                    if (cena < 0) {
+                        throw new NumberFormatException("Cena nie może być ujemna");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(contentPane, "Wprowadź poprawną wartość ceny (liczbę dodatnią).", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
             try {
-                // Nadpisywanie plików: tytuł, opis, tagi
+                // Nadpisywanie plików: tytuł, opis, tagi, cena
                 if (!title.isEmpty()) {
                     saveTextToFile(new File(selectedFolder[0], "tytul.txt"), title);
                 }
@@ -106,37 +141,44 @@ public class AdminEditFilm implements ComponentStyle {
                 if (!tags.isEmpty()) {
                     saveTextToFile(new File(selectedFolder[0], "tagi.txt"), tags);
                 }
+                if (!priceText.isEmpty()) {
+                    saveTextToFile(new File(selectedFolder[0], "cena.txt"), String.valueOf(cena));
+                }
 
                 // Obsługa okładki
                 if (selectedFile[0] != null) {
-                    // Usuń istniejącą okładkę w formacie PNG
-                    if (selectedFile[0].exists()) {
-                        if (selectedFolder[0].exists() && selectedFolder[0].isDirectory()) {
-                            File[] potentialPngCovers = selectedFolder[0].listFiles((dir, name) -> name.toLowerCase().endsWith(".png"));
-                            if (potentialPngCovers != null) {
-                                for (File oldCover : potentialPngCovers) {
-                                    if (!oldCover.delete()) {
-                                        JOptionPane.showMessageDialog(contentPane,
-                                                "Nie udało się usunąć starej okładki: " + oldCover.getName(),
-                                                "Błąd", JOptionPane.ERROR_MESSAGE);
-                                    }
+
+                    if (selectedFolder[0].exists() && selectedFolder[0].isDirectory()) {
+                        File[] potentialCovers = selectedFolder[0].listFiles((dir, name) -> {
+                            String lowerName = name.toLowerCase();
+                            return lowerName.endsWith(".png") || lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg");
+                        });
+                        if (potentialCovers != null) {
+                            for (File oldCover : potentialCovers) {
+                                if (!oldCover.delete()) {
+                                    JOptionPane.showMessageDialog(contentPane,
+                                            "Nie udało się usunąć starej okładki: " + oldCover.getName(),
+                                            "Błąd", JOptionPane.ERROR_MESSAGE);
                                 }
                             }
                         }
                     }
 
-                    // Zapisz nową okładkę z nazwą opartą na tytule (lub stara nazwa folderu, jeśli brak nowego tytułu)
-                    String newCoverName = (!title.isEmpty() ? title : selectedFolder[0].getName()).replaceAll("[\\\\/:*?\"<>|]", "_") + ".png";
+
+                    String baseName = (!title.isEmpty() ? title : selectedFolder[0].getName()).replaceAll("[\\\\/:*?\"<>|]", "_");
+                    String newCoverExtension = getFileExtension(selectedFile[0].getName());
+                    String newCoverName = baseName + "." + newCoverExtension;
                     File newCoverFile = new File(selectedFolder[0], newCoverName);
                     Files.copy(selectedFile[0].toPath(), newCoverFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 }
 
-                // Zmiana nazwy folderu filmu, jeśli użytkownik zmienił tytuł
+
                 if (!title.isEmpty()) {
                     File newFolder = new File(selectedFolder[0].getParent(), title.replaceAll("[\\\\/:*?\"<>|]", "_"));
                     if (!selectedFolder[0].equals(newFolder)) { // Jeśli nowa nazwa folderu jest inna niż poprzednia
                         if (selectedFolder[0].renameTo(newFolder)) {
                             selectedFolder[0] = newFolder; // Uaktualnij referencję do nowego folderu
+                            wybierzFilmButton.setText("Wybrano film do zmiany: " + selectedFolder[0].getName());
                         } else {
                             JOptionPane.showMessageDialog(contentPane, "Nie udało się zmienić nazwy folderu", "Błąd", JOptionPane.ERROR_MESSAGE);
                         }
@@ -152,11 +194,18 @@ public class AdminEditFilm implements ComponentStyle {
         });
     }
 
-
     private void saveTextToFile(File file, String content) throws IOException {
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(content);
         }
+    }
+
+    private String getFileExtension(String filename) {
+        int lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < filename.length() - 1) {
+            return filename.substring(lastDotIndex + 1).toLowerCase();
+        }
+        return "png";
     }
 
     public JButton getAnulujButton() {
@@ -166,6 +215,7 @@ public class AdminEditFilm implements ComponentStyle {
     public JPanel getContentPane() {
         return contentPane;
     }
+
     public JButton getZapiszButton() {
         return zapiszButton;
     }

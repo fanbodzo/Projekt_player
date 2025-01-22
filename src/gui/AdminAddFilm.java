@@ -21,6 +21,8 @@ public class AdminAddFilm implements ComponentStyle {
     private JLabel tagiLabel;
     private JLabel opisLabel;
     private JLabel tytulLabel;
+    private JTextField cenaField;
+    private JLabel cenaLabel;
 
     public AdminAddFilm() {
         setBackgroundDefault(contentPane);
@@ -33,6 +35,8 @@ public class AdminAddFilm implements ComponentStyle {
         setLabelStyle(tagiLabel);
         setLabelStyle(opisLabel);
         setLabelStyle(tytulLabel);
+        setLabelStyle(cenaLabel);
+        setTextFieldStyle(cenaField);
         dodawanieFilmuHandler();
 
     }
@@ -57,8 +61,9 @@ public class AdminAddFilm implements ComponentStyle {
             String title = titleField.getText().trim();
             String description = descriptionField.getText().trim();
             String tags = tagsField.getText().trim();
+            String cena = cenaField.getText().trim();
 
-            if (title.isEmpty() || description.isEmpty() || tags.isEmpty() || selectedFile[0] == null) {
+            if (title.isEmpty() || cena.isEmpty() || description.isEmpty() || tags.isEmpty() || selectedFile[0] == null) {
                 JOptionPane.showMessageDialog(contentPane, "Wszystkie pola oraz plik muszą być wypełnione!", "Błąd", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -77,6 +82,8 @@ public class AdminAddFilm implements ComponentStyle {
                 saveTextToFile(new File(movieFolder, "tytul.txt"), title);
                 saveTextToFile(new File(movieFolder, "opis.txt"), description);
                 saveTextToFile(new File(movieFolder, "tagi.txt"), tags);
+                saveTextToFile(new File(movieFolder, "cena.txt"), cena);
+                saveTextToFile(new File(movieFolder, "user.txt"), null);
 
                 // kopiowanie pliku okladki
                 File coverFile = new File(movieFolder, selectedFile[0].getName());

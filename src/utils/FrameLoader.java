@@ -242,6 +242,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
             frame.setContentPane(mainPageAdmin.getContentPane());
             frame.revalidate();
             frame.repaint();
+
             logEvent("Dodano film, powrót na stronę admina.");
         }, "Kliknięto przycisk dodaj w dodawanie filmu"));
 
