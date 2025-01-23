@@ -57,8 +57,8 @@ public class KupPremiumStrefa implements ComponentStyle {
         setPrimaryButtonStyle(powrotZKupPremiumButton);
 
 
-        tekstSubskrypcjiLabel.setContentType("text/html"); // Ustaw typ zawartości
-        wypiszSzczegolySubskrypcji(); // Wywołanie metody
+        tekstSubskrypcjiLabel.setContentType("text/html");
+        wypiszSzczegolySubskrypcji();
         SfinalizujZakupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,7 +102,7 @@ public class KupPremiumStrefa implements ComponentStyle {
         this.przejdzDoMainPage = przejdzDoMainPage;
     }
     public void ustawPremiumDlaZalogowanegoUzytkownika() {
-        String filePath = "data/users.txt"; // Ścieżka do pliku (dostosuj, jeśli potrzebne)
+        String filePath = "data/users.txt";
         List<String> wszystkieLinie = new ArrayList<>();
 
         try {
@@ -113,12 +113,11 @@ public class KupPremiumStrefa implements ComponentStyle {
             for (int i = 0; i < wszystkieLinie.size(); i++) {
                 String linia = wszystkieLinie.get(i);
 
-                // Sprawdza, czy nazwa użytkownika znajduje się w pliku
+                // sprawdza czy nazwa uzytkownika znajduje się w pliku
                 String[] dane = linia.split(",");
                 if (dane.length >= 2 && dane[1].equals(currentUsername)) {
                     System.out.println("Znaleziono użytkownika: " + currentUsername);
 
-                    // Ustaw flagę premium na true (w pliku)
                     if (dane.length == 6) {
                         dane[5] = "true";
                     }
@@ -153,27 +152,21 @@ public class KupPremiumStrefa implements ComponentStyle {
 
 
     /**
-     * Metoda sprawdzająca poprawność danych w formularzu.
-     *
-     * @return true, jeśli dane są prawidłowe, false w przeciwnym razie
+     * metody na poprawnosc danych
      */
     private boolean sprawdzPoprawnoscDanych() {
-        // Walidacja adresu e-mail
         if (!czyEmailJestPoprawny(eMailTextField.getText())) {
             return false;
         }
 
-        // Walidacja numeru karty kredytowej
         if (!czyNumerKartyJestPoprawny(numerKartyTextField.getText())) {
             return false;
         }
 
-        // Walidacja imienia i nazwiska
         if (!czyImieNazwiskoJestPoprawne(imieNazwiskoTextField.getText())) {
             return false;
         }
 
-        // Walidacja pola adresu (ulica, numer domu, kod pocztowy, miasto)
         if (adresUlicaTextField.getText().isEmpty() ||
                 adresNumerDomuTextField.getText().isEmpty() ||
                 adresKodPocztowyTextField.getText().isEmpty() ||
@@ -181,15 +174,11 @@ public class KupPremiumStrefa implements ComponentStyle {
             return false;
         }
 
-        // Jeśli wszystkie pola są poprawne
         return true;
     }
 
     /**
-     * Sprawdza poprawność adresu e-mail.
-     *
-     * @param email adres e-mail
-     * @return true, jeśli adres jest poprawny, false w przeciwnym razie
+     *poprawnosc adresu e-mail
      */
     private boolean czyEmailJestPoprawny(String email) {
         String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"; // Prosty regex dla e-maila
@@ -197,22 +186,16 @@ public class KupPremiumStrefa implements ComponentStyle {
     }
 
     /**
-     * Sprawdza poprawność numeru karty kredytowej.
-     *
-     * @param numerKarty numer karty kredytowej
-     * @return true, jeśli numer karty jest poprawny, false w przeciwnym razie
+     *poprawnosc karty na 16 cyfr
      */
     private boolean czyNumerKartyJestPoprawny(String numerKarty) {
-        // Numer karty powinien składać się z 16 cyfr
         String kartaRegex = "\\d{16}";
         return Pattern.matches(kartaRegex, numerKarty);
     }
 
     /**
-     * Sprawdza poprawność imienia i nazwiska.
-     *
-     * @param imieNazwisko imię i nazwisko
-     * @return true, jeśli imię i nazwisko zawiera tylko litery i spacje, false w przeciwnym razie
+     * poprawnosc imienia i nazwiska
+
      */
     private boolean czyImieNazwiskoJestPoprawne(String imieNazwisko) {
         String imieNazwiskoRegex = "^[A-Za-zÀ-ÿ]+(\\s[A-Za-zÀ-ÿ]+)+$"; // Imię i nazwisko (przynajmniej dwa człony)

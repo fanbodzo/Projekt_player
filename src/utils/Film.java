@@ -10,7 +10,6 @@ public class Film {
     private String tagi;
     private double cena;
 
-    // Konstruktor
     public Film(String nazwa, String sciezkaVideo, String sciezkaIkony, String opis, String tagi, double cena) {
         this.tytul = nazwa;
         this.sciezkaVideo = sciezkaVideo;
@@ -20,7 +19,6 @@ public class Film {
         this.cena = cena;
     }
 
-    // Gettery
     public String getTytul() {
         return tytul;
     }
@@ -49,7 +47,7 @@ public class Film {
         this.cena = cena;
     }
 
-    // Metoda obliczająca cenę z rabatem dla użytkowników premium
+    //cena z rabatem dla premium
     public double getCenaDlaUzytkownika(User user) {
         if (user.isPremium()) {
             return cena * 0.5;
@@ -57,7 +55,6 @@ public class Film {
         return cena;
     }
 
-    // Prosta reprezentacja tekstowa
     @Override
     public String toString() {
         return "Film{" +

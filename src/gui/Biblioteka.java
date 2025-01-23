@@ -31,27 +31,26 @@ public class Biblioteka extends JPanel implements ComponentStyle {
         this.frameLoader = frameLoader;
 
 
-        // Inicjalizacja głównego panelu (contentPane)
+        //contentPane
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         setBackgroundDefault(contentPane);
 
-        // Inicjalizacja panelu na filmy
+        //filmy
         filmy = new JPanel();
         setBackgroundDefault(filmy);
         filmy.setLayout(new GridLayout(2, 8, 10, 10)); // Automatyczna liczba wierszy, odstępy 10px
 
-        // Inicjalizacja przycisku powrotu
         powrotButton = new JButton("Powrót");
         setPrimaryButtonStyle(powrotButton);
 
-        // Pobieranie i dodawanie filmów
+        // pobieranie i dodawanie filmów
         List<Film> listaFilmow = wczytajFilmy(folderFilmy);
         User loggedInUser = this.frameLoader.getLoggedInUser();
 
 
         for (Film film : listaFilmow) {
-            File filmFolder = new File(folderFilmy, film.getTytul()); // Zakładając, że nazwa folderu to tytuł filmu
+            File filmFolder = new File(folderFilmy, film.getTytul());
             boolean maDostep = czyUzytkownikMaDostepDoFilmu(loggedInUser, filmFolder, film);
 
             JButton button = new JButton(film.getTytul());
@@ -72,7 +71,7 @@ public class Biblioteka extends JPanel implements ComponentStyle {
                 koszyk.dodajFilm(film);
             });
 
-            // Ustawianie koloru i akcji przycisku w zależności od dostępu
+            // ustawianie koloru i akcji przycisku
             if (maDostep) {
                 setButtonColor(button, new Color(173, 251, 21, 98));
                 setButtonColor(dodajDoKoszykaButton, new Color(173, 251, 21, 98));
@@ -87,23 +86,19 @@ public class Biblioteka extends JPanel implements ComponentStyle {
             }
 
 
-
-            // Panel z filmem i przyciskiem
             JPanel filmPanel = new JPanel();
             setBackgroundDefault(filmPanel);
             filmPanel.setLayout(new BorderLayout());
             filmPanel.add(button, BorderLayout.NORTH);
             filmPanel.add(dodajDoKoszykaButton, BorderLayout.SOUTH);
 
-            // Dodanie panelu filmu do głównego panelu
+
             filmy.add(filmPanel);
         }
 
-        // Dodanie komponentów do głównego panelu
         contentPane.add(powrotButton, BorderLayout.NORTH);
         contentPane.add(new JScrollPane(filmy), BorderLayout.CENTER); // Dodanie JScrollPane dla lepszej nawigacji
 
-        // Dodanie contentPane do głównego komponentu
         setLayout(new BorderLayout());
         add(contentPane);
     }

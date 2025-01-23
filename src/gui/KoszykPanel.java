@@ -115,13 +115,13 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
         panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         setBackgroundDefault(panel);
 
-        // Film image
+        //okladka
         ImageIcon icon = new ImageIcon(film.getSciezkaIkony());
         Image scaledImage = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Film info
+        //info
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayout(3, 1));
         setBackgroundDefault(infoPanel);
@@ -131,7 +131,6 @@ public class KoszykPanel extends JPanel implements ComponentStyle {
         JLabel priceLabel = new JLabel(String.format("Cena: %.2f PLN", film.getCena()), SwingConstants.CENTER);
         priceLabel.setForeground(Color.WHITE);
 
-        // Remove button
         JButton usunButton = new JButton("Usuń z koszyka");
         setPrimaryButtonStyle(usunButton);
         usunButton.addActionListener(e -> {

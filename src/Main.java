@@ -11,15 +11,15 @@ public class Main {
         UserLoader loader = new UserLoader();
         List<User> users = loader.loadUsersFromFile("data/users.txt");
 
-        //Pomocznicze wyswietlanie listy uzytkownikow
+        //pomocznicze wyswietlanie listy uzytkownikow
         /*for (User user : users) {
             System.out.println("Login: " + user.getLogin() + " " + "Haslo: " + user.getPassword());
         }*/
 
-        // uruchamianie login forma czyli tego gui co zrobilem
+        // uruchamianie login forma
        FrameLoader frameLoader = new FrameLoader();
 
-        // Wczytaj filmy z katalogu "Filmy"
+        // wczytanie filmow z folderu "Filmy"
         String folderFilmy = "Filmy";
         List<Film> filmy = FilmLoader.wczytajFilmy(folderFilmy);
 

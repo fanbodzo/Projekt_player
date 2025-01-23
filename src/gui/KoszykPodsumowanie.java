@@ -25,7 +25,6 @@ public class KoszykPodsumowanie extends JPanel implements ComponentStyle {
     }
 
     private void initComponents() {
-        // Left panel - order summary
         JPanel summaryPanel = new JPanel(new BorderLayout(5, 5));
         setBackgroundDefault(summaryPanel);
         summaryPanel.setPreferredSize(new Dimension(300, 400));
@@ -38,10 +37,9 @@ public class KoszykPodsumowanie extends JPanel implements ComponentStyle {
 
         summaryPanel.add(new JScrollPane(orderDetailsPane), BorderLayout.CENTER);
 
-        // Right panel - form
+        //dane uzytkownika
         JPanel formPanel = createFormPanel();
 
-        // Bottom panel - purchase button
         JButton purchaseButton = new JButton("Sfinalizuj zakup");
         setPrimaryButtonStyle(purchaseButton);
         purchaseButton.addActionListener(e -> finalizePurchase());

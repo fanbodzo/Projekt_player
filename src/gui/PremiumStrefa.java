@@ -27,8 +27,8 @@ public class PremiumStrefa implements ComponentStyle {
         setBackgroundDefault(panel2);
         setEditorPaneStyle(opisPremiumLabel);
 
-        opisPremiumLabel.setContentType("text/html"); // Ustaw typ zawartości
-        wypiszSzczegolyPremium(); // Wywołanie metody
+        opisPremiumLabel.setContentType("text/html");
+        wypiszSzczegolyPremium();
     }
     public void wypiszSzczegolyPremium() {
         String opisPremium = "<html>"

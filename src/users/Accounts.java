@@ -9,7 +9,7 @@ public class Accounts {
         this.password = password;
     }
 
-    // Metody wspólne dla wszystkich kont
+    //metody wspolne dla wszystkich kont
     public boolean authenticate(String inputLogin, String inputPassword) {
         return login.equals(inputLogin) && password.equals(inputPassword);
     }

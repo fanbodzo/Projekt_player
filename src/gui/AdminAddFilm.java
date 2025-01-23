@@ -106,7 +106,7 @@ public class AdminAddFilm implements ComponentStyle {
         });
     }
 
-    // Metoda pomocnicza do zapisywania tekstu do pliku
+    //pomocnicza do zapisywania tekstu do pliku
     private void saveTextToFile(File file, String content) throws IOException {
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(content);

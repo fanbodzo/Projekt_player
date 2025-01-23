@@ -47,9 +47,8 @@ public class AdminEditFilm implements ComponentStyle {
         final File[] selectedFile = {null}; // Plik okładki
         final File[] selectedFolder = {null}; // Wybrany folder z filmem (stary folder filmu)
 
-        // Obsługa wyboru folderu filmu
+
         wybierzFilmButton.addActionListener(e -> {
-            // Ścieżka do domyślnego folderu "Filmy"
             File defaultFolder = new File("Filmy");
             if (!defaultFolder.exists() || !defaultFolder.isDirectory()) {
                 JOptionPane.showMessageDialog(contentPane, "Folder 'Filmy' nie istnieje w projekcie", "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -66,7 +65,7 @@ public class AdminEditFilm implements ComponentStyle {
                 selectedFolder[0] = chosenFolder; // Ustawiamy wybrany folder
                 wybierzFilmButton.setText("Wybrano film do zmiany: " + selectedFolder[0].getName());
 
-                // Opcjonalnie, wczytaj obecne dane filmu do pól tekstowych
+
                 try {
                     String currentTitle = new String(Files.readAllBytes(new File(chosenFolder, "tytul.txt").toPath())).trim();
                     String currentDescription = new String(Files.readAllBytes(new File(chosenFolder, "opis.txt").toPath())).trim();
@@ -84,7 +83,7 @@ public class AdminEditFilm implements ComponentStyle {
             }
         });
 
-        // Obsługa nowej okładki
+
         edytujOkladkeButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Obrazy PNG i JPG", "png", "jpg", "jpeg");
@@ -97,7 +96,7 @@ public class AdminEditFilm implements ComponentStyle {
             }
         });
 
-        // Obsługa zapisywania zmian
+
         zapiszButton.addActionListener(e -> {
             // Sprawdzanie, czy wybrano folder filmu do edycji
             if (selectedFolder[0] == null) {
@@ -110,13 +109,13 @@ public class AdminEditFilm implements ComponentStyle {
             String tags = tagsField.getText().trim();
             String priceText = edytujCeneField.getText().trim();
 
-            // Sprawdzanie, czy przynajmniej jedno pole zostało wypełnione lub wybrano nową okładkę
+            // sprawdzanie, czy przynajmniej jedno pole zostało wypełnione lub wybrano nową okładkę
             if (title.isEmpty() && description.isEmpty() && tags.isEmpty() && priceText.isEmpty() && selectedFile[0] == null) {
                 JOptionPane.showMessageDialog(contentPane, "Wprowadź przynajmniej jedną zmianę, aby zapisać", "Błąd", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Walidacja ceny, jeśli została wprowadzona
+            // walidacja ceny
             double cena = 0.0;
             if (!priceText.isEmpty()) {
                 try {
@@ -131,7 +130,7 @@ public class AdminEditFilm implements ComponentStyle {
             }
 
             try {
-                // Nadpisywanie plików: tytuł, opis, tagi, cena
+                // nadpisywanie plików
                 if (!title.isEmpty()) {
                     saveTextToFile(new File(selectedFolder[0], "tytul.txt"), title);
                 }
@@ -145,7 +144,7 @@ public class AdminEditFilm implements ComponentStyle {
                     saveTextToFile(new File(selectedFolder[0], "cena.txt"), String.valueOf(cena));
                 }
 
-                // Obsługa okładki
+
                 if (selectedFile[0] != null) {
 
                     if (selectedFolder[0].exists() && selectedFolder[0].isDirectory()) {

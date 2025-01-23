@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FrameLoader implements LogManager { // Implementacja LogManager
+public class FrameLoader implements LogManager {
     private JFrame frame;
     private LoginForm loginForm;
     private MainPageUser mainPageUser;
@@ -35,7 +35,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         loginForm = new LoginForm();
         koszyk = new Koszyk(); // Inicjalizacja koszyka na początku
 
-        // Dodanie obsługi przycisku rejestracji
+        //przycisk rejestracji
         loginForm.getRegisterButton().addActionListener(new SwitchPanelAction(this::switchToRegisterForm, "Kliknięto przycisk Rejestracji"));
         frame.setContentPane(loginForm.getContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +49,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private void switchToRegisterForm() {
         RegisterForm registerForm = new RegisterForm();
 
-        // Obsługa przycisku powrotu
+        // Obsluga powrotu
         registerForm.getBackButton().addActionListener(new SwitchPanelAction(() -> {
             loginForm = new LoginForm();
             loginForm.getRegisterButton().addActionListener(new SwitchPanelAction(this::switchToRegisterForm, "Kliknięto przycisk Rejestracji"));
@@ -138,7 +138,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     private void switchToMojeDane() {
         User loggedInUser = loginForm.getLoggedInUser();
         MojeDane mojeDane = new MojeDane();
-        mojeDane.mojeDaneHandler(loggedInUser); // Przekazujemy użytkownika do handlera
+        mojeDane.mojeDaneHandler(loggedInUser); // przekazujemy uzytkownika do handlera
         frame.setContentPane(mojeDane.getContentPane());
         mojeDane.getPowrot().addActionListener(new SwitchPanelAction(this::switchToMojeKonto, "Kliknięto przycisk Powrotu z Moich Danych"));
         frame.revalidate();
@@ -275,13 +275,13 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
     }
 
     private void logout() {
-        loginForm = new LoginForm(); // Tworzenie nowej instancji LoginForm
+        loginForm = new LoginForm();
         frame.setContentPane(loginForm.getContentPane());
         frame.revalidate();
         frame.repaint();
 
         logEvent("Użytkownik wylogował się: " + currentUsername);
-        currentUsername = null; // Resetowanie nazwy użytkownika
+        currentUsername = null;
         loginChecker();
     }
 
@@ -293,7 +293,7 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         logEvent("Przełączono na główną stronę użytkownika.");
     }
 
-    // Klasa wewnętrzna do obsługi przełączania paneli z logowaniem akcji
+    // klasa wewnetrzna do obslugi przelaczania paneli z logowaniem akcji
     private class SwitchPanelAction implements ActionListener {
         private Runnable action;
         private String logMessage;
@@ -316,11 +316,11 @@ public class FrameLoader implements LogManager { // Implementacja LogManager
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String logMessage = now.format(formatter) + " - [" + (currentUsername != null ? currentUsername : "N/A") + "] - " + message + "\n";
 
-        // Ścieżka do folderu `data`
+        // sciezka do folderu `data`
         String logDirPath = "data";
         String logFilePath = logDirPath + "/application_log.txt";
 
-        // Utwórz folder `data`, jeśli nie istnieje
+        // utworz folder `data`, jelli nie istnieje
         File logDir = new File(logDirPath);
         if (!logDir.exists()) {
             logDir.mkdirs();

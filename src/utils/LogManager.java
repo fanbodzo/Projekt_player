@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public interface LogManager {
-    // Metoda do logowania zdarzeń
+    // metoda do logowania zdarzen
     default void logEvent(String message) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -19,12 +19,12 @@ public interface LogManager {
         }
     }
 
-    // Metoda dedykowana do logowania zamknięcia aplikacji
+    //dedykowana do logowania zamkniecia aplikacji
     default void logApplicationClose() {
         logEvent("Aplikacja została zamknięta.");
     }
 
-    // Można dodać inne zdarzenia, np. logowanie błędów
+    //mozna dodac inne zdarzenia, np. logowanie bledow
     default void logError(String errorMessage) {
         logEvent("BŁĄD: " + errorMessage);
     }

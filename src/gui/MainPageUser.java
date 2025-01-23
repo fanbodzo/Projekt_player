@@ -40,7 +40,7 @@ public class MainPageUser implements ComponentStyle{
     }
 
     /**
-     * Ustawia treść powitalną w elemencie JLabel.
+     * powitanie
      */
     private void ustawPowitanie() {
         if (welcomeLabel != null) {

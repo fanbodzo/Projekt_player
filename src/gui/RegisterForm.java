@@ -25,7 +25,7 @@ public class RegisterForm implements ComponentStyle {
         contentPane.setLayout(new GridBagLayout());
         setBackgroundDefault(contentPane);
 
-        // Tworzenie komponentów
+
         loginField = new JTextField(20);
         passwordField = new JPasswordField(20);
         confirmPasswordField = new JPasswordField(20);
@@ -34,23 +34,19 @@ public class RegisterForm implements ComponentStyle {
         registerButton = new JButton("Zarejestruj się");
         backButton = new JButton("Powrót");
 
-        // Stylizacja przycisków
         setPrimaryButtonStyle(registerButton);
         setPrimaryButtonStyle(backButton);
 
-        // Ustawienia layoutu
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Dodawanie komponentów
         addComponent("Login:", loginField, gbc, 0);
         addComponent("Hasło:", passwordField, gbc, 1);
         addComponent("Potwierdź hasło:", confirmPasswordField, gbc, 2);
         addComponent("Email:", emailField, gbc, 3);
         addComponent("Imię:", nameField, gbc, 4);
 
-        // Przyciski
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(BackgroundDefaultColor);
         buttonPanel.add(registerButton);
@@ -66,7 +62,7 @@ public class RegisterForm implements ComponentStyle {
         gbc.gridwidth = 2;
         contentPane.add(buttonPanel, gbc);
 
-        // Obsługa rejestracji
+        // obsluga rejestracji
         registerButton.addActionListener(e -> {
             if (validateForm()) {
                 registerUser();
@@ -119,7 +115,7 @@ public class RegisterForm implements ComponentStyle {
         return true;
     }
 
-    // Metoda do znajdowania następnego dostępnego ID
+    // metoda do znajdowania nastepnego dostepnego ID
     private String getNextAvailableId() {
         List<Integer> existingIds = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("data/users.txt"))) {
@@ -132,19 +128,19 @@ public class RegisterForm implements ComponentStyle {
                 }
                 String[] parts = line.split(",");
                 try {
-                    // Próbujemy przekonwertować ID na liczbę
+                    //ID na liczbe
                     int id = Integer.parseInt(parts[0].trim());
                     existingIds.add(id);
                 } catch (NumberFormatException ignored) {
-                    // Ignorujemy ID, które nie są liczbami (np. UUID)
+                    // ignorujemy ID, ktpre nie są liczbami
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return "0"; // Domyślne ID w przypadku błędu
+            return "0"; //ID w przypadku bledu
         }
 
-        // Znajdź najwyższe istniejące ID
+        //najwyzsze istniejace ID
         int nextId = 0;
         if (!existingIds.isEmpty()) {
             nextId = existingIds.stream().mapToInt(Integer::intValue).max().orElse(-1) + 1;
@@ -183,7 +179,7 @@ public class RegisterForm implements ComponentStyle {
                     "Sukces",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            // Automatyczny powrót do logowania
+            //powrot do logowania
             if (registrationSuccessful) {
                 backButton.doClick();
             }

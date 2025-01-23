@@ -29,7 +29,7 @@ public class FilmLoader {
             String tagi = znajdzPlikZRozszerzeniem(podfolder, Arrays.asList(".txt"));
             String opis = wczytajOpis(podfolder);
 
-            // Domyślna cena dla filmów, możesz dostosować
+            // domyslna cena dla filmow, mozesz dostosowac
             double cena = 19.99;
 
             if (sciezkaIkony != null) {
@@ -42,7 +42,7 @@ public class FilmLoader {
         return filmy;
     }
 
-    // Tworzy mapę z ikonami na podstawie listy filmów
+    // tworzy mape z ikonami na podstawie listy filmow
     public static Map<Film, ImageIcon> utworzIkonkiFilmow(List<Film> filmy) {
         Map<Film, ImageIcon> mapowanieIkon = new HashMap<>(); // Mapa przechowująca filmy i ich ikonki
 

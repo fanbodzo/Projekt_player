@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public interface ComponentStyle {
-    // Kolory podstawowe
+    // kolory podstawowe
     Color ButtonDefaultColor = new Color(0, 120, 215);
     Color BackgroundDefaultColor = new Color(43, 39, 39);
     Color OnPressColor = new Color(87, 98, 149, 255);
@@ -20,13 +20,13 @@ public interface ComponentStyle {
     Color ComboBoxFontColor = Color.WHITE;
     Color ComboBoxBorderColor = Color.GRAY;
 
-    // Czcionki
+    // czcionki
     Font DefaultFont = new Font("Arial", Font.PLAIN, 14);
     Font BoldFont = new Font("Arial", Font.BOLD, 14);
 
-    // Metoda do zaokrąglania przycisków
+    // metoda do zaokraglania przycisków
     default void roundButton(JButton button, Color backgroundColor) {
-        if (button == null) return; // Sprawdzenie, czy przycisk nie jest null
+        if (button == null) return; //czy przycisk nie jest null
 
         button.setOpaque(false);
         button.setBorderPainted(false);
@@ -69,7 +69,7 @@ public interface ComponentStyle {
         });
     }
 
-    // Metoda do stylizacji JTextField
+    //stylizacja JTextField
     default void setTextFieldStyle(JTextField textField) {
         textField.setBackground(TextFieldBackgroundColor);
         textField.setForeground(TextFieldFontColor);
@@ -78,19 +78,19 @@ public interface ComponentStyle {
         textField.setFont(DefaultFont);
     }
 
-    // Metoda do stylizacji JLabel
+    //stylizacja JLabel
     default void setLabelStyle(JLabel label) {
         label.setForeground(LabelFontColor);
         label.setFont(BoldFont);
     }
 
-    // Metoda do stylizacji JScrollPane
+    //stylizacja JScrollPane
     default void setScrollPaneStyle(JScrollPane scrollPane) {
         scrollPane.getViewport().setBackground(ScrollPaneBackgroundColor);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
 
-    // Metoda do stylizacji JEditorPane
+    //stylizacja JEditorPane
     default void setEditorPaneStyle(JEditorPane editorPane) {
         editorPane.setForeground(Color.GRAY);
         editorPane.setBackground(EditorPaneBackgroundColor);
@@ -98,14 +98,14 @@ public interface ComponentStyle {
         editorPane.setFont(DefaultFont);
     }
 
-    // Metoda do stylizacji JComboBox
+    //stylizacja JComboBox
     default void setComboBoxStyle(JComboBox<?> comboBox) {
         comboBox.setBackground(ComboBoxBackgroundColor);
         comboBox.setForeground(ComboBoxFontColor);
         comboBox.setFont(DefaultFont);
         comboBox.setBorder(BorderFactory.createLineBorder(ComboBoxBorderColor));
 
-        // Ustawienie rendererów, aby elementy listy miały odpowiedni styl
+        // ustawienie rendererów, zeby elementy listy mialy odpowiedni styl
         comboBox.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
@@ -123,7 +123,7 @@ public interface ComponentStyle {
         });
     }
 
-    // Metoda do tworzenia obramowania
+    //obramowania
     default void createBorder(JComponent component) {
         int thickness = 10;
         int radius = 10;
@@ -133,22 +133,22 @@ public interface ComponentStyle {
         ));
     }
 
-    // Metoda do ustawiania stylu przycisku
+    //ustawianie stylu przycisku
     default void setPrimaryButtonStyle(JButton button) {
         roundButton(button, ButtonDefaultColor);
     }
 
-    // Metoda do ustawiania podstawowego tła panelu
+    //podstawowe tlo panelu
     default void setBackgroundDefault(JPanel panel) {
         panel.setBackground(BackgroundDefaultColor);
     }
 
-    // Metoda do ustawiania niestandardowego koloru przycisku
+    //niestandardowy kolor przycisku
     default void setButtonColor(JButton button, Color color) {
         roundButton(button, color);
     }
 
-    // Metoda do ustawiania niestandardowego tła panelu
+    //niestandardowe tlo panelu
     default void setBackgroundColor(JPanel panel, Color color) {
         panel.setBackground(color);
     }

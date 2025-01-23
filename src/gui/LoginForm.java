@@ -28,7 +28,6 @@ public class LoginForm implements ComponentStyle {
         contentPane.setLayout(new GridBagLayout());
         setBackgroundDefault(contentPane);
 
-        // Inicjalizacja komponentów
         usernameLabel = new JLabel("Login:");
         passwordLabel = new JLabel("Hasło:");
         usernameField = new JTextField(20);
@@ -36,16 +35,13 @@ public class LoginForm implements ComponentStyle {
         loginButton = new JButton("Zaloguj się");
         registerButton = new JButton("Zarejestruj się");
 
-        // Stylizacja przycisków
         setPrimaryButtonStyle(loginButton);
         setPrimaryButtonStyle(registerButton);
 
-        // Layout
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Dodawanie komponentów
         gbc.gridx = 0;
         gbc.gridy = 0;
         contentPane.add(usernameLabel, gbc);
@@ -60,7 +56,6 @@ public class LoginForm implements ComponentStyle {
         gbc.gridx = 1;
         contentPane.add(passwordField, gbc);
 
-        // Panel przycisków
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(BackgroundDefaultColor);
         buttonPanel.add(loginButton);

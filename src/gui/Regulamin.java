@@ -20,11 +20,7 @@ public class Regulamin implements ComponentStyle {
         ustawRegulamin();
     }
 
-    /**
-     * Zwraca treść regulaminu w formacie tekstowym.
-     *
-     * @return String z treścią regulaminu
-     */
+
     private String getRegulaminTresc() {
         return """
                 Regulamin użytkowania Playera
@@ -92,9 +88,7 @@ public class Regulamin implements ComponentStyle {
                 """;
     }
 
-    /**
-     * Ustawia treść regulaminu w elemencie JLabel.
-     */
+
     private void ustawRegulamin() {
         if (regulaminTrescLabel != null) {
             regulaminTrescLabel.setText("<html>" + getRegulaminTresc().replace("\n", "<br>") + "</html>");
